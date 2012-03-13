@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string-array name="stationTypeArray">
+        <item>All Transport Modes</item>
+        <item>Bus</item>
+        <item>Rail</item>
+        <item>Tram</item>
+    </string-array>
+    
+</resources>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <!-- Background Colours -->
+    <color name="appBGColor">#fff</color>
+    <color name="headerBGColor">#363737</color>
+    <color name="bannerBGColor">#4d4d4d</color>
+    <color name="evenRowBGColor">#eeeeee</color>
+    <color name="oddRowBGColor">#e5e4d7</color>
+    <color name="activeRowBGColor">#ffcc00</color>
+    <color name="bgColor">#ffffff</color>
+    <color name="realtimeBGColor">#ffcc00</color>
+    
+    <!-- Font Colours -->
+    <color name="appFontColor">#363737</color>
+    <color name="headerFontColor">#ffffff</color>
+    <color name="bannerFontColor">#ffffff</color>
+    <color name="realtimeFontColor">#000000</color>
+    
+    
+</resources>

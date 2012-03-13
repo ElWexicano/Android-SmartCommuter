@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="ie.smartcommuter"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk android:minSdkVersion="8" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/appName" android:description="@string/appDesc" android:theme="@style/appTheme">
+        <activity
+            android:name="ie.smartcommuter.controllers.HomeActivity"
+            android:label="@string/appName" >
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="ie.smartcommuter.controllers.SearchActivity"></activity>
+        <activity android:name="ie.smartcommuter.controllers.NearbyStationsActivity"></activity>
+        <activity android:name="ie.smartcommuter.controllers.FavouriteStationsActivity"></activity>
+        <activity android:name="ie.smartcommuter.controllers.StationActivity"></activity>
+        <activity android:name="ie.smartcommuter.controllers.InfoActivity"></activity>
+        <activity android:name="ie.smartcommuter.controllers.SettingsActivity"></activity>
+        <activity android:name="ie.smartcommuter.controllers.NearbyStationsListActivity"></activity>
+        <uses-library android:name="com.google.android.maps" />
+		<activity android:name="ie.smartcommuter.controllers.NearbyStationsMapActivity"></activity>
+        <activity android:name="ie.smartcommuter.controllers.StationDirectionsActivity"></activity>
+        <activity android:name="ie.smartcommuter.controllers.StationLocationActivity"></activity>
+        <activity android:name="ie.smartcommuter.controllers.StationRealtimeActivity"></activity>
+        
+        
+        
+    </application>
+
+</manifest>

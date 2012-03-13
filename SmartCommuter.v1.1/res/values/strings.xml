@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, SmartCommuterActivity!</string>
+    <string name="appName">SmartCommuter</string>
+    <string name="appDesc">Public Transport Realtime Information</string>
+    <string name="searchLbl">Search Stations</string>
+    <string name="nearbyLbl">Nearby Stations</string>
+    <string name="favouritesLbl">Favourite Stations</string>
+    <string name="realtimeLbl">Realtime</string>
+    <string name="directionsLbl">Directions</string>
+    <string name="locationLbl">Location</string>
+    <string name="arrivalsLbl">Arrivals</string>
+    <string name="departuresLbl">Departures</string>
+    <string name="recentlyViewedLbl">Recently Viewed Stations</string>
+    <string name="stationNameLbl">Station Name</string>
+    <string name="stationTypeLbl">Station Transport Mode</string>
+    <string name="listLbl">List</string>
+    <string name="mapLbl">Map</string>
+    <string name="settingsLbl">Settings</string>
+    <string name="searchStationsNameHint">Enter Station Name</string>
+    <string name="searchStationsTypePrompt">Choose the Station Mode</string>
+
+</resources>

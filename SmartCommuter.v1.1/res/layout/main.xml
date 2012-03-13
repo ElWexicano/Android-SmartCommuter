@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/appLayoutTheme"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" 
+        android:padding="10dp" >
+        
+        <Button
+            android:id="@+id/searchStationsBtn"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="left"
+            android:text="@string/searchLbl" />
+        
+	     <Button
+	         android:id="@+id/nearbyStationsBtn"
+	         android:layout_width="fill_parent"
+	         android:layout_height="fill_parent"
+	         android:layout_gravity="left"
+	         android:text="@string/nearbyLbl" />
+	        
+	     <Button
+	         android:id="@+id/favouriteStationsBtn"
+	         android:layout_width="fill_parent"
+	         android:layout_height="fill_parent"
+	         android:layout_gravity="left"
+	         android:text="@string/favouritesLbl" />
+        
+    </LinearLayout>
+
+
+	<TextView
+	    android:id="@+id/recentStationsTextView"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:text="@string/recentlyViewedLbl"
+	    style="@style/banner" />    
+
+	<!-- 
+    <ListView
+        android:id="@+id/recentlyViewedList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </ListView>
+ 	-->
+    
+</LinearLayout>

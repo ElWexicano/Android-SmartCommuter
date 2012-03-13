@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/appLayoutTheme"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/arrivalsTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/realtimeBanner"
+        android:text="@string/arrivalsLbl" />
+
+    <ListView
+        android:id="@+id/arrivalsListView"
+        android:layout_width="match_parent"
+        android:layout_height="170dp" >
+    </ListView>
+
+    <TextView
+        android:id="@+id/departuresTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/realtimeBanner"
+        android:text="@string/departuresLbl" />
+
+    <ListView
+        android:id="@+id/departuresListView"
+        android:layout_width="match_parent"
+        android:layout_height="170dp" >
+    </ListView>
+
+</LinearLayout>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <style name="appWindowTitleBackground">
+        <item name="android:background">@color/headerBGColor</item>
+    </style>
+ 
+    <style name="appTheme" parent="android:Theme">
+        <item name="android:windowTitleSize">26dp</item>
+        <item name="android:windowTitleBackgroundStyle">@style/appWindowTitleBackground</item>
+    </style>
+    
+    <style name="appLayoutTheme" parent="android:Theme">
+        <item name="android:background">@color/appBGColor</item>
+        <item name="android:textColor">@color/appFontColor</item>
+    </style>
+    
+    <style name="header">
+        <item name="android:textColor">@color/headerFontColor</item>
+        <item name="android:background">@color/headerBGColor</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">20dp</item>
+    </style>
+    
+    <style name="banner" parent="header">
+        <item name="android:textColor">@color/bannerFontColor</item>
+        <item name="android:background">@color/bannerBGColor</item>
+		<item name="android:textSize">14dp</item>
+        <item name="android:paddingTop">2dp</item>
+        <item name="android:paddingBottom">2dp</item>
+    </style>
+    
+    <style name="realtimeBanner" parent="header">
+        <item name="android:textColor">@color/realtimeFontColor</item>
+        <item name="android:background">@color/realtimeBGColor</item>
+		<item name="android:textSize">14dp</item>
+        <item name="android:paddingTop">2dp</item>
+        <item name="android:paddingBottom">2dp</item>
+    </style>
+    
+    <style name="tabs">
+        <item name="android:padding">10dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">@drawable/tab_selector_bg</item>
+    </style>
+    
+    <style name="tabsText">
+        <item name="android:textSize">15dp</item>
+        <item name="android:textColor">@drawable/tab_selector_color</item>
+    </style>
+    
+</resources>
