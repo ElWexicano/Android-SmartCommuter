@@ -50,4 +50,25 @@
         <item name="android:textColor">@drawable/tab_selector_color</item>
     </style>
     
+    <style name="stationDetailsName">
+        <item name="android:textSize">16dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#363737</item>
+    </style>
+    
+    <style name="stationDetailsAddress">
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">#aaaaaa</item>
+    </style>
+    
+    <style name="stationRow">
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">#363737</item>
+        <item name="android:background">#eeeeee</item>
+    </style>
+    
+    <style name="stationRowOdd" parent="stationRow">
+        <item name="android:background">#e5e4d7</item>
+    </style>
+    
 </resources>

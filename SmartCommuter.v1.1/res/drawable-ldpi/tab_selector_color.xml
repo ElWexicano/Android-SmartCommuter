@@ -2,16 +2,16 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item 
         android:state_selected="true"
-        android:color="@android:color/white" />
+        android:color="@color/activeFontColor" />
     
     <item 
         android:state_focused="true" 
-        android:color="@android:color/white" />
+        android:color="@color/activeFontColor" />
     
     <item 
         android:state_pressed="true" 
-        android:color="@android:color/white" />
+        android:color="@color/pressedFontColor" />
     
     <item 
-        android:color="#f8f8f8" />
+        android:color="@color/inactiveFontColor" />
 </selector>

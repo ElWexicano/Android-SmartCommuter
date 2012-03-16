@@ -1,6 +1,8 @@
-package ie.smartcommuter.controllers;
+package ie.smartcommuter.controllers.screens;
 
 import ie.smartcommuter.R;
+import ie.smartcommuter.controllers.maps.NearbyStationsMapActivity;
+import ie.smartcommuter.controllers.tabcontents.NearbyStationsListActivity;
 import android.app.TabActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -18,8 +20,10 @@ public class NearbyStationsActivity extends TabActivity{
         super.onCreate(savedInstanceState);
         
         requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-        setContentView(R.layout.nearby);
-        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.header);
+        setContentView(R.layout.screen_nearby);
+        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.title_bar);
+        
+        // Get the user location and Search for stations near there!
         
         TabHost tabHost = getTabHost();
         View tabView;
@@ -40,7 +44,7 @@ public class NearbyStationsActivity extends TabActivity{
     }
     
     private static View createTabView(final Context context, final String text) {
-    	View view = LayoutInflater.from(context).inflate(R.layout.app_tabs, null);
+    	View view = LayoutInflater.from(context).inflate(R.layout.tabs, null);
     	TextView tv = (TextView) view.findViewById(R.id.tabsTextView);
     	tv.setText(text);
     	return view;

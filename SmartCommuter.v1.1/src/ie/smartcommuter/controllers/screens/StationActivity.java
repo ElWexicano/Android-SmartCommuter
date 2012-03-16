@@ -1,6 +1,9 @@
-package ie.smartcommuter.controllers;
+package ie.smartcommuter.controllers.screens;
 
 import ie.smartcommuter.R;
+import ie.smartcommuter.controllers.maps.StationLocationActivity;
+import ie.smartcommuter.controllers.tabcontents.StationDirectionsActivity;
+import ie.smartcommuter.controllers.tabcontents.StationRealtimeActivity;
 import android.app.TabActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -18,8 +21,10 @@ public class StationActivity extends TabActivity {
         super.onCreate(savedInstanceState);
         
         requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-        setContentView(R.layout.station);
-        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.header);
+        setContentView(R.layout.screen_station);
+        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.title_bar);
+        
+        // TODO: Get the stations details.
         
         TabHost tabHost = getTabHost();
         View tabView;
@@ -45,7 +50,7 @@ public class StationActivity extends TabActivity {
     }
     
     private static View createTabView(final Context context, final String text) {
-    	View view = LayoutInflater.from(context).inflate(R.layout.app_tabs, null);
+    	View view = LayoutInflater.from(context).inflate(R.layout.tabs, null);
     	TextView tv = (TextView) view.findViewById(R.id.tabsTextView);
     	tv.setText(text);
     	return view;

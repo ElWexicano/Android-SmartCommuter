@@ -1,5 +1,6 @@
-package ie.smartcommuter.controllers;
+package ie.smartcommuter.controllers.tabcontents;
 
+import ie.smartcommuter.controllers.SmartTabContentActivity;
 import android.os.Bundle;
 
 public class NearbyStationsListActivity extends SmartTabContentActivity {

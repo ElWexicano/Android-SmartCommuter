@@ -11,7 +11,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/appName" android:description="@string/appDesc" android:theme="@style/appTheme">
         <activity
-            android:name="ie.smartcommuter.controllers.HomeActivity"
+            android:name=".controllers.screens.HomeActivity"
             android:label="@string/appName" >
 
             <intent-filter>
@@ -20,21 +20,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="ie.smartcommuter.controllers.SearchActivity"></activity>
-        <activity android:name="ie.smartcommuter.controllers.NearbyStationsActivity"></activity>
-        <activity android:name="ie.smartcommuter.controllers.FavouriteStationsActivity"></activity>
-        <activity android:name="ie.smartcommuter.controllers.StationActivity"></activity>
-        <activity android:name="ie.smartcommuter.controllers.InfoActivity"></activity>
-        <activity android:name="ie.smartcommuter.controllers.SettingsActivity"></activity>
-        <activity android:name="ie.smartcommuter.controllers.NearbyStationsListActivity"></activity>
+        <activity android:name=".controllers.screens.FavouriteStationsActivity"></activity>
+        <activity android:name=".controllers.screens.InfoActivity"></activity>
+        <activity android:name=".controllers.screens.NearbyStationsActivity"></activity>
+        <activity android:name=".controllers.screens.StationActivity"></activity>
+        <activity android:name=".controllers.screens.SearchActivity"></activity>
+        <activity android:name=".controllers.screens.SettingsActivity"></activity>
+        
+        <activity android:name=".controllers.SmartActivity"></activity>
+        <activity android:name=".controllers.SmartMapActivity"></activity>
+        <activity android:name=".controllers.SmartTabContentActivity"></activity>
+        
+        <activity android:name=".controllers.tabcontents.StationDirectionsActivity"></activity>
+        <activity android:name=".controllers.tabcontents.StationRealtimeActivity"></activity>
+        <activity android:name=".controllers.tabcontents.NearbyStationsListActivity"></activity>
+        
+        <activity android:name=".controllers.maps.StationLocationActivity"></activity>
+        <activity android:name=".controllers.maps.NearbyStationsMapActivity"></activity>
+        
         <uses-library android:name="com.google.android.maps" />
-		<activity android:name="ie.smartcommuter.controllers.NearbyStationsMapActivity"></activity>
-        <activity android:name="ie.smartcommuter.controllers.StationDirectionsActivity"></activity>
-        <activity android:name="ie.smartcommuter.controllers.StationLocationActivity"></activity>
-        <activity android:name="ie.smartcommuter.controllers.StationRealtimeActivity"></activity>
         
-        
-        
-    </application>
+</application>
 
 </manifest>

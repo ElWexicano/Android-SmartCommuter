@@ -7,8 +7,9 @@
 
     <TextView
         android:id="@+id/textView1"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/appDesc" />
-
+        android:text="@string/settingsLbl" 
+        style="@style/banner" />
+    
 </LinearLayout>

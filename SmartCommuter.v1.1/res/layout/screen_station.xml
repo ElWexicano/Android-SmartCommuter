@@ -8,7 +8,7 @@
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
-        android:layout_height="66dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingBottom="5dp"
         android:paddingLeft="10dp"
@@ -20,14 +20,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/stationNameExample"
-            android:textSize="16dp" />
-        
+            style="@style/stationDetailsName" />
+            
         <TextView
             android:id="@+id/stationAddressTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/stationAddressExample"
-            android:textSize="14dp" />
+            style="@style/stationDetailsAddress" />
         
     </LinearLayout>
 
@@ -52,7 +52,8 @@
             <FrameLayout
                 android:id="@android:id/tabcontent"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="match_parent"
+                android:background="#cccccc" >
 
             </FrameLayout>
         </LinearLayout>

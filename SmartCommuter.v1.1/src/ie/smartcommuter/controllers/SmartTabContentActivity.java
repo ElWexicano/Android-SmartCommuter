@@ -1,6 +1,9 @@
 package ie.smartcommuter.controllers;
 
 import ie.smartcommuter.R;
+import ie.smartcommuter.controllers.screens.HomeActivity;
+import ie.smartcommuter.controllers.screens.InfoActivity;
+import ie.smartcommuter.controllers.screens.SettingsActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
@@ -13,7 +16,7 @@ public class SmartTabContentActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		MenuInflater i = getMenuInflater();
-		i.inflate(R.menu.options_menu,menu);
+		i.inflate(R.menu.menu_options,menu);
 		
 		return super.onCreateOptionsMenu(menu);
 	}

@@ -20,5 +20,6 @@
     <string name="settingsLbl">Settings</string>
     <string name="searchStationsNameHint">Enter Station Name</string>
     <string name="searchStationsTypePrompt">Choose the Station Mode</string>
+    <string name="informationLbl">Information</string>
 
 </resources>

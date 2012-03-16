@@ -1,6 +1,10 @@
 package ie.smartcommuter.controllers;
 
 import ie.smartcommuter.R;
+import ie.smartcommuter.controllers.screens.HomeActivity;
+import ie.smartcommuter.controllers.screens.InfoActivity;
+import ie.smartcommuter.controllers.screens.SettingsActivity;
+import ie.smartcommuter.controllers.screens.StationActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,15 +23,15 @@ public class SmartActivity extends Activity {
         super.onCreate(savedInstanceState);
         
         requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-        setContentView(R.layout.main);
-        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.header);
+        setContentView(R.layout.screen_home);
+        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.title_bar);
     }
     
     @Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		MenuInflater i = getMenuInflater();
-		i.inflate(R.menu.options_menu,menu);
+		i.inflate(R.menu.menu_options,menu);
 		
 		return super.onCreateOptionsMenu(menu);
 	}

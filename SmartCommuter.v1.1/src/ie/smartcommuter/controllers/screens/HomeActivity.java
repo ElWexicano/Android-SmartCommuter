@@ -1,13 +1,14 @@
-package ie.smartcommuter.controllers;
+package ie.smartcommuter.controllers.screens;
 
 import ie.smartcommuter.R;
+import ie.smartcommuter.controllers.SmartActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
+//import android.widget.ListView;
+//import android.widget.ArrayAdapter;
 
 /**
  * This activity provides functionality to the

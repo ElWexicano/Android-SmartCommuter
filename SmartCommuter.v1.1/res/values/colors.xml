@@ -10,12 +10,18 @@
     <color name="activeRowBGColor">#ffcc00</color>
     <color name="bgColor">#ffffff</color>
     <color name="realtimeBGColor">#ffcc00</color>
+    <color name="activeBGColor">#363737</color>
+    <color name="inactiveBGColor">#4d4d4d</color>
+    <color name="pressedBGColor">#363737</color>
+    
     
     <!-- Font Colours -->
     <color name="appFontColor">#363737</color>
     <color name="headerFontColor">#ffffff</color>
     <color name="bannerFontColor">#ffffff</color>
     <color name="realtimeFontColor">#000000</color>
-    
+    <color name="activeFontColor">#ffffff</color>
+    <color name="inactiveFontColor">#cccccc</color>
+    <color name="pressedFontColor">#90b831</color>
     
 </resources>
