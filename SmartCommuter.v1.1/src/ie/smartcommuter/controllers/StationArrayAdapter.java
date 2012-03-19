@@ -35,7 +35,6 @@ public class StationArrayAdapter extends ArrayAdapter<Station> {
 		ImageView stationImageView = (ImageView) view.findViewById(R.id.stationLogo);
 		stationNameView.setText(station.getName());
 		
-		// TODO: Alternate bg color for each row.
 		if(station.getCompany().getName().equals("Bus Éireann")) {
 			stationImageView.setImageResource(R.drawable.img_bus_eireann);
 		} else if(station.getCompany().getName().equals("Dublin Bus")) {
