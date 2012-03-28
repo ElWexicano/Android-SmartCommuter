@@ -16,6 +16,11 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
+/**
+ * This is a superclass that is widely used by
+ * other classes in the Application.
+ * @author Shane Bryan Doyle
+ */
 public class SmartActivity extends Activity {
 	
     @Override
@@ -53,7 +58,13 @@ public class SmartActivity extends Activity {
 		return super.onMenuItemSelected(featureId, item);
 	}
     
-	
+	/**
+	 * This class is used to Listen to when an Station
+	 * Item has been clicked and responds to it by 
+	 * starting the the StationActivity class which
+	 * intends displays the Station Details to the user.
+	 * @author Shane Bryan Doyle
+	 */
 	public class StationItemListener implements OnItemClickListener {
 		
 		@Override
@@ -63,6 +74,10 @@ public class SmartActivity extends Activity {
 		
 	}
 	
+	/**
+	 * This method is used to start a new activity.
+	 * @param activityClass
+	 */
 	private void goToActivity(Class<? extends Activity> activityClass) {
         Intent newActivity = new Intent(this, activityClass);
         startActivity(newActivity);

@@ -20,10 +20,10 @@
         android:id="@+id/stationLogo"
         android:layout_width="69dp"
         android:layout_height="22dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:gravity="right"
         android:src="@drawable/img_dublin_bus" />
     

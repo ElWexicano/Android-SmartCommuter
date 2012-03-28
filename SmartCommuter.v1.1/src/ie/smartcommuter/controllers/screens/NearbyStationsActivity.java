@@ -13,6 +13,11 @@ import android.view.Window;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+/**
+ * This class is used for the Nearby Stations Screen
+ * of the Application.
+ * @author Shane Bryan Doyle
+ */
 public class NearbyStationsActivity extends TabActivity{
 
     @Override
@@ -23,7 +28,7 @@ public class NearbyStationsActivity extends TabActivity{
         setContentView(R.layout.screen_nearby);
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.title_bar);
         
-        // Get the user location and Search for stations near there!
+        // TODO: Get the user location and Search for stations near there!
         
         TabHost tabHost = getTabHost();
         View tabView;

@@ -14,6 +14,11 @@ import android.view.Window;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+/**
+ * This activity provides functionality to the
+ * Station Details screen of the application.
+ * @author Shane Bryan Doyle
+ */
 public class StationActivity extends TabActivity {
 
     @Override

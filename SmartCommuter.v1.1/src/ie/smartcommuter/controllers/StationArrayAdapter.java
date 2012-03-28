@@ -31,6 +31,8 @@ public class StationArrayAdapter extends ArrayAdapter<Station> {
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View view = inflater.inflate(R.layout.row_station, parent, false);
 		
+		view.setId(station.getId());
+		
 		TextView stationNameView = (TextView) view.findViewById(R.id.stationNameText);
 		ImageView stationImageView = (ImageView) view.findViewById(R.id.stationLogo);
 		stationNameView.setText(station.getName());

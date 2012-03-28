@@ -43,12 +43,12 @@
 	    android:text="@string/recentlyViewedLbl"
 	    style="@style/banner" />    
 
-	<!-- 
+
     <ListView
         android:id="@+id/recentlyViewedList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
     </ListView>
- 	-->
+
     
 </LinearLayout>

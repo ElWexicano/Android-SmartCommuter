@@ -15,6 +15,7 @@ public class NearbyStationsMapActivity extends SmartMapActivity {
         
         MapView mapView = (MapView) findViewById(R.id.mapview);
         mapView.setBuiltInZoomControls(true);
+        
     }
-
+    
 }

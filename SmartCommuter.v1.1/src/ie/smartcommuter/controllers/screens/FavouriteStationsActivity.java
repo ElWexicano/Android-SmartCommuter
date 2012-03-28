@@ -1,11 +1,21 @@
 package ie.smartcommuter.controllers.screens;
 
+import java.util.List;
+
 import ie.smartcommuter.R;
 import ie.smartcommuter.controllers.SmartActivity;
+import ie.smartcommuter.controllers.StationArrayAdapter;
+import ie.smartcommuter.models.DatabaseManager;
+import ie.smartcommuter.models.Station;
 import android.os.Bundle;
-//import android.widget.ArrayAdapter;
-//import android.widget.ListView;
+import android.widget.ListView;
 
+
+/**
+ * This activity provides functionality to the
+ * Favourite Stations screen of the application.
+ * @author Shane Bryan Doyle
+ */
 public class FavouriteStationsActivity extends SmartActivity {
 
     @Override
@@ -13,13 +23,17 @@ public class FavouriteStationsActivity extends SmartActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.screen_favourites);
         
-        // TODO: Add in list of the stations of favourite stations
-//        String[] favouriteStations = getResources().getStringArray(R.array.stationsListExample);
-//        
-//        ListView favourites = (ListView)findViewById(R.id.favouriteStationsList);
-//        favourites.setOnItemClickListener(new StationItemListener());
-//        favourites.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, favouriteStations));
-//
-//        favourites.setTextFilterEnabled(true);
+        DatabaseManager databaseManager = new DatabaseManager(this);
+        databaseManager.open();
+        
+        List<Station> favouriteStations = databaseManager.getAllStations();
+        
+        databaseManager.close();
+        
+        StationArrayAdapter listAdapter = new StationArrayAdapter(this, favouriteStations);
+        
+        ListView favouriteStationsList = (ListView)findViewById(R.id.favouriteStationsList);
+        favouriteStationsList.setOnItemClickListener(new StationItemListener());
+        favouriteStationsList.setAdapter(listAdapter);
     }
 }
