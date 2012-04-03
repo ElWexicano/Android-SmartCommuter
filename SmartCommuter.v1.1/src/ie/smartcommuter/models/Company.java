@@ -1,5 +1,10 @@
 package ie.smartcommuter.models;
 
+/**
+ * This is a class is to create instances
+ * of Public Transport Companies.
+ * @author Shane Bryan Doyle
+ */
 public class Company {
 	
 	private String name;

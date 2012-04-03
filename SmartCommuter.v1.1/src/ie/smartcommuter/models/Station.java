@@ -1,9 +1,17 @@
 package ie.smartcommuter.models;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Station {
+/**
+ * This is a class is to create instances
+ * of Public Transport Stations.
+ * @author Shane Bryan Doyle
+ */
+public class Station implements Serializable {
 	
+
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private String name;
 	private String apiCode;
@@ -54,4 +62,5 @@ public class Station {
 	public void setCompany(Company company) {
 		this.company = company;
 	}
+	
 }

@@ -1,24 +1,27 @@
 package ie.smartcommuter.controllers.screens;
 
+import java.io.Serializable;
+import java.util.List;
+
 import ie.smartcommuter.R;
+import ie.smartcommuter.controllers.SmartTabActivity;
 import ie.smartcommuter.controllers.maps.NearbyStationsMapActivity;
 import ie.smartcommuter.controllers.tabcontents.NearbyStationsListActivity;
-import android.app.TabActivity;
-import android.content.Context;
-import android.content.Intent;
+import ie.smartcommuter.models.Address;
+import ie.smartcommuter.models.DatabaseManager;
+import ie.smartcommuter.models.Station;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.Window;
-import android.widget.TabHost;
-import android.widget.TextView;
 
 /**
  * This class is used for the Nearby Stations Screen
  * of the Application.
  * @author Shane Bryan Doyle
  */
-public class NearbyStationsActivity extends TabActivity{
+public class NearbyStationsActivity extends SmartTabActivity{
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -28,30 +31,29 @@ public class NearbyStationsActivity extends TabActivity{
         setContentView(R.layout.screen_nearby);
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.title_bar);
         
-        // TODO: Get the user location and Search for stations near there!
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         
-        TabHost tabHost = getTabHost();
-        View tabView;
-        Intent intent;
-        TabHost.TabSpec tabSpec;
-        
-        intent = new Intent().setClass(this, NearbyStationsListActivity.class);
-        tabView = createTabView(tabHost.getContext(), "List");
-        tabSpec = tabHost.newTabSpec("List").setIndicator(tabView).setContent(intent);
-        tabHost.addTab(tabSpec);
-        
-        intent = new Intent().setClass(this, NearbyStationsMapActivity.class);
-        tabView = createTabView(tabHost.getContext(), "Map");
-        tabSpec = tabHost.newTabSpec("Map").setIndicator(tabView).setContent(intent);
-        tabHost.addTab(tabSpec);
+        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+        	// TODO: Display a AlarmDialog prompt that asks the user if they want to enable GPS or not use this feature!
+        }
 
+        Criteria criteria = new Criteria();
+        String provider = locationManager.getBestProvider(criteria, false);
+		Location location = locationManager.getLastKnownLocation(provider);
+        Address address = new Address(location);
+        
+        DatabaseManager databaseManager = new DatabaseManager(this);
+        databaseManager.open();
+        List<Station> nearbyStations = databaseManager.getNearbyStations(address);
+        databaseManager.close();
+        
+        Bundle activityInfo = new Bundle();
+        activityInfo.putSerializable("nearbyStations", (Serializable) nearbyStations);
+        activityInfo.putSerializable("userLocation", (Serializable) address);
+        
+        tabHost = getTabHost();
+        addTab(NearbyStationsListActivity.class, activityInfo, "List");
+        addTab(NearbyStationsMapActivity.class, activityInfo, "Map");
         tabHost.setCurrentTab(0);
-    }
-    
-    private static View createTabView(final Context context, final String text) {
-    	View view = LayoutInflater.from(context).inflate(R.layout.tabs, null);
-    	TextView tv = (TextView) view.findViewById(R.id.tabsTextView);
-    	tv.setText(text);
-    	return view;
     }
 }

@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello">Hello World, SmartCommuterActivity!</string>
     <string name="appName">SmartCommuter</string>
-    <string name="appDesc">Public Transport Realtime Information</string>
+    <string name="appDisplayName">Smart Commuter</string>
+    <string name="appDesc">SmartCommuter provides free up to the minute information on Public Transport Systems in Ireland.</string>
+    <string name="appMoreInfo">For more information about SmartCommuter or to provide feedback please visit www.oursite.com</string>
+    <string name="appAbout">About SmartCommuter</string>
+    <string name="appWebsite">www.smartcommuter.ie</string>
+    <string name="developer">Developed by Shane Bryan Doyle</string>
+    <string name="versionLabel">Current Version:</string>
+    <string name="version">1</string>
     <string name="searchLbl">Search Stations</string>
     <string name="nearbyLbl">Nearby Stations</string>
     <string name="favouritesLbl">Favourite Stations</string>
@@ -22,5 +28,14 @@
     <string name="searchStationsTypePrompt">Choose the Station Mode</string>
     <string name="informationLbl">Information</string>
     <string name="screenOrientation">portrait</string>
-
+    <string name="gpsAlertTitle">Enable GPS</string>
+    <string name="gpsAlertMessage">Do you want to enable GPS or not use this feature?</string>
+    <string name="gpsAlertButtonEnableGPS">Enable GPS</string>
+    <string name="gpsAlertButtonDontUse">Don\'t Use</string>
+    <string name="createDBProgressTitle">Creating Database</string>
+    <string name="createDBProgressMessage">Loading, Please wait.</string>
+    <string name="updateDBProgressTitle">Updating Database</string>
+    <string name="updateDBProgressMessage">Loading, Please wait.</string>
+	
+    
 </resources>

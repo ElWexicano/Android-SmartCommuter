@@ -1,10 +1,10 @@
 package ie.smartcommuter.models;
 
 import java.io.InputStream;
+
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 /**
  * This is the Database Helper class which
@@ -25,6 +25,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+    	
+    	// TODO: Display Progress Bar when creating the database.
     	generateDBFromSQLFile(db);
     }
 
@@ -47,8 +49,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			String[] statements = FileHelper.parseSqlFile(is);
 	
 			for (String statement : statements) {
-					 
-				Log.d("SQL Statement",statement);
 				db.execSQL(statement);
 			}
 		} catch (Exception ex) {

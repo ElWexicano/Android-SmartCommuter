@@ -26,7 +26,7 @@ public class FavouriteStationsActivity extends SmartActivity {
         DatabaseManager databaseManager = new DatabaseManager(this);
         databaseManager.open();
         
-        List<Station> favouriteStations = databaseManager.getAllStations();
+        List<Station> favouriteStations = databaseManager.getFavouriteStations();
         
         databaseManager.close();
         

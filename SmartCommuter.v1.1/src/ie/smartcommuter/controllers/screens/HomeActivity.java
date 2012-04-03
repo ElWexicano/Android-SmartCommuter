@@ -21,12 +21,13 @@ import android.widget.ListView;
  */
 public class HomeActivity extends SmartActivity {
 	
-	private DatabaseManager databaseManager;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
- 
+        
+        isHomeActivity = true;
+        
         Button searchStationsButton = (Button)findViewById(R.id.searchStationsBtn);
         Button nearbyStationsButton = (Button)findViewById(R.id.nearbyStationsBtn);
         Button favouriteStationsButton = (Button)findViewById(R.id.favouriteStationsBtn);
@@ -35,7 +36,7 @@ public class HomeActivity extends SmartActivity {
         nearbyStationsButton.setOnClickListener(new HomeButtonsListener(1));
         favouriteStationsButton.setOnClickListener(new HomeButtonsListener(2));
 
-        databaseManager = new DatabaseManager(this);
+        DatabaseManager databaseManager = new DatabaseManager(this);
         databaseManager.open();
         
         List<Station> recentlyViewedStations = databaseManager.getRecentlyViewedStations();

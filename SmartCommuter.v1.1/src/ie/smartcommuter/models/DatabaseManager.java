@@ -103,7 +103,7 @@ public class DatabaseManager {
 	public List<Station> getRecentlyViewedStations() {
 		List<Station> stations = new ArrayList<Station>();
 		
-		Cursor cursor = db.query("recently_viewed_station_details", null, null, null, null, null, "recently_viewed_time");
+		Cursor cursor = db.query("recently_viewed_station_details", null, null, null, null, null, "recently_viewed_time DESC");
 		
 		cursor.moveToFirst();
 		
@@ -132,8 +132,14 @@ public class DatabaseManager {
 	public List<Station> getNearbyStations(Address address) {
 		List<Station> stations = new ArrayList<Station>();
 		
-		Cursor cursor = db.query("station_details", null, "station_latitude", null, null, null, null);
+		String lat = Double.toString(GeoLocation.microDegreesToDegrees(address.getLatitude()));
+		String lon = Double.toString(GeoLocation.microDegreesToDegrees(address.getLongitude()));
 		
+		String latOrderBy = "("+lat+" - station_latitude) * ("+lat+" - station_latitude)";
+		String lonOrderBy = "("+lon+" - station_longitude) * ("+lon+" - station_longitude)";
+		
+		Cursor cursor = db.query("station_details", null, null, null, null, null, "("+latOrderBy+" + "+lonOrderBy+")", "20");
+
 		cursor.moveToFirst();
 		
 		while(!cursor.isAfterLast()) {
@@ -189,9 +195,10 @@ public class DatabaseManager {
 	 */
 	public Station getStation(int stationId) {
 		Cursor cursor = db.query("station_details", null, "station_id = "+stationId, null, null, null, null);
+		cursor.moveToFirst();
 		Station station = cursorToStation(cursor);
 		cursor.close();
-		
+
 		return station;
 	}
 	
@@ -203,6 +210,7 @@ public class DatabaseManager {
 	 */
 	public Company getCompany(String companyName) {
 		Cursor cursor = db.query("company_details", null, "company_name = "+companyName, null, null, null, null);
+		cursor.moveToFirst();
 		Company company = cursorToCompany(cursor);	
 		cursor.close();
 		
@@ -236,9 +244,15 @@ public class DatabaseManager {
 	 */
 	public void addToRecentlyViewedStations(int stationId) {
 		ContentValues values = new ContentValues();
-		values.put("recently_viewed_station_id", stationId);
 		values.put("recently_viewed_time", System.currentTimeMillis());
-		db.insert("recently_viewed_stations", null, values);
+		Cursor cursor = db.query("recently_viewed_stations", null, "recently_viewed_station_id = "+stationId, null, null, null, null);
+		
+		if(cursor.getCount()==0) {
+			values.put("recently_viewed_station_id", stationId);
+			db.insert("recently_viewed_stations", null, values);
+		} else {
+			db.update("recently_viewed_stations", values, "recently_viewed_station_id = "+stationId, null);
+		}
 	}
 	
 	/**
@@ -251,8 +265,8 @@ public class DatabaseManager {
 		Station station = new Station();
 		Address address = new Address();
 		Company company = new Company();
-		
-		if(cursor!=null) {
+
+		if(cursor.getCount()>0) {
 			station.setId(cursor.getInt(0));
 			station.setName(cursor.getString(1));
 			station.setApiCode(cursor.getString(2));
@@ -280,7 +294,7 @@ public class DatabaseManager {
 		Company company = new Company();
 		ContactDetails details = new ContactDetails();
 		
-		if(cursor!=null) {
+		if(cursor.getCount()>0) {
 			company.setName(cursor.getString(0));
 			company.setMode(cursor.getString(1));
 			

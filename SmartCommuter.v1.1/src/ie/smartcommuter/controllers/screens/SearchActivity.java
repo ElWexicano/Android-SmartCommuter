@@ -77,7 +77,7 @@ public class SearchActivity extends SmartActivity {
 		@Override
 		public void onTextChanged(CharSequence s, int start, int before,
 				int count) {
-			listAdapter.getFilter().filter(s.toString());
+			listAdapter.getFilter().filter(s);
 		}
     	
     }

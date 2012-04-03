@@ -1,5 +1,10 @@
 package ie.smartcommuter.models;
 
+/**
+ * This is a class is to create instances
+ * of Station Data ie real time information.
+ * @author Shane Bryan Doyle
+ */
 public class StationData {
 	
 	private String route;

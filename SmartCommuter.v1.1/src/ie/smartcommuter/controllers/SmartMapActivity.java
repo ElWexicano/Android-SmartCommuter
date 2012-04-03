@@ -2,21 +2,36 @@ package ie.smartcommuter.controllers;
 
 import ie.smartcommuter.R;
 import ie.smartcommuter.controllers.screens.HomeActivity;
-import ie.smartcommuter.controllers.screens.InfoActivity;
 import ie.smartcommuter.controllers.screens.SettingsActivity;
+import ie.smartcommuter.models.Address;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TextView;
 
+import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
+import com.google.android.maps.MapController;
+import com.google.android.maps.MapView;
 
+/**
+ * This is a superclass that is widely used by
+ * classes that need Maps.
+ * @author Shane Bryan Doyle
+ */
 public class SmartMapActivity extends MapActivity {
 
+	protected MapView mapView;
+	
 	@Override
 	protected boolean isRouteDisplayed() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -29,26 +44,82 @@ public class SmartMapActivity extends MapActivity {
 		return super.onCreateOptionsMenu(menu);
 	}
     
-
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		switch(item.getItemId()) {
 		
 		case R.id.home :
-			goToActivity(HomeActivity.class);
+			goToActivity(HomeActivity.class, null);
 			break;
 		case R.id.settings :
-			goToActivity(SettingsActivity.class);
+			goToActivity(SettingsActivity.class, null);
 			break;
 		case R.id.information :
-			goToActivity(InfoActivity.class);
+			openInformationDialog();
 			break;
 		}
 		return super.onMenuItemSelected(featureId, item);
 	}
 	
-	
-	private void goToActivity(Class<? extends Activity> activityClass) {
+	/**
+	 * This method is used to start a new activity.
+	 * @param activityClass
+	 * @param bundle
+	 */
+	private void goToActivity(Class<? extends Activity> activityClass, Bundle bundle) {
         Intent newActivity = new Intent(this, activityClass);
+        
+        if(bundle!=null) {
+        	newActivity.putExtras(bundle);
+        }
+        
         startActivity(newActivity);
 	}
+	
+    /**
+     * This method is used to centre the Map on an address.
+     * @param address
+     */
+    protected MapView initGoogleMap(Address address) {
+    	MapView mapView = (MapView) findViewById(R.id.mapview);
+        mapView.setBuiltInZoomControls(true);
+        MapController mapController = mapView.getController();
+        mapController.setCenter(new GeoPoint(address.getLatitude(),address.getLongitude()));
+		return mapView;
+    }
+    
+	/**
+	 * This method is used to open the information
+	 * dialog.
+	 */
+	private void openInformationDialog() {
+		Dialog dialog = new Dialog(this);
+		dialog.setTitle(R.string.appAbout);
+		dialog.setContentView(R.layout.dialog_information);
+		
+		TextView currentVersion = (TextView) dialog.findViewById(R.id.versionTextView);
+		currentVersion.setText(getApplicationVersion());
+		
+		dialog.setCancelable(true);
+		dialog.setCanceledOnTouchOutside(true);
+		dialog.show();
+	}
+	
+	/**
+	 * This method is used to get the current version of the application.
+	 * @return
+	 */
+	private String getApplicationVersion() {
+		PackageManager manager = this.getPackageManager();
+		PackageInfo info;
+		String version = "0";
+		
+		try {
+			info = manager.getPackageInfo(
+			    this.getPackageName(), 0);
+			version = info.versionName;
+		} catch (NameNotFoundException e) {
+		}
+		
+		return version;
+    }
 }

@@ -2,7 +2,7 @@
 <resources>
     
     <!-- Background Colours -->
-    <color name="appBGColor">#fff</color>
+    <color name="appBGColor">#f8f9fe</color>
     <color name="headerBGColor">#363737</color>
     <color name="bannerBGColor">#4d4d4d</color>
     <color name="evenRowBGColor">#eeeeee</color>
@@ -13,7 +13,7 @@
     <color name="activeBGColor">#363737</color>
     <color name="inactiveBGColor">#4d4d4d</color>
     <color name="pressedBGColor">#363737</color>
-    
+    <color name="appFooterBGColor">#dedede</color>
     
     <!-- Font Colours -->
     <color name="appFontColor">#363737</color>
@@ -23,5 +23,7 @@
     <color name="activeFontColor">#ffffff</color>
     <color name="inactiveFontColor">#cccccc</color>
     <color name="pressedFontColor">#90b831</color>
+    <color name="stationAddressFontColor">#aaaaaa</color>
+    <color name="appFooterFontColor">#606060</color>
     
 </resources>

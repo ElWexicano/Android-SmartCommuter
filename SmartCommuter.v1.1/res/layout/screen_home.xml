@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/appLayoutTheme"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -9,28 +10,25 @@
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" 
+        android:orientation="horizontal" 
         android:padding="10dp" >
         
         <Button
             android:id="@+id/searchStationsBtn"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_gravity="left"
+            style="@style/homeScreenButton"
+			android:drawableTop="@drawable/ic_search"
             android:text="@string/searchLbl" />
         
 	     <Button
 	         android:id="@+id/nearbyStationsBtn"
-	         android:layout_width="fill_parent"
-	         android:layout_height="fill_parent"
-	         android:layout_gravity="left"
+	         style="@style/homeScreenButton"
+	         android:drawableTop="@drawable/ic_nearby"
 	         android:text="@string/nearbyLbl" />
 	        
 	     <Button
 	         android:id="@+id/favouriteStationsBtn"
-	         android:layout_width="fill_parent"
-	         android:layout_height="fill_parent"
-	         android:layout_gravity="left"
+	         style="@style/homeScreenButton"
+	         android:drawableTop="@drawable/ic_favourite"
 	         android:text="@string/favouritesLbl" />
         
     </LinearLayout>
@@ -50,5 +48,19 @@
         android:layout_height="wrap_content" >
     </ListView>
 
+    
+	<LinearLayout 
+	    xmlns:android="http://schemas.android.com/apk/res/android"
+	    style="@style/footer" >
+	     
+	    <TextView 
+	        android:text="@string/appWebsite"
+	        android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/appFontColor"
+            android:gravity="center"
+            android:paddingTop="10dip" />
+	    
+	</LinearLayout>
     
 </LinearLayout>

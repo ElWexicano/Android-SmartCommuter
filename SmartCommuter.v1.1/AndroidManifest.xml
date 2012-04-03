@@ -6,13 +6,16 @@
 
     <uses-sdk android:minSdkVersion="8" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:icon="@drawable/ic_launcher"
-        android:label="@string/appName" android:description="@string/appDesc" android:theme="@style/appTheme" >
+        android:label="@string/appDisplayName" android:description="@string/appDesc" android:theme="@style/appTheme" >
         <activity
             android:name=".controllers.screens.HomeActivity"
-            android:label="@string/appName"  >
+            android:label="@string/appDisplayName"
+            android:screenOrientation="portrait" >
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,9 +30,9 @@
         <activity android:name=".controllers.screens.SearchActivity"></activity>
         <activity android:name=".controllers.screens.SettingsActivity"></activity>
         
-        <activity android:name=".controllers.SmartActivity"></activity>
-        <activity android:name=".controllers.SmartMapActivity"></activity>
-        <activity android:name=".controllers.SmartTabContentActivity"></activity>
+        <activity android:name=".controllers.SmartActivity" android:screenOrientation="portrait" ></activity>
+        <activity android:name=".controllers.SmartMapActivity" android:screenOrientation="portrait" ></activity>
+        <activity android:name=".controllers.SmartTabContentActivity" android:screenOrientation="portrait" ></activity>
         
         <activity android:name=".controllers.tabcontents.StationDirectionsActivity"></activity>
         <activity android:name=".controllers.tabcontents.StationRealtimeActivity"></activity>
