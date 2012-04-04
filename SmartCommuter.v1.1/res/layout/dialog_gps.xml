@@ -1,0 +1,37 @@
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_root"
+    style="@style/dialogContainer" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/gpsAlertMessageDesc" />
+    
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/gpsAlertMessage" />
+    
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/enableGPSButton"
+            android:text="@string/gpsAlertButtonEnableGPS" 
+            style="@style/dialogButton" />
+
+        <Button
+            android:id="@+id/dontUseButton"
+            android:text="@string/gpsAlertButtonDontUse" 
+			style="@style/dialogButton" />
+        
+    </LinearLayout>
+
+</LinearLayout>

@@ -2,6 +2,7 @@ package ie.smartcommuter.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import ie.smartcommuter.R;
 import ie.smartcommuter.models.Station;
 import android.content.Context;
@@ -17,7 +18,7 @@ import android.widget.TextView;
  * This is a class is used to display a stations in a list.
  * @author Shane Bryan Doyle
  */
-public class StationArrayAdapter extends ArrayAdapter<Station> {
+public class StationArrayAdapter extends ArrayAdapter<Station>{
 	
 	private Context context;
 	private List<Station> stations;
@@ -27,6 +28,7 @@ public class StationArrayAdapter extends ArrayAdapter<Station> {
 	
 	public StationArrayAdapter(Context context,  List<Station> stations) {
 		super(context, R.layout.row_station, stations);
+		
 		this.context = context;
 		this.stations = stations;
 		this.originalStations = stations;
@@ -136,4 +138,5 @@ public class StationArrayAdapter extends ArrayAdapter<Station> {
             }
         }
     }
+
 }

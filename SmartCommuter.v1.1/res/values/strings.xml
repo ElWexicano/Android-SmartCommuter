@@ -29,6 +29,7 @@
     <string name="informationLbl">Information</string>
     <string name="screenOrientation">portrait</string>
     <string name="gpsAlertTitle">Enable GPS</string>
+    <string name="gpsAlertMessageDesc">Your GPS is turned off. You will need to turn it on to use this feature.</string>
     <string name="gpsAlertMessage">Do you want to enable GPS or not use this feature?</string>
     <string name="gpsAlertButtonEnableGPS">Enable GPS</string>
     <string name="gpsAlertButtonDontUse">Don\'t Use</string>
@@ -36,6 +37,6 @@
     <string name="createDBProgressMessage">Loading, Please wait.</string>
     <string name="updateDBProgressTitle">Updating Database</string>
     <string name="updateDBProgressMessage">Loading, Please wait.</string>
-	
-    
+    <string name="viewStationButton">View Station</string>
+
 </resources>

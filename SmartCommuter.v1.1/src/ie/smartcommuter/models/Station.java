@@ -3,6 +3,7 @@ package ie.smartcommuter.models;
 import java.io.Serializable;
 import java.util.List;
 
+
 /**
  * This is a class is to create instances
  * of Public Transport Stations.
@@ -63,4 +64,9 @@ public class Station implements Serializable {
 		this.company = company;
 	}
 	
+	@Override
+	public String toString() {
+		return this.getName();
+	}
+
 }

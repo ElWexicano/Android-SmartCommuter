@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -122,4 +123,32 @@ public class SmartMapActivity extends MapActivity {
 		
 		return version;
     }
+	
+	/**
+	 * This method is used to get the Icon to display
+	 * for the Station location on the Google Map.
+	 * @param mode
+	 * @return
+	 */
+	protected Drawable getStationDrawable(String mode) {
+		Drawable drawable;
+		if(mode.equalsIgnoreCase("bus")) {
+        	drawable = this.getResources().getDrawable(R.drawable.map_ic_bus);
+        } else if (mode.equalsIgnoreCase("rail")) {
+        	drawable = this.getResources().getDrawable(R.drawable.map_ic_train);
+        } else {
+        	drawable = this.getResources().getDrawable(R.drawable.map_ic_tram);
+        }
+		return drawable;
+	}
+	
+	/**
+	 * This method is used to get the Icon to display
+	 * for the User location on the Google Map.
+	 * @return
+	 */
+	protected Drawable getUserDrawable(){
+		Drawable drawable = this.getResources().getDrawable(R.drawable.map_ic_male);
+		return drawable;
+	}
 }

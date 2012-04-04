@@ -253,6 +253,13 @@ public class DatabaseManager {
 		} else {
 			db.update("recently_viewed_stations", values, "recently_viewed_station_id = "+stationId, null);
 		}
+		
+		cursor = db.query("recently_viewed_stations", null, null, null, null, null, "recently_viewed_time");
+		
+		if(cursor.getCount()>10) {
+			cursor.moveToFirst();
+			db.delete("recently_viewed_stations", "recently_viewed_station_id = "+cursor.getString(0), null);
+		}
 	}
 	
 	/**

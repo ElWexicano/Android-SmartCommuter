@@ -80,6 +80,10 @@
         <item name="android:textColor">@color/appFontColor</item>
     </style>
     
+    <style name="stationDialogText" parent="stationRowText">
+        <item name="android:layout_marginLeft">0dp</item>
+    </style>
+    
     <style name="stationRowImage">
         <item name="android:layout_width">69dp</item>
         <item name="android:layout_height">22dp</item>
@@ -91,6 +95,9 @@
         <item name="android:layout_alignParentRight">true</item>
     </style>
     
+    <style name="stationDialogImage" parent="stationRowImage">
+        
+    </style>
     
     <style name="homeScreenButton">
         <item name="android:layout_gravity">center_vertical</item>
@@ -111,4 +118,20 @@
         <item name="android:background">@color/appFooterBGColor</item>
     </style>
     
+   <style name="dialogContainer">
+       <item name="android:orientation">vertical</item>
+       <item name="android:layout_width">fill_parent</item>
+       <item name="android:layout_height">fill_parent</item>
+       <item name="android:paddingLeft">10dp</item>
+       <item name="android:paddingRight">10dp</item>
+       <item name="android:paddingBottom">10dp</item>
+   </style>
+   
+   <style name="dialogButton">
+       <item name="android:layout_width">wrap_content</item>
+       <item name="android:layout_height">wrap_content</item>
+       <item name="android:layout_weight">0.50</item>
+   </style>
+   
+   
 </resources>

@@ -21,6 +21,8 @@ import android.widget.ListView;
  */
 public class HomeActivity extends SmartActivity {
 	
+	private List<Station> recentlyViewedStations;
+	private DatabaseManager databaseManager;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,11 +37,17 @@ public class HomeActivity extends SmartActivity {
         searchStationsButton.setOnClickListener(new HomeButtonsListener(0));
         nearbyStationsButton.setOnClickListener(new HomeButtonsListener(1));
         favouriteStationsButton.setOnClickListener(new HomeButtonsListener(2));
-
-        DatabaseManager databaseManager = new DatabaseManager(this);
+    }
+    
+    
+    @Override
+	protected void onResume() {
+		super.onResume();
+		
+        databaseManager = new DatabaseManager(this);
         databaseManager.open();
         
-        List<Station> recentlyViewedStations = databaseManager.getRecentlyViewedStations();
+        recentlyViewedStations = databaseManager.getRecentlyViewedStations();
 
         databaseManager.close();
         
@@ -47,10 +55,9 @@ public class HomeActivity extends SmartActivity {
         ListView recentStationsList = (ListView)findViewById(R.id.recentlyViewedList);
         recentStationsList.setOnItemClickListener(new StationItemListener());
         recentStationsList.setAdapter(listAdapter);
-    }
-    
-    
-    /**
+	}
+
+	/**
      * This class is used to listen to when a
      * button on the home screen has been 
      * clicked and starts the activity that is

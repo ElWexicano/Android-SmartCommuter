@@ -4,49 +4,145 @@ import ie.smartcommuter.R;
 import ie.smartcommuter.controllers.SmartTabContentActivity;
 import ie.smartcommuter.models.Address;
 import ie.smartcommuter.models.Station;
-import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 
 /**
  * This is a class is used to display the directions
  * to the station from the users location.
  * @author Shane Bryan Doyle
  */
-public class StationDirectionsActivity extends SmartTabContentActivity {
-    public void onCreate(Bundle savedInstanceState) {
+public class StationDirectionsActivity extends SmartTabContentActivity implements LocationListener {
+	
+	private LocationManager locationManager;
+	private Station station;
+	private Address address;
+	private Location location;
+	private String provider;
+	private Dialog dialog;
+	
+	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.screen_station_direction);
+        dialog = new Dialog(this);
         
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         
-        Station station = (Station) bundle.getSerializable("station");
-        
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        station = (Station) bundle.getSerializable("station");
+
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         
         if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-        	
-        	AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        	
-        	String message = getString(R.string.gpsAlertMessage);
-        	
-        	alertDialog.setTitle(R.string.gpsAlertTitle);
-        	alertDialog.setMessage(message);
-        	
-        	alertDialog.show();
+        	openGPSDialog();
         }
-
-        Criteria criteria = new Criteria();
-        String provider = locationManager.getBestProvider(criteria, false);
-		Location location = locationManager.getLastKnownLocation(provider);
-        Address address = new Address(location);
         
+        Criteria criteria = new Criteria();
+        provider = locationManager.getBestProvider(criteria, false);
+        location = locationManager.getLastKnownLocation(provider);
+
         // TODO: Get the directions to the station.
     }
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+        	openGPSDialog();
+        } else {
+        	
+        	if(dialog.isShowing()) {
+        		dialog.dismiss();
+        	}
+        }
+        
+		locationManager.requestLocationUpdates(provider, 400, 1, this);
+	}
 
+	@Override
+	protected void onPause() {
+		super.onPause();
+		locationManager.removeUpdates(this);
+		
+	}
+
+	@Override
+	public void onLocationChanged(Location arg0) {
+        address = new Address(location);
+        
+        // TODO: Update the directions
+	}
+
+	@Override
+	public void onProviderDisabled(String arg0) {}
+
+	@Override
+	public void onProviderEnabled(String arg0) {}
+
+	@Override
+	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {}
+	
+    /**
+     * This method is used to display the GPS Dialog
+     * when the GPS is turned off.
+     */
+    private void openGPSDialog() {
+		dialog.setTitle(R.string.gpsAlertTitle);
+		dialog.setContentView(R.layout.dialog_gps);
+		
+		dialog.setCancelable(false);
+		dialog.setCanceledOnTouchOutside(false);
+		dialog.show();
+		
+		Button enableGPSButton = (Button) dialog.findViewById(R.id.enableGPSButton);
+		Button dontUseFeatureButton = (Button) dialog.findViewById(R.id.dontUseButton);
+		enableGPSButton.setOnClickListener(new GPSDialogButtonListener(0));
+		dontUseFeatureButton.setOnClickListener(new GPSDialogButtonListener(1));
+    }
     
+    
+    /**
+     * This class is used to either direct the user
+     * to the Enable GPS screen or the previous
+     * activity.
+     * @author Shane Bryan Doyle
+     */
+    private class GPSDialogButtonListener implements OnClickListener {
+    	
+    	int operationId;
+    	
+    	public GPSDialogButtonListener(int id) {
+    		this.operationId = id;
+    	}
+    	
+		@Override
+		public void onClick(View arg0) {
+			
+			dialog.dismiss();
+			
+			Intent intent = null;
+			
+			switch(operationId) {
+			case 0:
+				intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+				startActivity(intent);
+				break;
+			case 1: 
+				finish();
+				break;
+			}
+		}
+    }
+
 }

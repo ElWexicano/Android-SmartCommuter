@@ -2,6 +2,8 @@ package ie.smartcommuter.models;
 
 import java.io.Serializable;
 
+import com.google.android.maps.GeoPoint;
+
 import android.location.Location;
 
 /**
@@ -55,5 +57,10 @@ public class Address implements Serializable {
 		double lon2 = GeoLocation.microDegreesToDegrees(address.getLongitude());
 		
 		return GeoLocation.distanceBetweenPoints(lat1, lon1, lon2, lat2);
+	}
+	
+	public GeoPoint toGeoPoint() {
+		GeoPoint point = new GeoPoint(this.getLatitude(),this.getLongitude());
+		return point;
 	}
 }
