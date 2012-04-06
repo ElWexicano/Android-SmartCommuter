@@ -7,10 +7,15 @@ import ie.smartcommuter.controllers.tabcontents.StationDirectionsActivity;
 import ie.smartcommuter.controllers.tabcontents.StationRealtimeActivity;
 import ie.smartcommuter.models.DatabaseManager;
 import ie.smartcommuter.models.Station;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * This activity provides functionality to the
@@ -19,18 +24,24 @@ import android.widget.TextView;
  */
 public class StationActivity extends SmartTabActivity {
 	
+	private Context context;
+	private DatabaseManager databaseManager;
+	private Boolean isFavourite;
+	private Station station;
+	private ImageView favouritesImage;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = this;
         
         Intent i = getIntent();
         Bundle info = i.getExtras();
         int stationId = info.getInt("stationId");
 
-        DatabaseManager databaseManager = new DatabaseManager(this);
+        databaseManager = new DatabaseManager(this);
         databaseManager.open();
-        Station station = databaseManager.getStation(stationId);
-        databaseManager.addToRecentlyViewedStations(stationId);
+        station = databaseManager.getStation(stationId);
         databaseManager.close();
         
         requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
@@ -41,8 +52,30 @@ public class StationActivity extends SmartTabActivity {
         TextView stationAddressTextView = (TextView) findViewById(R.id.stationAddressTextView);
         stationNameTextView.setText(station.getName());
         stationAddressTextView.setText(station.getAddress().getLocation());
+        favouritesImage = (ImageView) findViewById(R.id.stationDetailsFavouriteImageView);
         
-        // TODO: Add the favourite stations feature.
+        favouritesImage.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				
+				databaseManager.open();
+				
+				if(isFavourite) {
+					databaseManager.removeFromFavouriteStations(station.getId());
+					Toast.makeText(context, "Station removed from Favourites", Toast.LENGTH_SHORT).show();
+					isFavourite = false;
+					favouritesImage.setImageResource(android.R.drawable.star_off);
+				} else {
+					databaseManager.addToFavouriteStations(station.getId());
+					Toast.makeText(context, "Station added to Favourites", Toast.LENGTH_SHORT).show();
+					isFavourite = true;
+					favouritesImage.setImageResource(R.drawable.ic_favourite);
+				}
+				
+				databaseManager.close();
+			}
+		});
         
         Bundle activityInfo = new Bundle();
         activityInfo.putSerializable("station", station);
@@ -53,5 +86,20 @@ public class StationActivity extends SmartTabActivity {
         addTab(StationLocationActivity.class, activityInfo, "Location");
         tabHost.setCurrentTab(0);
     }
-
+    
+    
+    @Override
+	protected void onResume() {
+		super.onResume();
+		databaseManager.open();
+		isFavourite = databaseManager.isFavourite(station.getId());
+		databaseManager.addToRecentlyViewedStations(station.getId());
+		databaseManager.close();
+		
+		if(isFavourite) {
+			favouritesImage.setImageResource(R.drawable.ic_favourite);
+		} else {
+			favouritesImage.setImageResource(android.R.drawable.star_off);
+		}
+    }
 }

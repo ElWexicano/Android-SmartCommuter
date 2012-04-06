@@ -15,12 +15,30 @@
         android:paddingRight="10dp"
         android:paddingTop="5dp" >
         
-        <TextView
-            android:id="@+id/stationNameTextView"
+        <TableLayout
+            android:id="@+id/tableLayout1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/stationNameExample"
-            style="@style/stationDetailsName" />
+            android:layout_height="wrap_content" >
+
+            <TableRow
+                android:id="@+id/tableRow1"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1" >
+
+                <TextView
+                    android:id="@+id/stationNameTextView"
+                    style="@style/stationDetailsName"
+                    android:text="@string/stationNameExample" />
+
+                <ImageView
+                    android:id="@+id/stationDetailsFavouriteImageView"
+                    android:src="@android:drawable/star_off" 
+                    style="@style/stationDetailsFavourite" />
+
+            </TableRow>
+
+        </TableLayout>
             
         <TextView
             android:id="@+id/stationAddressTextView"

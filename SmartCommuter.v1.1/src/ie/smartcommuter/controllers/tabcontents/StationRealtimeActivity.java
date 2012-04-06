@@ -1,10 +1,15 @@
 package ie.smartcommuter.controllers.tabcontents;
 
+import java.util.List;
+
 import ie.smartcommuter.R;
+import ie.smartcommuter.client.RealTimeClient;
 import ie.smartcommuter.controllers.SmartTabContentActivity;
 import ie.smartcommuter.models.Station;
+import ie.smartcommuter.models.StationData;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -23,6 +28,10 @@ public class StationRealtimeActivity extends SmartTabContentActivity {
         
         Station station = (Station) bundle.getSerializable("station");
 
+        List<StationData> stationData = RealTimeClient.getStationData(station);
+        
+        Log.d("StationData",Integer.toString(stationData.size()));
+        
         // TODO: Get the real time data for the station.
         
         String[] recentlyViewedStations = getResources().getStringArray(R.array.realtimeExample);

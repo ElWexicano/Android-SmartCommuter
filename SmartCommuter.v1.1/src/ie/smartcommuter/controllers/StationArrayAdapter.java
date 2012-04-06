@@ -6,6 +6,7 @@ import java.util.List;
 import ie.smartcommuter.R;
 import ie.smartcommuter.models.Station;
 import android.content.Context;
+import android.inputmethodservice.Keyboard.Row;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
- * This is a class is used to display a stations in a list.
+ * This is a class is used to display stations in a list.
  * @author Shane Bryan Doyle
  */
 public class StationArrayAdapter extends ArrayAdapter<Station>{
@@ -41,7 +42,14 @@ public class StationArrayAdapter extends ArrayAdapter<Station>{
 		
 		LayoutInflater inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View view = inflater.inflate(R.layout.row_station, parent, false);
+		View view;
+		
+		if(position % 2 == 0) {
+			view = inflater.inflate(R.layout.row_station, parent, false);
+		} else {
+			view = inflater.inflate(R.layout.row_station_odd, parent, false);
+		}
+		
 		
 		view.setId(station.getId());
 		

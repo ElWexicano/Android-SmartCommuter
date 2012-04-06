@@ -85,6 +85,7 @@ public class SmartMapActivity extends MapActivity {
         mapView.setBuiltInZoomControls(true);
         MapController mapController = mapView.getController();
         mapController.setCenter(new GeoPoint(address.getLatitude(),address.getLongitude()));
+        mapController.setZoom(15);
 		return mapView;
     }
     

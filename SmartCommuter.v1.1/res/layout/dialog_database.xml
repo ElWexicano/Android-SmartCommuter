@@ -1,0 +1,19 @@
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_root"
+    style="@style/dialogContainer" >
+
+    <TextView
+        android:id="@+id/databaseMessageTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/createDBProgressMessage" />
+
+    <ProgressBar
+        android:id="@+id/databaseProgressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" />
+    
+</LinearLayout>

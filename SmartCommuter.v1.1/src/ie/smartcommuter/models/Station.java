@@ -63,6 +63,24 @@ public class Station implements Serializable {
 	public void setCompany(Company company) {
 		this.company = company;
 	}
+	public String getStationType() {
+		String type = "";
+		
+		if(getCompany().getName().equalsIgnoreCase("Bus Éireann")) {
+			type = "BusEireann";
+		} else if(getCompany().getName().equalsIgnoreCase("Dublin Bus")) {
+			type = "DublinBus";
+		} else if(getCompany().getName().equalsIgnoreCase("Irish Rail")) {
+			type = "IrishRail";
+		} else if(getCompany().getName().equalsIgnoreCase("JJ Kavanagh & Sons")) {
+			type = "JJKavanagh";
+		} else {
+			type = "Luas";
+		}
+		
+		return type;
+	}
+	
 	
 	@Override
 	public String toString() {

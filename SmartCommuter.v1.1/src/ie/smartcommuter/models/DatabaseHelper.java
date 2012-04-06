@@ -17,22 +17,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	private static final String SQL_FILE_NAME = "smartDB.sql";
 	private static final int DATABASE_VERSION = 1;
     private final Context myContext;
-
+    
     public DatabaseHelper(Context context) {
     	super(context, DATABASE_NAME, null, DATABASE_VERSION);
     	this.myContext = context;
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db) {
-    	
-    	// TODO: Display Progress Bar when creating the database.
+    public void onCreate(final SQLiteDatabase db) {
     	generateDBFromSQLFile(db);
     }
 
     
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    public void onUpgrade(final SQLiteDatabase db, int oldVersion, int newVersion) {
     	generateDBFromSQLFile(db);
     }
     
@@ -42,17 +40,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * @param db
      */
     public void generateDBFromSQLFile(SQLiteDatabase db) {
-
 		try {
 			InputStream is = myContext.getResources().getAssets().open(SQL_FILE_NAME);
 		
 			String[] statements = FileHelper.parseSqlFile(is);
-	
+			
 			for (String statement : statements) {
 				db.execSQL(statement);
 			}
-		} catch (Exception ex) {
+			
+		}catch (Exception ex) {
 			ex.printStackTrace();
 		}
     }
+    
+    
 }

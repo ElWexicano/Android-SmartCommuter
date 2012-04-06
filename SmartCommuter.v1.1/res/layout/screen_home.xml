@@ -41,26 +41,31 @@
 	    android:text="@string/recentlyViewedLbl"
 	    style="@style/banner" />    
 
+	<RelativeLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent" >
 
-    <ListView
-        android:id="@+id/recentlyViewedList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-    </ListView>
+	    <ListView
+	        android:id="@+id/recentlyViewedList"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_above="@+id/footerLinearLayout"
+	        android:layout_alignParentTop="true" />
 
-    
-	<LinearLayout 
-	    xmlns:android="http://schemas.android.com/apk/res/android"
-	    style="@style/footer" >
-	     
-	    <TextView 
-	        android:text="@string/appWebsite"
-	        android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/appFontColor"
-            android:gravity="center"
-            android:paddingTop="10dip" />
-	    
-	</LinearLayout>
+	    <LinearLayout
+	        android:id="@+id/footerLinearLayout"
+	        xmlns:android="http://schemas.android.com/apk/res/android"
+	        style="@style/footer"
+	        android:layout_alignParentBottom="true" >
+
+	        <TextView
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:gravity="center"
+	            android:paddingTop="10dip"
+	            android:text="@string/appWebsite"
+	            android:textColor="@color/appFontColor" />
+	    </LinearLayout>
+	</RelativeLayout>
     
 </LinearLayout>

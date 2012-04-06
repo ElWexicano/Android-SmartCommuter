@@ -22,83 +22,6 @@
         <item name="android:textSize">20dp</item>
     </style>
     
-    <style name="banner" parent="header">
-        <item name="android:textColor">@color/bannerFontColor</item>
-        <item name="android:background">@color/bannerBGColor</item>
-		<item name="android:textSize">14dp</item>
-        <item name="android:paddingTop">2dp</item>
-        <item name="android:paddingBottom">2dp</item>
-    </style>
-    
-    <style name="realtimeBanner" parent="header">
-        <item name="android:textColor">@color/realtimeFontColor</item>
-        <item name="android:background">@color/realtimeBGColor</item>
-		<item name="android:textSize">14dp</item>
-        <item name="android:paddingTop">2dp</item>
-        <item name="android:paddingBottom">2dp</item>
-    </style>
-    
-    <style name="tabs">
-        <item name="android:padding">10dp</item>
-        <item name="android:gravity">center</item>
-        <item name="android:orientation">vertical</item>
-        <item name="android:background">@drawable/tab_selector_bg</item>
-    </style>
-    
-    <style name="tabsText">
-        <item name="android:textSize">15dp</item>
-        <item name="android:textColor">@drawable/tab_selector_color</item>
-    </style>
-    
-    <style name="stationDetailsName">
-        <item name="android:textSize">16dp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/appFontColor</item>
-    </style>
-    
-    <style name="stationDetailsAddress">
-        <item name="android:textSize">14dp</item>
-        <item name="android:textColor">@color/stationAddressFontColor</item>
-    </style>
-    
-    <style name="stationRow">
-        <item name="android:textSize">14dp</item>
-        <item name="android:textColor">@color/appFontColor</item>
-        <item name="android:background">@color/evenRowBGColor</item>
-        <item name="android:layout_height">40dp</item>
-    </style>
-    
-    <style name="stationRowOdd" parent="stationRow">
-        <item name="android:background">@color/oddRowBGColor</item>
-    </style>
-    
-    <style name="stationRowText">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">40dp</item>
-        <item name="android:layout_marginLeft">10dp</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/appFontColor</item>
-    </style>
-    
-    <style name="stationDialogText" parent="stationRowText">
-        <item name="android:layout_marginLeft">0dp</item>
-    </style>
-    
-    <style name="stationRowImage">
-        <item name="android:layout_width">69dp</item>
-        <item name="android:layout_height">22dp</item>
-        <item name="android:layout_marginLeft">5dp</item>
-        <item name="android:layout_marginRight">10dp</item>
-        <item name="android:layout_marginTop">9dp</item>
-        <item name="android:layout_marginBottom">9dp</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:layout_alignParentRight">true</item>
-    </style>
-    
-    <style name="stationDialogImage" parent="stationRowImage">
-        
-    </style>
-    
     <style name="homeScreenButton">
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:layout_width">100dp</item>
@@ -118,20 +41,159 @@
         <item name="android:background">@color/appFooterBGColor</item>
     </style>
     
-   <style name="dialogContainer">
-       <item name="android:orientation">vertical</item>
-       <item name="android:layout_width">fill_parent</item>
-       <item name="android:layout_height">fill_parent</item>
-       <item name="android:paddingLeft">10dp</item>
-       <item name="android:paddingRight">10dp</item>
-       <item name="android:paddingBottom">10dp</item>
-   </style>
+    <style name="banner" parent="header">
+        <item name="android:textColor">@color/bannerFontColor</item>
+        <item name="android:background">@color/bannerBGColor</item>
+		<item name="android:textSize">14dp</item>
+        <item name="android:paddingTop">2dp</item>
+        <item name="android:paddingBottom">2dp</item>
+    </style>
+    
+    <style name="realtimeBanner" parent="header">
+        <item name="android:textColor">@color/realtimeFontColor</item>
+        <item name="android:background">@color/realtimeBGColor</item>
+		<item name="android:textSize">14dp</item>
+        <item name="android:paddingTop">2dp</item>
+        <item name="android:paddingBottom">2dp</item>
+    </style>
+    
+    
+    <!-- Tabs Styles (Start) -->
+    
+    <style name="tabs">
+        <item name="android:padding">10dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">@drawable/tab_selector_bg</item>
+    </style>
+    
+    <style name="tabsText">
+        <item name="android:textSize">15dp</item>
+        <item name="android:textColor">@drawable/tab_selector_color</item>
+    </style>
+    
+    <!-- Tabs Styles (End) -->
+    
+    
+    <!-- Station Details Styles (Start) -->
+    
+    <style name="stationDetailsName">
+        <item name="android:textSize">16dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/appFontColor</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">0.90</item>
+    </style>
+    
+    <style name="stationDetailsAddress">
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/stationAddressFontColor</item>
+    </style>
+    
+    <style name="stationDetailsFavourite">
+        <item name="android:layout_width">22dp</item>
+        <item name="android:layout_height">22dp</item>
+        <item name="android:layout_weight">0.10</item>
+    </style>
+    
+	<!-- Station Details Styles (End) -->
+
+    
+	<!-- Dialog Styles (Start) -->
+    
+	<style name="dialogContainer">
+	    <item name="android:orientation">vertical</item>
+	    <item name="android:layout_width">fill_parent</item>
+	    <item name="android:layout_height">fill_parent</item>
+	    <item name="android:paddingLeft">10dp</item>
+	    <item name="android:paddingRight">10dp</item>
+	    <item name="android:paddingBottom">10dp</item>
+	</style>
    
-   <style name="dialogButton">
-       <item name="android:layout_width">wrap_content</item>
-       <item name="android:layout_height">wrap_content</item>
-       <item name="android:layout_weight">0.50</item>
-   </style>
-   
-   
+	<style name="dialogButton">
+	    <item name="android:layout_width">wrap_content</item>
+	    <item name="android:layout_height">wrap_content</item>
+	    <item name="android:layout_weight">0.50</item>
+	</style>
+	
+	<!-- Dialog Styles (End) -->
+	
+	
+	<!-- Station Row Styles (Start) -->
+	
+    <style name="stationRow">
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/appFontColor</item>
+        <item name="android:background">@drawable/row_selector_stations_bg</item>
+        <item name="android:layout_height">40dp</item>
+    </style>
+    
+    <style name="stationRowOdd" parent="stationRow">
+        <item name="android:background">@drawable/row_selector_stations_bg_odd</item>
+    </style>
+    
+    <style name="stationRowText">
+        <item name="android:textColor">@color/appFontColor</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+    
+    <style name="stationRowImage">
+        <item name="android:layout_width">69dp</item>
+        <item name="android:layout_height">22dp</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_marginTop">9dp</item>
+        <item name="android:layout_marginBottom">9dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_alignParentRight">true</item>
+    </style>
+	
+	<!-- Station Row Styles (End) -->
+	
+	
+	<!-- Realtime Row Styles (Start) -->
+	
+    <style name="realtimeRow">
+        <item name="android:textColor">@color/appFontColor</item>
+        <item name="android:background">@color/evenRowBGColor</item>
+       	<item name="android:orientation">vertical</item>
+       	<item name="android:layout_width">match_parent</item>
+       	<item name="android:layout_height">wrap_content</item>
+		<item name="android:padding">5dp</item>
+    </style>
+
+    <style name="realtimeDestination">
+       	<item name="android:layout_width">wrap_content</item>
+       	<item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    
+    <style name="realtimeRoute">
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/stationAddressFontColor</item>
+        <item name="android:layout_width">wrap_content</item>
+       	<item name="android:layout_height">wrap_content</item>
+    </style>
+    
+    <style name="realtimeExpectedTime">
+       	<item name="android:layout_width">wrap_content</item>
+       	<item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    
+    <!-- Realtime Row Styles (End) -->
+    
+    
+    <!-- Directions Row Styles (Start) -->
+    
+    <style name="directionsRow" parent="realtimeRow"/>
+
+    <!-- Directions Row Styles (End) -->
+    
 </resources>

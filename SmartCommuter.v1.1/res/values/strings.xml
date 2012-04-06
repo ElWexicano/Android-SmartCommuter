@@ -23,7 +23,7 @@
     <string name="stationTypeLbl">Station Transport Mode</string>
     <string name="listLbl">List</string>
     <string name="mapLbl">Map</string>
-    <string name="settingsLbl">Settings</string>
+    <string name="settingsLbl">Settings is not enabled in Beta Version!</string>
     <string name="searchStationsNameHint">Enter Station Name</string>
     <string name="searchStationsTypePrompt">Choose the Station Mode</string>
     <string name="informationLbl">Information</string>
@@ -33,10 +33,12 @@
     <string name="gpsAlertMessage">Do you want to enable GPS or not use this feature?</string>
     <string name="gpsAlertButtonEnableGPS">Enable GPS</string>
     <string name="gpsAlertButtonDontUse">Don\'t Use</string>
-    <string name="createDBProgressTitle">Creating Database</string>
-    <string name="createDBProgressMessage">Loading, Please wait.</string>
-    <string name="updateDBProgressTitle">Updating Database</string>
-    <string name="updateDBProgressMessage">Loading, Please wait.</string>
+    <string name="createDBProgressTitle">Welcome to SmartCommuter !</string>
+    <string name="createDBProgressMessage">Please wait while the database is configured for the first time.</string>
+    <string name="updateDBProgressTitle">Database Update !</string>
+    <string name="updateDBProgressMessage">Please wait while the database is being updated.</string>
     <string name="viewStationButton">View Station</string>
+    <string name="crashMessage">Oh No ! SmartCommuter has crashed, but a report has been sent to fix the issue !</string>
+    <string name="routeLbl">Route</string>
 
 </resources>

@@ -1,8 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
-    
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/realtimeRow" >
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/expectedTimeTextView"
+        style="@style/realtimeExpectedTime"
+        android:layout_alignBottom="@+id/routeTextView"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:gravity="center_vertical" />
+
+    <TextView
+        android:id="@+id/locationTextView"
+        style="@style/realtimeDestination"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/expectedTimeTextView" />
+
+    <TextView
+        android:id="@+id/textView"
+        style="@style/realtimeRoute"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/locationTextView"
+        android:text="@string/routeLbl" />
+
+    <TextView
+        android:id="@+id/routeTextView"
+        style="@style/realtimeRoute"
+        android:layout_alignRight="@+id/locationTextView"
+        android:layout_below="@+id/locationTextView"
+        android:layout_toRightOf="@+id/textView" />
+
+</RelativeLayout>

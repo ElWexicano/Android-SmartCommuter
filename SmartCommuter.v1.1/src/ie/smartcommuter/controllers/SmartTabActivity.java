@@ -2,16 +2,12 @@ package ie.smartcommuter.controllers;
 
 import ie.smartcommuter.R;
 import android.app.Activity;
-import android.app.Dialog;
 import android.app.TabActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.TabHost;
 import android.widget.TextView;
 

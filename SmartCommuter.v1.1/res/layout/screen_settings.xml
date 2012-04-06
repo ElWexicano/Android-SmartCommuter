@@ -9,7 +9,6 @@
         android:id="@+id/textView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/settingsLbl" 
-        style="@style/banner" />
+        android:text="@string/settingsLbl" />
     
 </LinearLayout>

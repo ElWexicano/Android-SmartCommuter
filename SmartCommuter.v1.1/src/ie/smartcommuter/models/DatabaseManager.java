@@ -102,24 +102,28 @@ public class DatabaseManager {
 	 */
 	public List<Station> getRecentlyViewedStations() {
 		List<Station> stations = new ArrayList<Station>();
-		
-		Cursor cursor = db.query("recently_viewed_station_details", null, null, null, null, null, "recently_viewed_time DESC");
-		
-		cursor.moveToFirst();
-		
-		while(!cursor.isAfterLast()) {
+
+		try {
+			Cursor cursor = db.query("recently_viewed_station_details", null, null, null, null, null, "recently_viewed_time DESC");
 			
-			Station station = cursorToStation(cursor);
+			cursor.moveToFirst();
 			
-			if(station!=null) {
-				stations.add(station);
+			while(!cursor.isAfterLast()) {
+				
+				Station station = cursorToStation(cursor);
+				
+				if(station!=null) {
+					stations.add(station);
+				}
+				
+				cursor.moveToNext();
 			}
 			
-			cursor.moveToNext();
+			cursor.close();
+		} catch (Exception e) {
+			
 		}
-		
-		cursor.close();
-		
+
 		return stations;
 	}
 	
@@ -260,7 +264,34 @@ public class DatabaseManager {
 			cursor.moveToFirst();
 			db.delete("recently_viewed_stations", "recently_viewed_station_id = "+cursor.getString(0), null);
 		}
+		
+		cursor.close();
 	}
+	
+	
+	/**
+	 * This method is used to check if a station is already
+	 * a favourite.
+	 * @param stationId
+	 * @return
+	 */
+	public Boolean isFavourite(int stationId) {
+		
+		Cursor cursor = db.query("favourite_stations", null, "favourite_station_id = "+stationId, null, null, null, null);
+		
+		Boolean result;
+		
+		if(cursor.getCount()>0) {
+			result = true;
+		} else {
+			result = false;
+		}
+		
+		cursor.close();
+		
+		return result;
+	}
+	
 	
 	/**
 	 * This class is used to get create a Station

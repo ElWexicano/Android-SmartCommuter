@@ -27,7 +27,7 @@ public class HomeActivity extends SmartActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         isHomeActivity = true;
         
         Button searchStationsButton = (Button)findViewById(R.id.searchStationsBtn);
@@ -39,7 +39,6 @@ public class HomeActivity extends SmartActivity {
         favouriteStationsButton.setOnClickListener(new HomeButtonsListener(2));
     }
     
-    
     @Override
 	protected void onResume() {
 		super.onResume();
@@ -48,7 +47,7 @@ public class HomeActivity extends SmartActivity {
         databaseManager.open();
         
         recentlyViewedStations = databaseManager.getRecentlyViewedStations();
-
+        
         databaseManager.close();
         
         StationArrayAdapter listAdapter  = new StationArrayAdapter(this, recentlyViewedStations);
@@ -56,6 +55,7 @@ public class HomeActivity extends SmartActivity {
         recentStationsList.setOnItemClickListener(new StationItemListener());
         recentStationsList.setAdapter(listAdapter);
 	}
+
 
 	/**
      * This class is used to listen to when a
@@ -93,6 +93,5 @@ public class HomeActivity extends SmartActivity {
 				startActivity(activityIntent);
 			}
 		}
-    	
     }
 }

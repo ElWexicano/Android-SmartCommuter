@@ -6,13 +6,13 @@
     <color name="headerBGColor">#363737</color>
     <color name="bannerBGColor">#4d4d4d</color>
     <color name="evenRowBGColor">#eeeeee</color>
-    <color name="oddRowBGColor">#e5e4d7</color>
+    <color name="oddRowBGColor">#f4f4f4</color>
     <color name="activeRowBGColor">#ffcc00</color>
     <color name="bgColor">#ffffff</color>
     <color name="realtimeBGColor">#ffcc00</color>
     <color name="activeBGColor">#363737</color>
-    <color name="inactiveBGColor">#4d4d4d</color>
-    <color name="pressedBGColor">#363737</color>
+    <color name="inactiveBGColor">#5e5e5e</color>
+    <color name="pressedBGColor">#cccccc</color>
     <color name="appFooterBGColor">#dedede</color>
     
     <!-- Font Colours -->
