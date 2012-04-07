@@ -17,17 +17,22 @@ import android.widget.ListView;
  * @author Shane Bryan Doyle
  */
 public class FavouriteStationsActivity extends SmartActivity {
-
+	
+	private DatabaseManager databaseManager;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.screen_favourites);
-        
-        DatabaseManager databaseManager = new DatabaseManager(this);
+    }
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+        databaseManager = new DatabaseManager(this);
         databaseManager.open();
-        
         List<Station> favouriteStations = databaseManager.getFavouriteStations();
-        
         databaseManager.close();
         
         StationArrayAdapter listAdapter = new StationArrayAdapter(this, favouriteStations);
@@ -35,5 +40,6 @@ public class FavouriteStationsActivity extends SmartActivity {
         ListView favouriteStationsList = (ListView)findViewById(R.id.favouriteStationsList);
         favouriteStationsList.setOnItemClickListener(new StationItemListener());
         favouriteStationsList.setAdapter(listAdapter);
-    }
+	}
+
 }

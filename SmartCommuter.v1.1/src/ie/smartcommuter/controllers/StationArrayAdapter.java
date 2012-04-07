@@ -6,7 +6,6 @@ import java.util.List;
 import ie.smartcommuter.R;
 import ie.smartcommuter.models.Station;
 import android.content.Context;
-import android.inputmethodservice.Keyboard.Row;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +25,7 @@ public class StationArrayAdapter extends ArrayAdapter<Station>{
 	private List<Station> originalStations;
 	private Filter mFilter;
 	private final Object mLock = new Object();
+	private String stationModeFilter;
 	
 	public StationArrayAdapter(Context context,  List<Station> stations) {
 		super(context, R.layout.row_station, stations);
@@ -33,6 +33,7 @@ public class StationArrayAdapter extends ArrayAdapter<Station>{
 		this.context = context;
 		this.stations = stations;
 		this.originalStations = stations;
+		this.stationModeFilter = "All";
 	}
 
 	@Override
@@ -92,13 +93,18 @@ public class StationArrayAdapter extends ArrayAdapter<Station>{
         return stations.indexOf(station);
     }
 	
+    /**
+     * This method is used to get the filter
+     * that will be used to filter the list
+     * of stations.
+     */
     public Filter getFilter() {
         if (mFilter == null) {
             mFilter = new StationsFilter();
         }
         return mFilter;
     }
-
+    
     /**
      * This class is used to filter through the list of 
      * stations on the Search Stations screen.
@@ -112,28 +118,46 @@ public class StationArrayAdapter extends ArrayAdapter<Station>{
             
             if (stations == null) {
                 synchronized (mLock) {
-                    stations = new ArrayList<Station>(originalStations);
+                    stations = new ArrayList<Station>();
                 }
             }
             if (prefix == null || prefix.length() == 0) {
-                synchronized (mLock) {
-                    results.values = originalStations;
-                    results.count = originalStations.size();
-                }
+        		synchronized (mLock) {
+        			
+        			if(stationModeFilter.equals("All") ){
+                        results.values = originalStations;
+                        results.count = originalStations.size();
+        			} else {
+        				final List<Station> newStations = new ArrayList<Station>();
+        				for(Station station: originalStations) {
+        					if(stationModeFilter.equals(station.getCompany().getMode())) {
+                        		newStations.add(station);
+                        	}
+        				}
+                        results.values = newStations;
+                        results.count = newStations.size();
+        			}
+        			
+        		}
             } else {
                 String prefixString = prefix.toString().toLowerCase();
-                final int count = stations.size();
-                final List<Station> newStations = new ArrayList<Station>(count);
-                for (int i = 0; i < count; i++) {
-                    final Station station = stations.get(i);
-                    final String itemName = station.getName().toString().toLowerCase();
+
+                final List<Station> newStations = new ArrayList<Station>();
+                
+                for(Station station: originalStations) {
+                	final String itemName = station.getName().toString().toLowerCase();
                     if (itemName.startsWith(prefixString)) {
-                        newStations.add(station);
-                    } else {}
+                    	if(stationModeFilter.equals("All") ){
+                    		newStations.add(station);
+                    	} else if(stationModeFilter.equals(station.getCompany().getMode())) {
+                    		newStations.add(station);
+                    	}
+                    }
                 }
                 results.values = newStations;
                 results.count = newStations.size();
             }
+            
             return results;
         }
         @SuppressWarnings("unchecked")
@@ -146,5 +170,13 @@ public class StationArrayAdapter extends ArrayAdapter<Station>{
             }
         }
     }
-
+    
+    /**
+     * This method is used to update the mode of
+     * stations to be shown in the list.
+     * @param mode
+     */
+    public void updateStationModeFilter(String mode) {
+    	this.stationModeFilter = mode;
+    }
 }

@@ -10,12 +10,50 @@ import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.AndroidHttpTransport;
 
 public class RealTimeClient {
-
-	 private static final String NAMESPACE = "http://www.hawke-wit.net/axis2/services/RealTime/";
-	 private static final String URL = "http://www.hawke-wit.net/axis2/services/RealTime?wsdl"; 
-	 private static final String METHOD_NAME = "getStationData";
-	 private static final String SOAP_ACTION = "http://www.hawke-wit.net/axis2/services/RealTime/getStationData";
 	
+	private static final String NAMESPACE = "http://service.smartcommuter.ie";
+	private static final String URL = "http://www.hawke-wit.net/axis2/services/RealTime?wsdl"; 
+	private static final String METHOD_NAME = "getStationData";
+	private static final String SOAP_ACTION = "http://209.51.136.178/axis2/services/RealTime/getStationData";
+	
+	public static List<StationData> getRealTimeData(Station station) {
+		
+		List<StationData> realtimeInfo = new ArrayList<StationData>();
+		
+		SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+		request.addAttribute("stationType", station.getStationType());
+		request.addAttribute("stationApiCode", station.getApiCode());
+		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+	    envelope.setOutputSoapObject(request);
+	    
+	    SoapObject response = null;
+    	AndroidHttpTransport androidHttpTransport = new AndroidHttpTransport(URL);
+        try {
+        	androidHttpTransport.debug = true;
+	        androidHttpTransport.call(METHOD_NAME, envelope);
+	        response = (SoapObject)envelope.getResponse();
+	        
+        } catch(Exception e) {
+        	e.printStackTrace();
+        }
+
+    	int count = 0;
+    	
+    	if(response!=null) {
+    		count = response.getPropertyCount();
+    	}
+    	
+    	for(int i = 0; i < count; i++) {
+    		SoapObject soapObj = (SoapObject)response.getProperty(i);
+    		StationData data = soapObjectToStationData(soapObj);
+    		realtimeInfo.add(data);
+    	}
+        
+		return realtimeInfo;
+	}
+	 
+	 
+	 
 	public static List<StationData> getStationData(Station station) {
         SoapObject response = InvokeMethod(URL, station);
         return getStationsFromSoap(response);

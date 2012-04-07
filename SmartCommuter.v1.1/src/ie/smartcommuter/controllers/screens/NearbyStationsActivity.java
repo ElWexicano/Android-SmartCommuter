@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 
 /**
  * This class is used for the Nearby Stations Screen
@@ -52,21 +53,27 @@ public class NearbyStationsActivity extends SmartTabActivity implements Location
         
         if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
         	openGPSDialog();
-        }
+        } 
         
         Criteria criteria = new Criteria();
         provider = locationManager.getBestProvider(criteria, false);
         location = locationManager.getLastKnownLocation(provider);
-        address = new Address(location);
-
-        databaseManager = new DatabaseManager(this);
-        databaseManager.open();
-        nearbyStations = databaseManager.getNearbyStations(address);
-        databaseManager.close();
         
-        activityInfo = new Bundle();
-        activityInfo.putSerializable("nearbyStations", (Serializable) nearbyStations);
-        activityInfo.putSerializable("userLocation", (Serializable) address);
+        if(location==null) {
+        	Toast.makeText(this, "Couldn't locate a provider to find your location", Toast.LENGTH_LONG).show();
+        	finish();
+        } else {
+            address = new Address(location);
+
+            databaseManager = new DatabaseManager(this);
+            databaseManager.open();
+            nearbyStations = databaseManager.getNearbyStations(address);
+            databaseManager.close();
+            
+            activityInfo = new Bundle();
+            activityInfo.putSerializable("nearbyStations", (Serializable) nearbyStations);
+            activityInfo.putSerializable("userLocation", (Serializable) address);
+        }
         
         tabHost = getTabHost();
         addTab(NearbyStationsListActivity.class, activityInfo, "List");
@@ -107,6 +114,7 @@ public class NearbyStationsActivity extends SmartTabActivity implements Location
         activityInfo.putSerializable("nearbyStations", (Serializable) nearbyStations);
         activityInfo.putSerializable("userLocation", (Serializable) address);
         
+        // TODO: Update the tabs with the new content
 	}
 
 	@Override

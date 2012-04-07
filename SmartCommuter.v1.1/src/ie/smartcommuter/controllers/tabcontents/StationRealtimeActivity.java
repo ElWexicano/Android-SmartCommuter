@@ -28,9 +28,8 @@ public class StationRealtimeActivity extends SmartTabContentActivity {
         
         Station station = (Station) bundle.getSerializable("station");
 
-        List<StationData> stationData = RealTimeClient.getStationData(station);
+//        List<StationData> stationData = RealTimeClient.getRealTimeData(station);
         
-        Log.d("StationData",Integer.toString(stationData.size()));
         
         // TODO: Get the real time data for the station.
         

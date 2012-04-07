@@ -10,6 +10,9 @@ import ie.smartcommuter.models.Station;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -19,23 +22,24 @@ import android.widget.Spinner;
  * This class is used for the search stations
  * screen of the application.
  * @author Shane Bryan Doyle
- *
  */
 public class SearchActivity extends SmartActivity {
 
 	private StationArrayAdapter listAdapter;
+	private Spinner stationTypeSpinner;
+	private EditText stationNameText;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.screen_search);
         
-        Spinner stationTypeSpinner = (Spinner) findViewById(R.id.stationTypeSpinner);
+        stationTypeSpinner = (Spinner) findViewById(R.id.stationTypeSpinner);
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(
                 this, R.array.stationTypeArray, android.R.layout.simple_spinner_item);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         stationTypeSpinner.setAdapter(spinnerAdapter);
-        // TODO: Get the spinner to update the stations list.
+        stationTypeSpinner.setOnItemSelectedListener(new SearchSpinnerChangedListener());
         
         DatabaseManager databaseManager = new DatabaseManager(this);
         databaseManager.open();
@@ -51,7 +55,7 @@ public class SearchActivity extends SmartActivity {
         searchStationsList.setAdapter(listAdapter);
         searchStationsList.setTextFilterEnabled(true);
         
-        EditText stationNameText = (EditText) findViewById(R.id.searchStationsNameEditText);
+        stationNameText = (EditText) findViewById(R.id.searchStationsNameEditText);
         stationNameText.addTextChangedListener(new SearchTextChangedListener());
     }
     
@@ -61,24 +65,51 @@ public class SearchActivity extends SmartActivity {
      * Edit Text to update the List of Stations.
      * 
      * @author Shane Bryan Doyle
-     *
      */
     private class SearchTextChangedListener implements TextWatcher {
 
 		@Override
-		public void afterTextChanged(Editable s) {
-		}
+		public void afterTextChanged(Editable s) {}
 
 		@Override
 		public void beforeTextChanged(CharSequence s, int start, int count,
-				int after) {
-		}
+				int after) {}
 
 		@Override
 		public void onTextChanged(CharSequence s, int start, int before,
 				int count) {
 			listAdapter.getFilter().filter(s);
 		}
-    	
+    }
+    
+    /**
+     * This class is used to update the list of stations based on
+     * what is selected in the Spinner.
+     * 
+     * @author Shane Bryan Doyle
+     */
+    private class SearchSpinnerChangedListener implements OnItemSelectedListener {
+
+		@Override
+		public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
+				long arg3) {
+			
+			String selected = arg0.getItemAtPosition(arg2).toString();
+
+			if(selected.equals("Bus")) {
+				listAdapter.updateStationModeFilter("Bus");
+			} else if (selected.equals("Rail")) {
+				listAdapter.updateStationModeFilter("Rail");
+			} else if (selected.equals("Tram")) {
+				listAdapter.updateStationModeFilter("Tram");
+			} else {
+				listAdapter.updateStationModeFilter("All");
+			}
+			
+			listAdapter.getFilter().filter(stationNameText.getText());
+		}
+
+		@Override
+		public void onNothingSelected(AdapterView<?> arg0) {}
     }
 }
