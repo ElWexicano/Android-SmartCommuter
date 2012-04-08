@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen 
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <PreferenceCategory 
+        android:title="@string/generalSettings" 
+        android:key="general_settings">
+        
+        <ListPreference 
+            android:key="googleMapUserIconType"
+            android:title="@string/locationIconTitle"
+            android:summary="@string/locationIconSummary"
+            android:defaultValue="male"
+            android:entries="@array/userLocationIconTypeArray"
+            android:entryValues="@array/userLocationIconTypeValueArray"/>
+        
+        <CheckBoxPreference 
+            android:key="automaticProblemReporting"
+            android:summary="@string/autoProblemReportSummary"
+            android:title="@string/autoProblemReportTitle"
+            android:defaultValue="true"/>
+        
+    </PreferenceCategory>
+    
+    <PreferenceCategory 
+        android:title="@string/favouriteStationSettings" 
+        android:key="favourite_station_settings">
+
+        <ListPreference 
+            android:key="maxFavouriteStations" 
+            android:title="@string/maximumFavouriteStationsTitle"
+            android:summary="@string/maximumFavouriteStationsSummary"
+            android:defaultValue="10"
+            android:entries="@array/numberOfStationsArray"
+            android:entryValues="@array/numberOfStationsValuesArray"/>
+        
+        <Preference 
+            android:key="clearFavouriteStations"
+            android:title="@string/clearFavouriteStationsTitle"
+            android:summary="@string/clearFavouriteStationsSummary"/>
+        
+    </PreferenceCategory>
+    
+    <PreferenceCategory 
+        android:title="@string/recentlyViewedSettings" 
+        android:key="recently_viewed_settings">
+        
+        <ListPreference 
+            android:key="maxRecentlyViewedStations" 
+            android:title="@string/maximumRecentlyViewedStationsTitle"
+            android:summary="@string/maximumRecentlyViewedStationsSummary"
+            android:defaultValue="10"
+            android:entries="@array/numberOfStationsArray"
+            android:entryValues="@array/numberOfStationsValuesArray"/>
+        
+        <Preference 
+            android:key="clearRecenltyViewedStations"
+            android:title="@string/clearRecentlyViewedStationsTitle"
+            android:summary="@string/clearRecentlyViewedStationsSummary"/>
+        
+    </PreferenceCategory>
+    
+    <PreferenceCategory 
+        android:title="@string/about" 
+        android:key="about_settings">
+        
+        <Preference 
+            android:key="showTutorial"
+            android:title="Show Tutorial"/>
+        
+        <Preference 
+            android:key="currentVersion"
+            android:title="Current Version"
+            android:selectable="false"/>
+        
+    </PreferenceCategory>
+
+</PreferenceScreen>

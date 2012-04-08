@@ -23,7 +23,7 @@
     <string name="stationTypeLbl">Station Transport Mode</string>
     <string name="listLbl">List</string>
     <string name="mapLbl">Map</string>
-    <string name="settingsLbl">Settings is not enabled in Beta Version!</string>
+    <string name="settingsLbl">Settings</string>
     <string name="searchStationsNameHint">Enter Station Name</string>
     <string name="searchStationsTypePrompt">Choose the Station Mode</string>
     <string name="informationLbl">Information</string>
@@ -40,5 +40,31 @@
     <string name="viewStationButton">View Station</string>
     <string name="crashMessage">Oh No ! SmartCommuter has crashed, but a report has been sent to fix the issue !</string>
     <string name="routeLbl">Route</string>
+    <string name="restartMessage">You will need to restart SmartCommuter to apply changes !</string>
+    <string name="favouriteAddedSuccessMessage">Station added to Favourites</string>
+    <string name="favouriteAddedFailedMessage">Station cannot be added to Favourites. Maximum number of Favourite Stations Reached !</string>
+    <string name="favouriteRemovedMessage">Station removed from Favourites</string>
+    
+    <!-- Settings Strings -->
+    
+    <string name="generalSettings">General Settings</string>
+    <string name="favouriteStationSettings">Favourite Station Settings</string>
+    <string name="recentlyViewedSettings">Recently Viewed Settings</string>
+    <string name="about">About</string>
+    <string name="showTutorial">Show Tutorial</string>
+    <string name="locationIconTitle">Your Location Icon</string>
+    <string name="locationIconSummary">Your Location Icon for Maps</string>
+    <string name="autoProblemReportTitle">Problem Reporting</string>
+    <string name="autoProblemReportSummary">Enable Automatic Problem Reporting</string>
+    <string name="maximumFavouriteStationsTitle">Maximum Favourites</string>
+    <string name="maximumFavouriteStationsSummary">Maximum number of Favourite Stations</string>
+    <string name="maximumRecentlyViewedStationsTitle">Maximum Recently Viewed</string>
+    <string name="maximumRecentlyViewedStationsSummary">Maximum number of Recently Viewed Stations</string>
+    <string name="clearFavouriteStationsTitle">Clear Favourites</string>
+    <string name="clearFavouriteStationsSummary">Clear all Favourite Stations</string>
+    <string name="clearFavouriteStationsMessage">Are you sure you want to clear all Favourite Stations</string>
+    <string name="clearRecentlyViewedStationsTitle">Clear Recently Viewed</string>
+    <string name="clearRecentlyViewedStationsSummary">Clear all Recently Viewed Stations</string>
+    <string name="clearRecentlyViewedStationsMessage">Are you sure you want to clear all Recently Viewed Stations?</string>
 
 </resources>

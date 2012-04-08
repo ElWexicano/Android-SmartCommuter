@@ -11,7 +11,8 @@ import android.view.Window;
 
 /**
  * This class is used to display the application 
- * Splash Screen.
+ * Splash Screen. It is also used to create any
+ * shared prefences that will be used.
  * @author Shane Bryan Doyle
  */
 public class SplashScreenActivity extends Activity {
@@ -20,11 +21,10 @@ public class SplashScreenActivity extends Activity {
 	private Context context;
 	private DatabaseManager databaseManager;
 	
+	
 	public void onCreate(Bundle savedInstanceState) {
-	    super.onCreate(savedInstanceState);
-	    
+	    super.onCreate(savedInstanceState);	    
 	    this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-	    
 	    context = this;
 	    
 	    dialog = ProgressDialog.show(this, "SmartCommuter", "Loading. Please wait...", true);

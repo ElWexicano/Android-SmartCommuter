@@ -8,4 +8,28 @@
         <item>Tram</item>
     </string-array>
     
+    <string-array name="numberOfStationsArray">
+        <item name="10">10 Stations</item>
+        <item name="10">20 Stations</item>
+        <item name="10">30 Stations</item>
+        <item name="10">40 Stations</item>
+    </string-array>
+
+    <string-array name="numberOfStationsValuesArray">
+        <item name="10">10</item>
+        <item name="10">20</item>
+        <item name="10">30</item>
+        <item name="10">40</item>
+    </string-array>
+    
+    <string-array name="userLocationIconTypeArray">
+        <item name="male">Male</item>
+        <item name="female">Female</item>
+    </string-array>
+    
+    <string-array name="userLocationIconTypeValueArray">
+        <item name="male">male</item>
+        <item name="female">female</item>
+    </string-array>
+    
 </resources>

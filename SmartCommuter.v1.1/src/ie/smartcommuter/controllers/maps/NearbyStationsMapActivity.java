@@ -11,8 +11,10 @@ import ie.smartcommuter.controllers.SmartOverlay;
 import ie.smartcommuter.models.Address;
 import ie.smartcommuter.models.Station;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 
 /**
  * This is a class is used to display a Nearby Stations
@@ -21,7 +23,11 @@ import android.os.Bundle;
  */
 public class NearbyStationsMapActivity extends SmartMapActivity {
 	
-    @Override
+	private Address userLocation;
+	private List<Station> nearbyStations;
+	
+    @SuppressWarnings("unchecked")
+	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map_google);
@@ -29,15 +35,20 @@ public class NearbyStationsMapActivity extends SmartMapActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         
-        Address userLocation = (Address) bundle.getSerializable("userLocation");
-        @SuppressWarnings("unchecked")
-		List<Station> nearbyStations = (List<Station>) bundle.getSerializable("nearbyStations");
-        
+        userLocation = (Address) bundle.getSerializable("userLocation");
+        nearbyStations = (List<Station>) bundle.getSerializable("nearbyStations");
+    }
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
         mapView = initGoogleMap(userLocation);
         
         List<Overlay> mapOverlays = mapView.getOverlays();
         
-        Drawable drawable = getUserDrawable();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        Drawable drawable = getUserDrawable(prefs.getString("googleMapUserIconType", "male"));
         
         SmartOverlay overlay = new SmartOverlay(this, drawable);
         
@@ -57,5 +68,6 @@ public class NearbyStationsMapActivity extends SmartMapActivity {
         }
         
         mapOverlays.add(overlay);
-    }
+	}
+
 }

@@ -18,9 +18,12 @@ public class DatabaseManager {
 
 	private SQLiteDatabase db;
 	private DatabaseHelper databaseHelper;
+	public int maxFavourites, maxRecentlyViewed;
 	
 	public DatabaseManager(Context context) {
 		databaseHelper = new DatabaseHelper(context);
+		maxFavourites = 10;
+		maxRecentlyViewed = 10;
 	}
 	
 	/**
@@ -226,10 +229,21 @@ public class DatabaseManager {
 	 * favourite stations table in the database.
 	 * @param stationId
 	 */
-	public void addToFavouriteStations(int stationId) {
-		ContentValues values = new ContentValues();
-		values.put("favourite_station_id", stationId);
-		db.insert("favourite_stations", null, values);
+	public Boolean addToFavouriteStations(int stationId) {
+		Cursor cursor = db.query("favourite_stations", null, null, null, null, null, null);
+		
+		Boolean result;
+		
+		if(cursor.getCount()>=maxFavourites) {
+			result = false;
+		} else {
+			ContentValues values = new ContentValues();
+			values.put("favourite_station_id", stationId);
+			db.insert("favourite_stations", null, values);
+			result = true;
+		}
+		
+		return result;
 	}
 	
 	/**
@@ -239,6 +253,14 @@ public class DatabaseManager {
 	 */
 	public void removeFromFavouriteStations(int stationId) {
 		db.delete("favourite_stations", "favourite_station_id = "+stationId, null);
+	}
+	
+	/**
+	 * This method is used to remove all favourite stations
+	 * from the favourite stations table in the database.
+	 */
+	public void removeAllFavouriteStations() {
+		db.delete("favourite_stations", null, null);
 	}
 	
 	/**
@@ -259,15 +281,26 @@ public class DatabaseManager {
 		}
 		
 		cursor = db.query("recently_viewed_stations", null, null, null, null, null, "recently_viewed_time");
+		cursor.moveToFirst();
 		
-		if(cursor.getCount()>10) {
-			cursor.moveToFirst();
+		int size = cursor.getCount();
+		
+		while(size>maxRecentlyViewed) {
 			db.delete("recently_viewed_stations", "recently_viewed_station_id = "+cursor.getString(0), null);
+			size--;
+			cursor.moveToNext();
 		}
 		
 		cursor.close();
 	}
 	
+	/**
+	 * This method is used to remove all Recently Viewed
+	 * Stations from the database.
+	 */
+	public void removeAllRecentlyViewedStations() {
+		db.delete("recently_viewed_stations", null, null);
+	}
 	
 	/**
 	 * This method is used to check if a station is already
@@ -292,6 +325,10 @@ public class DatabaseManager {
 		return result;
 	}
 	
+	public Integer getNumberOfFavouriteStations() {
+		return null;
+		
+	}
 	
 	/**
 	 * This class is used to get create a Station

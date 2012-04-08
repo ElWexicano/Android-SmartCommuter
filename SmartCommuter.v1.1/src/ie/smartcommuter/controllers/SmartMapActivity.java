@@ -146,10 +146,18 @@ public class SmartMapActivity extends MapActivity {
 	/**
 	 * This method is used to get the Icon to display
 	 * for the User location on the Google Map.
+	 * @param gender
 	 * @return
 	 */
-	protected Drawable getUserDrawable(){
-		Drawable drawable = this.getResources().getDrawable(R.drawable.map_ic_male);
+	protected Drawable getUserDrawable(String gender){
+		Drawable drawable;
+		
+		if(gender.equals("male")) {
+			drawable = this.getResources().getDrawable(R.drawable.map_ic_male);
+		} else {
+			drawable = this.getResources().getDrawable(R.drawable.map_ic_female);
+		}
+		
 		return drawable;
 	}
 }

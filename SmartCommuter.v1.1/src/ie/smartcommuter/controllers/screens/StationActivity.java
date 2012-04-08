@@ -9,7 +9,9 @@ import ie.smartcommuter.models.DatabaseManager;
 import ie.smartcommuter.models.Station;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -29,6 +31,7 @@ public class StationActivity extends SmartTabActivity {
 	private Boolean isFavourite;
 	private Station station;
 	private ImageView favouritesImage;
+	private SharedPreferences prefs;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,14 +66,17 @@ public class StationActivity extends SmartTabActivity {
 				
 				if(isFavourite) {
 					databaseManager.removeFromFavouriteStations(station.getId());
-					Toast.makeText(context, "Station removed from Favourites", Toast.LENGTH_SHORT).show();
+					Toast.makeText(context, R.string.favouriteRemovedMessage, Toast.LENGTH_SHORT).show();
 					isFavourite = false;
 					favouritesImage.setImageResource(android.R.drawable.star_off);
 				} else {
-					databaseManager.addToFavouriteStations(station.getId());
-					Toast.makeText(context, "Station added to Favourites", Toast.LENGTH_SHORT).show();
-					isFavourite = true;
-					favouritesImage.setImageResource(R.drawable.ic_favourite);
+					if(databaseManager.addToFavouriteStations(station.getId())){
+						Toast.makeText(context, R.string.favouriteAddedSuccessMessage, Toast.LENGTH_SHORT).show();
+						isFavourite = true;
+						favouritesImage.setImageResource(R.drawable.ic_favourite);
+					} else {
+						Toast.makeText(context, R.string.favouriteAddedFailedMessage, Toast.LENGTH_SHORT).show();
+					}
 				}
 				
 				databaseManager.close();
@@ -91,6 +97,11 @@ public class StationActivity extends SmartTabActivity {
     @Override
 	protected void onResume() {
 		super.onResume();
+		
+		prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		databaseManager.maxFavourites = Integer.parseInt(prefs.getString("maxFavouriteStations", "10"));
+		databaseManager.maxRecentlyViewed = Integer.parseInt(prefs.getString("maxRecentlyViewedStations", "10"));
+				
 		databaseManager.open();
 		isFavourite = databaseManager.isFavourite(station.getId());
 		databaseManager.addToRecentlyViewedStations(station.getId());
