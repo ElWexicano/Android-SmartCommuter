@@ -39,7 +39,7 @@
     <string name="updateDBProgressMessage">Please wait while the database is being updated.</string>
     <string name="viewStationButton">View Station</string>
     <string name="crashMessage">Oh No ! SmartCommuter has crashed, but a report has been sent to fix the issue !</string>
-    <string name="routeLbl">Route</string>
+    <string name="routeLbl">Route:</string>
     <string name="restartMessage">You will need to restart SmartCommuter to apply changes !</string>
     <string name="favouriteAddedSuccessMessage">Station added to Favourites</string>
     <string name="favouriteAddedFailedMessage">Station cannot be added to Favourites. Maximum number of Favourite Stations Reached !</string>
@@ -66,5 +66,8 @@
     <string name="clearRecentlyViewedStationsTitle">Clear Recently Viewed</string>
     <string name="clearRecentlyViewedStationsSummary">Clear all Recently Viewed Stations</string>
     <string name="clearRecentlyViewedStationsMessage">Are you sure you want to clear all Recently Viewed Stations?</string>
+    <string name="refreshRealTimeTitle">Realtime Update Interval</string>
+    <string name="refreshRealTimeSummary">Define how often Realtime Information will be updated</string>
+    
 
 </resources>

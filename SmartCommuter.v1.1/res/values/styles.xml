@@ -162,11 +162,16 @@
         <item name="android:background">@color/evenRowBGColor</item>
        	<item name="android:orientation">vertical</item>
        	<item name="android:layout_width">match_parent</item>
-       	<item name="android:layout_height">wrap_content</item>
+       	<item name="android:layout_height">50dp</item>
 		<item name="android:padding">5dp</item>
     </style>
 
+    <style name="realtimeRowOdd" parent="realtimeRow">
+        <item name="android:background">@color/oddRowBGColor</item>
+    </style>
+    
     <style name="realtimeDestination">
+        <item name="android:textColor">@color/appFontColor</item>
        	<item name="android:layout_width">wrap_content</item>
        	<item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">16dp</item>
@@ -181,6 +186,7 @@
     </style>
     
     <style name="realtimeExpectedTime">
+        <item name="android:textColor">@color/appFontColor</item>
        	<item name="android:layout_width">wrap_content</item>
        	<item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">18dp</item>

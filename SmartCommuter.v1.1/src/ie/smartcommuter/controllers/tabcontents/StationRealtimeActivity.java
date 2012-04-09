@@ -1,16 +1,13 @@
 package ie.smartcommuter.controllers.tabcontents;
 
-import java.util.List;
-
 import ie.smartcommuter.R;
-import ie.smartcommuter.client.RealTimeClient;
+import ie.smartcommuter.controllers.RealtimeArrayAdapter;
 import ie.smartcommuter.controllers.SmartTabContentActivity;
 import ie.smartcommuter.models.Station;
-import ie.smartcommuter.models.StationData;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.ArrayAdapter;
+import android.preference.PreferenceManager;
 import android.widget.ListView;
 
 /**
@@ -19,6 +16,16 @@ import android.widget.ListView;
  * @author Shane Bryan Doyle
  */
 public class StationRealtimeActivity extends SmartTabContentActivity {
+	
+	private Station station;
+	private ListView arrivals;
+	private ListView departures;
+	private RealtimeArrayAdapter arrivalsAdapter;
+	private RealtimeArrayAdapter departuresAdapter;
+	private int realtimeRefreshInterval;
+	private SharedPreferences prefs;
+
+	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.screen_station_realtime);
@@ -26,22 +33,39 @@ public class StationRealtimeActivity extends SmartTabContentActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         
-        Station station = (Station) bundle.getSerializable("station");
+        station = (Station) bundle.getSerializable("station");
 
-//        List<StationData> stationData = RealTimeClient.getRealTimeData(station);
+        arrivals = (ListView)findViewById(R.id.arrivalsListView);
+        departures = (ListView)findViewById(R.id.departuresListView);
         
-        
-        // TODO: Get the real time data for the station.
-        
-        String[] recentlyViewedStations = getResources().getStringArray(R.array.realtimeExample);
-        
-        ListView arrivals = (ListView)findViewById(R.id.arrivalsListView);
-        ListView departures = (ListView)findViewById(R.id.departuresListView);
-
-        arrivals.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, recentlyViewedStations));
-        arrivals.setTextFilterEnabled(true);
-        
-        departures.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, recentlyViewedStations));
-        departures.setTextFilterEnabled(true);
+        arrivals.setTextFilterEnabled(false);
+        departures.setTextFilterEnabled(false);
     }
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		realtimeRefreshInterval = Integer.parseInt(prefs.getString("realtimeRefreshInterval", "30000"));
+		
+		// TODO: Create a thread that runs every some seconds refreshing the RealTime Data.
+		
+        station.getRealTimeData();
+        arrivalsAdapter = new RealtimeArrayAdapter(this, station.getArrivals());
+        arrivals.setAdapter(arrivalsAdapter);
+        
+        departuresAdapter = new RealtimeArrayAdapter(this, station.getDepartures());
+        departures.setAdapter(departuresAdapter);
+	}
+	
 }
+
+
+
+

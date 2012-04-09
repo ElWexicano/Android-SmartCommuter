@@ -20,6 +20,14 @@
             android:title="@string/autoProblemReportTitle"
             android:defaultValue="true"/>
         
+        <ListPreference 
+            android:key="realtimeRefreshInterval"
+            android:title="@string/refreshRealTimeTitle" 
+            android:summary="@string/refreshRealTimeSummary"
+            android:defaultValue="30000"
+            android:entries="@array/realRefreshArray"
+            android:entryValues="@array/realRefreshValuesArray"/>
+        
     </PreferenceCategory>
     
     <PreferenceCategory 

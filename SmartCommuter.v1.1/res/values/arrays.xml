@@ -32,4 +32,20 @@
         <item name="female">female</item>
     </string-array>
     
+    <string-array name="realRefreshArray">
+        <item name="30000">Every 30 Seconds</item>
+        <item name="60000">Every Minute</item>
+        <item name="300000">Every 5 Minutes</item>
+        <item name="600000">Every 10 Minutes</item>
+        <item name="900000">Every 15 Minutes</item>
+    </string-array>
+    
+    <string-array name="realRefreshValuesArray">
+        <item name="30000">30000</item>
+        <item name="60000">60000</item>
+        <item name="300000">300000</item>
+        <item name="600000">600000</item>
+        <item name="900000">900000</item>
+    </string-array>
+    
 </resources>

@@ -1,7 +1,13 @@
 package ie.smartcommuter.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+
+import org.ksoap2.SoapEnvelope;
+import org.ksoap2.serialization.SoapObject;
+import org.ksoap2.serialization.SoapSerializationEnvelope;
+import org.ksoap2.transport.AndroidHttpTransport;
 
 
 /**
@@ -11,7 +17,10 @@ import java.util.List;
  */
 public class Station implements Serializable {
 	
-
+	private static final String NAMESPACE = "http://service.smartcommuter.ie";
+	private static final String URL = "http://www.hawke-wit.net/axis2/services/RealTime?wsdl";
+	private static final String METHOD_NAME = "getStationData";
+	private static final String SOAP_ACTION = "RealTime";
 	private static final long serialVersionUID = 1L;
 	private int id;
 	private String name;
@@ -87,4 +96,69 @@ public class Station implements Serializable {
 		return this.getName();
 	}
 
+	/**
+	 * This method is used to get Real Time Data for a 
+	 * Public Transport Station.
+	 */
+	public void getRealTimeData() {
+		
+		List<StationData> arrivals = new ArrayList<StationData>();
+		List<StationData> departures = new ArrayList<StationData>();
+		
+		SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+		request.addProperty("stationType", getStationType());
+		request.addProperty("stationApiCode", getApiCode());
+		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+		envelope.dotNet = true;
+		envelope.setOutputSoapObject(request);
+		AndroidHttpTransport androidHttpTransport = new AndroidHttpTransport(URL);
+		
+		SoapObject response = null;
+
+        try {
+        	androidHttpTransport.debug = true;
+        	androidHttpTransport.call(SOAP_ACTION,envelope);
+	        response = (SoapObject)envelope.getResponse();
+	        
+        } catch(Exception e) {
+        	e.printStackTrace();
+        }
+
+    	int count = 0;
+    	
+    	if(response!=null) {
+    		count = response.getPropertyCount();
+    	}
+    	
+    	for(int i = 0; i < count; i++) {
+    		
+    		StationData data = soapObjectToStationData(response);
+    		
+    		if(data.getIsArrivalOrDeparture().equals("Arrival")) {
+    			arrivals.add(data);
+    		} else {
+    			departures.add(data);
+    		}
+    	}
+    	
+    	setArrivals(arrivals);
+    	setDepartures(departures);
+	}
+	
+    /**
+     * This method is used to convert a Soap Object to a
+     * Station Data Object.
+     * @param soapObj
+     * @return
+     */
+    private static StationData soapObjectToStationData(SoapObject soapObj) {
+    	StationData stationData = new StationData();
+    	
+    	stationData.setDestination(soapObj.getProperty("destination").toString());
+    	stationData.setRoute(soapObj.getProperty("route").toString());
+    	stationData.setExpectedTime(soapObj.getProperty("expectedTime").toString());
+    	stationData.setIsArrivalOrDeparture(soapObj.getProperty("isArrivalOrDeparture").toString());
+    	
+    	return stationData;
+    }
 }

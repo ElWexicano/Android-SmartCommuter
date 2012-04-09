@@ -13,6 +13,7 @@
     <color name="activeBGColor">#363737</color>
     <color name="inactiveBGColor">#5e5e5e</color>
     <color name="pressedBGColor">#cccccc</color>
+    <color name="tabPressedBGColor">#494949</color>
     <color name="appFooterBGColor">#dedede</color>
     
     <!-- Font Colours -->

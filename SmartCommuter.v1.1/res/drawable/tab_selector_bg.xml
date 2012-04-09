@@ -17,7 +17,7 @@
 	<!--  Pressed tab -->
 	<item 
 	    android:state_pressed="true" 
-	    android:drawable="@color/pressedBGColor" />
+	    android:drawable="@color/tabPressedBGColor" />
 	
 	<!--  Selected tab (using d-pad) -->
 	<item 
