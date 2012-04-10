@@ -15,7 +15,7 @@
     <ListView
         android:id="@+id/arrivalsListView"
         android:layout_width="match_parent"
-        android:layout_height="170dp" >
+        android:layout_height="160dp" >
     </ListView>
 
     <TextView
@@ -28,7 +28,7 @@
     <ListView
         android:id="@+id/departuresListView"
         android:layout_width="match_parent"
-        android:layout_height="170dp" >
+        android:layout_height="160dp" >
     </ListView>
 
 </LinearLayout>

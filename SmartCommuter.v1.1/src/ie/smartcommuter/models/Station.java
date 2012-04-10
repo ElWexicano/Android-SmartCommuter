@@ -9,7 +9,6 @@ import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.AndroidHttpTransport;
 
-
 /**
  * This is a class is to create instances
  * of Public Transport Stations.
@@ -118,8 +117,7 @@ public class Station implements Serializable {
         try {
         	androidHttpTransport.debug = true;
         	androidHttpTransport.call(SOAP_ACTION,envelope);
-	        response = (SoapObject)envelope.getResponse();
-	        
+	        response = (SoapObject)envelope.bodyIn;
         } catch(Exception e) {
         	e.printStackTrace();
         }
@@ -131,8 +129,9 @@ public class Station implements Serializable {
     	}
     	
     	for(int i = 0; i < count; i++) {
+    		SoapObject obj = (SoapObject) response.getProperty(i);
     		
-    		StationData data = soapObjectToStationData(response);
+    		StationData data = soapObjectToStationData(obj);
     		
     		if(data.getIsArrivalOrDeparture().equals("Arrival")) {
     			arrivals.add(data);
