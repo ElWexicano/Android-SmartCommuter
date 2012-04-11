@@ -54,6 +54,7 @@ public class HomeActivity extends SmartActivity {
         ListView recentStationsList = (ListView)findViewById(R.id.recentlyViewedList);
         recentStationsList.setOnItemClickListener(new StationItemListener());
         recentStationsList.setAdapter(listAdapter);
+        recentStationsList.setEmptyView(findViewById(R.id.recentlyViewedListEmpty));
 	}
 
 

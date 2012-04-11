@@ -146,7 +146,7 @@ public class StationArrayAdapter extends ArrayAdapter<Station>{
                 
                 for(Station station: originalStations) {
                 	final String itemName = station.getName().toString().toLowerCase();
-                    if (itemName.startsWith(prefixString)) {
+                    if (itemName.contains(prefixString)) {
                     	if(stationModeFilter.equals("All") ){
                     		newStations.add(station);
                     	} else if(stationModeFilter.equals(station.getCompany().getMode())) {

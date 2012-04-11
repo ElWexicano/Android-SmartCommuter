@@ -40,6 +40,7 @@ public class FavouriteStationsActivity extends SmartActivity {
         ListView favouriteStationsList = (ListView)findViewById(R.id.favouriteStationsList);
         favouriteStationsList.setOnItemClickListener(new StationItemListener());
         favouriteStationsList.setAdapter(listAdapter);
+        favouriteStationsList.setEmptyView(findViewById(R.id.favouritesListEmpty));
 	}
 
 }

@@ -54,6 +54,7 @@ public class SearchActivity extends SmartActivity {
         searchStationsList.setOnItemClickListener(new StationItemListener());
         searchStationsList.setAdapter(listAdapter);
         searchStationsList.setTextFilterEnabled(true);
+        searchStationsList.setEmptyView(findViewById(R.id.searchStationsListEmpty));
         
         stationNameText = (EditText) findViewById(R.id.searchStationsNameEditText);
         stationNameText.addTextChangedListener(new SearchTextChangedListener());

@@ -15,9 +15,31 @@
     <ListView
         android:id="@+id/arrivalsListView"
         android:layout_width="match_parent"
-        android:layout_height="160dp" >
-    </ListView>
+        android:layout_height="160dp" />
 
+	<LinearLayout 
+	    android:id="@+id/arrivalsLoadingListView" 
+	    xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:layout_width="fill_parent"
+	    android:layout_height="160dp"
+	    android:orientation="vertical"
+	    android:gravity="center" >
+	
+	    <ProgressBar
+	        android:id="@+id/arrivalsLoadingProgressBar"
+	        style="?android:attr/progressBarStyleSmall"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" />
+	
+	    <TextView
+	        android:id="@+id/arrivalsLoadingTextView"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textColor="@color/appFontColor"
+	        android:text="@string/realTimeLoadingMessage" />
+	
+	</LinearLayout>
+    
     <TextView
         android:id="@+id/departuresTextView"
         android:layout_width="match_parent"
@@ -28,7 +50,29 @@
     <ListView
         android:id="@+id/departuresListView"
         android:layout_width="match_parent"
-        android:layout_height="160dp" >
-    </ListView>
+        android:layout_height="160dp" />
 
+	<LinearLayout 
+	    android:id="@+id/departuresLoadingListView" 
+	    xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:layout_width="fill_parent"
+	    android:layout_height="160dp"
+	    android:orientation="vertical"
+	    android:gravity="center" >
+	
+	    <ProgressBar
+	        android:id="@+id/departuresLoadingProgressBar"
+	        style="?android:attr/progressBarStyleSmall"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" />
+	
+	    <TextView
+	        android:id="@+id/departuresLoadingTextView"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textColor="@color/appFontColor"
+	        android:text="@string/realTimeLoadingMessage" />
+	
+	</LinearLayout>
+    
 </LinearLayout>

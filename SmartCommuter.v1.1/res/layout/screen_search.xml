@@ -42,5 +42,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
     </ListView>
+    
+    <TextView 
+        android:id="@+id/searchStationsListEmpty"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:textColor="@color/appFontColor"
+        android:text="@string/searchListEmptyMessage" />
 
 </LinearLayout>

@@ -52,6 +52,14 @@
 	        android:layout_above="@+id/footerLinearLayout"
 	        android:layout_alignParentTop="true" />
 
+	    <TextView 
+	        android:id="@+id/recentlyViewedListEmpty"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:gravity="center"
+	        android:textColor="@color/appFontColor"
+	        android:text="@string/recentlyViewedListEmptyMessage" />
+	    
 	    <LinearLayout
 	        android:id="@+id/footerLinearLayout"
 	        xmlns:android="http://schemas.android.com/apk/res/android"

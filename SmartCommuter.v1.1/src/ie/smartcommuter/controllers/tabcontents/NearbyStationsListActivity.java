@@ -33,6 +33,7 @@ public class NearbyStationsListActivity extends SmartTabContentActivity {
             ListView favouriteStationsList = (ListView)findViewById(R.id.nearbyStationsList);
             favouriteStationsList.setOnItemClickListener(new StationItemListener());
             favouriteStationsList.setAdapter(listAdapter);
+            favouriteStationsList.setEmptyView(findViewById(R.id.nearbyListEmpty));
         }
     }
 }

@@ -4,14 +4,16 @@ import ie.smartcommuter.R;
 import ie.smartcommuter.controllers.RealtimeArrayAdapter;
 import ie.smartcommuter.controllers.SmartTabContentActivity;
 import ie.smartcommuter.models.Station;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -31,8 +33,8 @@ public class StationRealtimeActivity extends SmartTabContentActivity {
 	private Context context;
 	private Boolean getRealtimeUpdates;
 	private Handler handler;
-	private ProgressDialog loadingDialog;
 	private Runnable runnable;
+	private Boolean hideLoading;
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,22 +44,23 @@ public class StationRealtimeActivity extends SmartTabContentActivity {
         context = this;
         getRealtimeUpdates = true;
         handler = new Handler();
+        hideLoading = false;
         
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         realtimeRefreshInterval = Integer.parseInt(prefs.getString("realtimeRefreshInterval", "30000"));
-        
-        loadingDialog = ProgressDialog.show(this, "", "Loading. Please wait...", true);
-        
+
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         
         station = (Station) bundle.getSerializable("station");
 
         arrivals = (ListView)findViewById(R.id.arrivalsListView);
-        departures = (ListView)findViewById(R.id.departuresListView);
-        
         arrivals.setTextFilterEnabled(false);
+        arrivals.setEmptyView(findViewById(R.id.arrivalsLoadingListView));
+        
+        departures = (ListView)findViewById(R.id.departuresListView);
         departures.setTextFilterEnabled(false);
+        departures.setEmptyView(findViewById(R.id.departuresLoadingListView));
         
 		runnable = getRealtimeRunnable();
     }
@@ -88,8 +91,8 @@ public class StationRealtimeActivity extends SmartTabContentActivity {
 		Runnable runnable = new Runnable() {
 			@Override
 			public void run() {
+				
 				while(getRealtimeUpdates) {
-					
 					station.getRealTimeData();
 					
 					handler.post(new Runnable() {
@@ -101,10 +104,10 @@ public class StationRealtimeActivity extends SmartTabContentActivity {
 					        departuresAdapter = new RealtimeArrayAdapter(context, station.getDepartures());
 					        departures.setAdapter(departuresAdapter);
 
-							if(loadingDialog.isShowing()) {
-					        	loadingDialog.dismiss();
-					        } else {
-					        	Toast.makeText(context, "Realtime Updated !", Toast.LENGTH_SHORT).show();
+					        Toast.makeText(context, "Realtime Updated !", Toast.LENGTH_SHORT).show();
+					        
+					        if(!hideLoading){
+					        	updateEmptyListMessages();
 					        }
 						}
 					});
@@ -120,5 +123,26 @@ public class StationRealtimeActivity extends SmartTabContentActivity {
 		
 		return runnable;
 	}
+	
+	/**
+	 * This method is used to change the original
+	 * empty view message from loading to the no
+	 * data message.
+	 * @return 
+	 */
+	private void updateEmptyListMessages() {
+		ProgressBar arrivalsLoading = (ProgressBar) findViewById(R.id.arrivalsLoadingProgressBar);
+		arrivalsLoading.setVisibility(View.INVISIBLE);
+		TextView arrivalsTextView = (TextView) findViewById(R.id.arrivalsLoadingTextView);
+		arrivalsTextView.setText(R.string.realTimeUnavailableMessage);
+		
+		ProgressBar departuresLoading = (ProgressBar) findViewById(R.id.departuresLoadingProgressBar);
+		departuresLoading.setVisibility(View.INVISIBLE);
+		TextView departuresTextView = (TextView) findViewById(R.id.departuresLoadingTextView);
+		departuresTextView.setText(R.string.realTimeUnavailableMessage);
+		
+		hideLoading = true;
+	}
+	
 }
 
