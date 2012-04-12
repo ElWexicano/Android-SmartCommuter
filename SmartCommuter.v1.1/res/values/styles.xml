@@ -200,8 +200,30 @@
     
     <!-- Directions Row Styles (Start) -->
     
-    <style name="directionsRow" parent="realtimeRow"/>
+    <style name="directionsRow" parent="realtimeRow">
+        <item name="android:layout_height">wrap_content</item>
+    </style>
 
+    <style name="directionsRowOdd" parent="directionsRow">
+        <item name="android:background">@color/oddRowBGColor</item>
+    </style>
+    
+    <style name="directionsHeader">
+        <item name="android:layout_width">match_parent</item>
+       	<item name="android:layout_height">wrap_content</item>
+       	<item name="android:background">@color/evenRowBGColor</item>
+       	<item name="android:paddingTop">10dp</item>
+       	<item name="android:paddingBottom">10dp</item>
+       	<item name="android:paddingLeft">20dp</item>
+       	<item name="android:paddingRight">20dp</item>
+    </style>
+    
+    <style name="directionsHeaderText">
+        <item name="android:textSize">18dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/appFontColor</item>
+    </style>
+    
     <!-- Directions Row Styles (End) -->
     
 </resources>

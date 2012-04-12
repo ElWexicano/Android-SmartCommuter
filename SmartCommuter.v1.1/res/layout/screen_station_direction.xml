@@ -5,10 +5,33 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/textView1"
+    <ListView
+        android:id="@+id/directionsListView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/directionsLbl"
-        style="@style/banner" />
+        android:layout_height="match_parent" />
+    
+    
+	<LinearLayout 
+	    android:id="@+id/departuresLoadingListView" 
+	    xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:orientation="vertical"
+	    android:gravity="center" >
+	
+	    <ProgressBar
+	        android:id="@+id/directionsProgressBar"
+	        style="?android:attr/progressBarStyleSmall"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" />
+	
+	    <TextView
+	        android:id="@+id/directionsListEmpty"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textColor="@color/appFontColor"
+	        android:text="@string/realTimeLoadingMessage" />
+	
+	</LinearLayout>
+    
 </LinearLayout>

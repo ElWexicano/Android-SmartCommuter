@@ -93,7 +93,7 @@ public class NearbyStationsActivity extends SmartTabActivity implements Location
         	}
         }
         
-		locationManager.requestLocationUpdates(provider, 400, 1, this);
+		locationManager.requestLocationUpdates(provider, 180000, 200, this);
 	}
 
 	@Override
@@ -104,6 +104,7 @@ public class NearbyStationsActivity extends SmartTabActivity implements Location
 
 	@Override
 	public void onLocationChanged(Location arg0) {
+		location = arg0;
         address = new Address(location);
         
         databaseManager = new DatabaseManager(this);
@@ -113,8 +114,6 @@ public class NearbyStationsActivity extends SmartTabActivity implements Location
         
         activityInfo.putSerializable("nearbyStations", (Serializable) nearbyStations);
         activityInfo.putSerializable("userLocation", (Serializable) address);
-        
-        // TODO: Update the tabs with the new content
 	}
 
 	@Override

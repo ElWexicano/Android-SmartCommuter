@@ -6,6 +6,9 @@
     <string name="destinationExample">Dun Laoghaire via Stillorgan</string>
     <string name="routeNameExample">75</string>
     <string name="expectedTimeExample">12:32</string>
+    <string name="directionsSummaryExample">Walking via N30</string>
+    <string name="directionsDistanceExample">1.4 km</string>
+    <string name="directionsDurationExample">17 min</string>
     
     <string name="stationAddressExample">
         Lower Some Road, Sometown, Dublin
@@ -47,5 +50,6 @@
         <item>Turn Right after 100m</item>
         <item>Walk for 100m</item>
     </string-array>
-    
+     
 </resources>
+

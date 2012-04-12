@@ -45,11 +45,14 @@
     <string name="favouriteAddedFailedMessage">Station cannot be added to Favourites. Maximum number of Favourite Stations Reached !</string>
     <string name="favouriteRemovedMessage">Station removed from Favourites</string>
     <string name="realTimeLoadingMessage">Loading&#8230;</string>
-    <string name="realTimeUnavailableMessage">Realtime information unavailable !</string>
+    <string name="realTimeUnavailableMessage">Realtime information is currently unavailable !</string>
     <string name="recentlyViewedListEmptyMessage">You have no Recently Viewed Stations !</string>
     <string name="favouritesListEmptyMessage">You have no Favourite Stations !</string>
     <string name="searchListEmptyMessage">No Stations Found !</string>
     <string name="nearbyListEmptyMessage">There are no Nearby Stations !</string>
+    <string name="arrivalsListEmptyMessage">No Arrivals Expected !</string>
+    <string name="departuresListEmptyMessage">No Departures Expected !</string>
+    <string name="directionsListEmptyMessage">Unable to provide Directions !</string>
     
     <!-- Settings Strings -->
     

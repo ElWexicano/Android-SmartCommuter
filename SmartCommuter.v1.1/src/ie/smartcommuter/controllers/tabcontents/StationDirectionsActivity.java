@@ -1,22 +1,26 @@
 package ie.smartcommuter.controllers.tabcontents;
 
 import ie.smartcommuter.R;
+import ie.smartcommuter.controllers.DirectionArrayAdapter;
 import ie.smartcommuter.controllers.SmartTabContentActivity;
 import ie.smartcommuter.models.Address;
-import ie.smartcommuter.models.GeoLocation;
+import ie.smartcommuter.models.Directions;
 import ie.smartcommuter.models.Station;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -32,11 +36,24 @@ public class StationDirectionsActivity extends SmartTabContentActivity implement
 	private Location location;
 	private String provider;
 	private Dialog dialog;
+	private Directions directions;
+	private ListView directionsList;
+	private DirectionArrayAdapter directionsAdapter;
+	private Context context;
+	private Handler handler;
+	private Runnable runnable;
+	private Boolean hideProgressBar;
 	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.screen_station_direction);
         dialog = new Dialog(this);
+        context = this;
+        handler = new Handler();
+        hideProgressBar = false;
+        
+        directionsList = (ListView) findViewById(R.id.directionsListView);
+        directionsList.setEmptyView(findViewById(R.id.directionsListEmpty));
         
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -49,26 +66,14 @@ public class StationDirectionsActivity extends SmartTabContentActivity implement
         	openGPSDialog();
         }
         
-        Criteria criteria = new Criteria();
-        provider = locationManager.getBestProvider(criteria, false);
+        provider = LocationManager.GPS_PROVIDER;
         location = locationManager.getLastKnownLocation(provider);
-        
         if(location==null) {
         	Toast.makeText(this, "Couldn't locate a provider to find your location", Toast.LENGTH_LONG).show();
         	finish();
-        } else {
-            address = new Address(location);
-            
-            String lat1, lat2, lon1, lon2;
-            lat1 = Double.toString(GeoLocation.microDegreesToDegrees(address.getLatitude()));
-            lat2 = Double.toString(GeoLocation.microDegreesToDegrees(station.getAddress().getLongitude()));
-            lon1 = Double.toString(GeoLocation.microDegreesToDegrees(address.getLatitude()));
-            lon2 = Double.toString(GeoLocation.microDegreesToDegrees(station.getAddress().getLongitude()));
-            
-//            String url = "http://maps.google.com/maps?saddr="+lat1+","+lon1+"&daddr="+lat2+","+lon2;
-//            intent = new Intent(android.content.Intent.ACTION_VIEW,  Uri.parse(url));
-//            startActivity(intent);
         }
+        
+        runnable = updateDirectionsRunnable();
     }
 	
 	@Override
@@ -78,27 +83,25 @@ public class StationDirectionsActivity extends SmartTabContentActivity implement
         if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
         	openGPSDialog();
         } else {
-        	
         	if(dialog.isShowing()) {
         		dialog.dismiss();
         	}
         }
         
-		locationManager.requestLocationUpdates(provider, 400, 1, this);
+		locationManager.requestLocationUpdates(provider, 180000, 200, this);
+		new Thread(runnable).start();
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
 		locationManager.removeUpdates(this);
-		
 	}
 
 	@Override
-	public void onLocationChanged(Location arg0) {
-        address = new Address(location);
-        
-        // TODO: Update the directions
+	public void onLocationChanged(Location arg0) { 
+		location = arg0;
+//		new Thread(runnable).start(); This turns on automatic updates.
 	}
 
 	@Override
@@ -161,5 +164,70 @@ public class StationDirectionsActivity extends SmartTabContentActivity implement
 			}
 		}
     }
+    
+    /**
+     * This method is used to run a thread that updates
+     * the directions on the screen.
+     * @return
+     */
+    private Runnable updateDirectionsRunnable() {
+    	Runnable runnable = new Runnable() {
 
+			@Override
+			public void run() {
+				
+				handler.post(new Runnable() {
+
+					@Override
+					public void run() {
+						address = new Address(location);
+						
+				        directions = new Directions();
+				        directions.setStartLocation(address);
+				        directions.setEndLocation(station.getAddress());
+				        directions.generate();
+				        
+				        directionsAdapter = new DirectionArrayAdapter(context, directions.getStages());
+				        
+				        View header = getLayoutInflater().inflate(R.layout.row_directions_header, null, false);
+				        TextView summary = (TextView) header.findViewById(R.id.directionSummary);
+				        summary.setText(directions.getSummary());
+				        TextView distance = (TextView) header.findViewById(R.id.directionDistance);
+				        distance.setText(directions.getDistance());
+				        TextView duration = (TextView) header.findViewById(R.id.directionDuration);
+				        duration.setText(directions.getDuration());
+				        
+				        if(directionsList.getHeaderViewsCount()==0){
+				        	directionsList.addHeaderView(header);
+				        }
+				        
+				        if(directions.getStages().size()>0) {
+				        	directionsList.setAdapter(directionsAdapter);
+				        }
+				        
+				        if(!hideProgressBar) {
+				        	updateEmptyListMessage();
+				        }
+					}
+				});
+			}
+    	};
+    	
+		return runnable;
+    }
+
+    /**
+     * This method is used to change the original loading message
+     * to an empty list message.
+     */
+    private void updateEmptyListMessage() {
+    	ProgressBar progressBar = (ProgressBar) findViewById(R.id.directionsProgressBar);
+    	progressBar.setVisibility(View.INVISIBLE);
+    	
+    	TextView directionsListEmpty = (TextView) findViewById(R.id.directionsListEmpty);
+    	directionsListEmpty.setText(R.string.directionsListEmptyMessage);
+    	
+    	hideProgressBar = true;
+    }
+    
 }

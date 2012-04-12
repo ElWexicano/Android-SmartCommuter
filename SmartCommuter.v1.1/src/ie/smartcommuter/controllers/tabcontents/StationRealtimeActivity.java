@@ -34,7 +34,7 @@ public class StationRealtimeActivity extends SmartTabContentActivity {
 	private Boolean getRealtimeUpdates;
 	private Handler handler;
 	private Runnable runnable;
-	private Boolean hideLoading;
+	private Boolean hideProgressBar;
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,7 @@ public class StationRealtimeActivity extends SmartTabContentActivity {
         context = this;
         getRealtimeUpdates = true;
         handler = new Handler();
-        hideLoading = false;
+        hideProgressBar = false;
         
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         realtimeRefreshInterval = Integer.parseInt(prefs.getString("realtimeRefreshInterval", "30000"));
@@ -106,7 +106,7 @@ public class StationRealtimeActivity extends SmartTabContentActivity {
 
 					        Toast.makeText(context, "Realtime Updated !", Toast.LENGTH_SHORT).show();
 					        
-					        if(!hideLoading){
+					        if(!hideProgressBar){
 					        	updateEmptyListMessages();
 					        }
 						}
@@ -134,14 +134,14 @@ public class StationRealtimeActivity extends SmartTabContentActivity {
 		ProgressBar arrivalsLoading = (ProgressBar) findViewById(R.id.arrivalsLoadingProgressBar);
 		arrivalsLoading.setVisibility(View.INVISIBLE);
 		TextView arrivalsTextView = (TextView) findViewById(R.id.arrivalsLoadingTextView);
-		arrivalsTextView.setText(R.string.realTimeUnavailableMessage);
+		arrivalsTextView.setText(R.string.arrivalsListEmptyMessage);
 		
 		ProgressBar departuresLoading = (ProgressBar) findViewById(R.id.departuresLoadingProgressBar);
 		departuresLoading.setVisibility(View.INVISIBLE);
 		TextView departuresTextView = (TextView) findViewById(R.id.departuresLoadingTextView);
-		departuresTextView.setText(R.string.realTimeUnavailableMessage);
+		departuresTextView.setText(R.string.departuresListEmptyMessage);
 		
-		hideLoading = true;
+		hideProgressBar = true;
 	}
 	
 }
