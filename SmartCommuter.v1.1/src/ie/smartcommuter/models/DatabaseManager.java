@@ -243,6 +243,8 @@ public class DatabaseManager {
 			result = true;
 		}
 		
+		cursor.close();
+		
 		return result;
 	}
 	
@@ -279,6 +281,8 @@ public class DatabaseManager {
 		} else {
 			db.update("recently_viewed_stations", values, "recently_viewed_station_id = "+stationId, null);
 		}
+		
+		cursor.close();
 		
 		cursor = db.query("recently_viewed_stations", null, null, null, null, null, "recently_viewed_time");
 		cursor.moveToFirst();

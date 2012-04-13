@@ -12,7 +12,6 @@ import ie.smartcommuter.models.DatabaseManager;
 import ie.smartcommuter.models.Station;
 import android.app.Dialog;
 import android.content.Intent;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -55,8 +54,7 @@ public class NearbyStationsActivity extends SmartTabActivity implements Location
         	openGPSDialog();
         } 
         
-        Criteria criteria = new Criteria();
-        provider = locationManager.getBestProvider(criteria, false);
+        provider = LocationManager.GPS_PROVIDER;
         location = locationManager.getLastKnownLocation(provider);
         
         if(location==null) {
@@ -73,12 +71,12 @@ public class NearbyStationsActivity extends SmartTabActivity implements Location
             activityInfo = new Bundle();
             activityInfo.putSerializable("nearbyStations", (Serializable) nearbyStations);
             activityInfo.putSerializable("userLocation", (Serializable) address);
+            
+            tabHost = getTabHost();
+            addTab(NearbyStationsListActivity.class, activityInfo, "List");
+            addTab(NearbyStationsMapActivity.class, activityInfo, "Map");
+            tabHost.setCurrentTab(0);
         }
-        
-        tabHost = getTabHost();
-        addTab(NearbyStationsListActivity.class, activityInfo, "List");
-        addTab(NearbyStationsMapActivity.class, activityInfo, "Map");
-        tabHost.setCurrentTab(0);
     }
     
 	@Override

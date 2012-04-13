@@ -1,5 +1,6 @@
 package ie.smartcommuter.models;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +9,7 @@ import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
+import org.xmlpull.v1.XmlPullParserException;
 
 
 /**
@@ -21,6 +23,7 @@ public class Station implements Serializable {
 	private static final String URL = "http://www.hawke-wit.net/axis2/services/RealTime?wsdl";
 	private static final String METHOD_NAME = "getStationData";
 	private static final String SOAP_ACTION = "RealTime";
+	private static final int TIMEOUT = 20000;
 	private static final long serialVersionUID = 1L;
 	private int id;
 	private String name;
@@ -115,15 +118,18 @@ public class Station implements Serializable {
 
 		SoapObject response = null;
 
-        try {
-        	androidHttpTransport = new HttpTransportSE(URL,120000);
+    	try {
+        	androidHttpTransport = new HttpTransportSE(URL,TIMEOUT);
         	androidHttpTransport.debug = true;
-        	androidHttpTransport.call(SOAP_ACTION,envelope);
-	        response = (SoapObject)envelope.bodyIn;
-        } catch(Exception e) {
-        	e.printStackTrace();
-        	
-        }
+			androidHttpTransport.call(SOAP_ACTION, envelope);
+			response = (SoapObject)envelope.bodyIn;
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (XmlPullParserException e) {
+			e.printStackTrace();
+		}
+        
+
 
     	int count = 0;
     	

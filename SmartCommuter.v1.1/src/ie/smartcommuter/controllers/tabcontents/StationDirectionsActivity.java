@@ -180,34 +180,41 @@ public class StationDirectionsActivity extends SmartTabContentActivity implement
 
 					@Override
 					public void run() {
-						address = new Address(location);
+						location = locationManager.getLastKnownLocation(provider);
 						
-				        directions = new Directions();
-				        directions.setStartLocation(address);
-				        directions.setEndLocation(station.getAddress());
-				        directions.generate();
-				        
-				        directionsAdapter = new DirectionArrayAdapter(context, directions.getStages());
-				        
-				        View header = getLayoutInflater().inflate(R.layout.row_directions_header, null, false);
-				        TextView summary = (TextView) header.findViewById(R.id.directionSummary);
-				        summary.setText(directions.getSummary());
-				        TextView distance = (TextView) header.findViewById(R.id.directionDistance);
-				        distance.setText(directions.getDistance());
-				        TextView duration = (TextView) header.findViewById(R.id.directionDuration);
-				        duration.setText(directions.getDuration());
-				        
-				        if(directionsList.getHeaderViewsCount()==0){
-				        	directionsList.addHeaderView(header);
-				        }
-				        
-				        if(directions.getStages().size()>0) {
-				        	directionsList.setAdapter(directionsAdapter);
-				        }
-				        
-				        if(!hideProgressBar) {
-				        	updateEmptyListMessage();
-				        }
+						if(location!=null) {
+							address = new Address(location);
+							
+					        directions = new Directions();
+					        directions.setStartLocation(address);
+					        directions.setEndLocation(station.getAddress());
+					        directions.generate();
+					        
+					        directionsAdapter = new DirectionArrayAdapter(context, directions.getStages());
+					        
+					        View header = getLayoutInflater().inflate(R.layout.row_directions_header, null, false);
+					        TextView summary = (TextView) header.findViewById(R.id.directionSummary);
+					        summary.setText(directions.getSummary());
+					        TextView distance = (TextView) header.findViewById(R.id.directionDistance);
+					        distance.setText(directions.getDistance());
+					        TextView duration = (TextView) header.findViewById(R.id.directionDuration);
+					        duration.setText(directions.getDuration());
+					        
+					        if(directionsList.getHeaderViewsCount()==0){
+					        	directionsList.addHeaderView(header);
+					        }
+					        
+					        if(directions.getStages().size()>0) {
+					        	directionsList.setAdapter(directionsAdapter);
+					        }
+					        
+					        if(!hideProgressBar) {
+					        	updateEmptyListMessage();
+					        }
+						} else {
+				        	Toast.makeText(context, "Couldn't locate a provider to find your location", Toast.LENGTH_LONG).show();
+				        	finish();
+						}
 					}
 				});
 			}
