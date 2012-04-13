@@ -7,7 +7,8 @@ import java.util.List;
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
-import org.ksoap2.transport.AndroidHttpTransport;
+import org.ksoap2.transport.HttpTransportSE;
+
 
 /**
  * This is a class is to create instances
@@ -110,16 +111,18 @@ public class Station implements Serializable {
 		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
 		envelope.dotNet = true;
 		envelope.setOutputSoapObject(request);
-		AndroidHttpTransport androidHttpTransport = new AndroidHttpTransport(URL);
-		
+		HttpTransportSE androidHttpTransport;
+
 		SoapObject response = null;
 
         try {
+        	androidHttpTransport = new HttpTransportSE(URL,120000);
         	androidHttpTransport.debug = true;
         	androidHttpTransport.call(SOAP_ACTION,envelope);
 	        response = (SoapObject)envelope.bodyIn;
         } catch(Exception e) {
         	e.printStackTrace();
+        	
         }
 
     	int count = 0;

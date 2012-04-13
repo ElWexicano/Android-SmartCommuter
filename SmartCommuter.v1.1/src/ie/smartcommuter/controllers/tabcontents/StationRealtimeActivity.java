@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * This is a class is used to display the realtime
@@ -103,8 +102,6 @@ public class StationRealtimeActivity extends SmartTabContentActivity {
 					        
 					        departuresAdapter = new RealtimeArrayAdapter(context, station.getDepartures());
 					        departures.setAdapter(departuresAdapter);
-
-					        Toast.makeText(context, "Realtime Updated !", Toast.LENGTH_SHORT).show();
 					        
 					        if(!hideProgressBar){
 					        	updateEmptyListMessages();

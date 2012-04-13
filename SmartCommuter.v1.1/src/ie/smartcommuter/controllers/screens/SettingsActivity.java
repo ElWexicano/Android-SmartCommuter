@@ -67,16 +67,16 @@ public class SettingsActivity extends PreferenceActivity {
         	
         });
         
-        Preference showTutorial = getPreferenceScreen().findPreference("showTutorial");
-        showTutorial.setOnPreferenceClickListener(new OnPreferenceClickListener(){
-
-			@Override
-			public boolean onPreferenceClick(Preference preference) {
-				Toast.makeText(context, "Not Added Yet", Toast.LENGTH_SHORT).show();
-				return false;
-			}
-        	
-        });
+//        Preference showTutorial = getPreferenceScreen().findPreference("showTutorial");
+//        showTutorial.setOnPreferenceClickListener(new OnPreferenceClickListener(){
+//
+//			@Override
+//			public boolean onPreferenceClick(Preference preference) {
+//				Toast.makeText(context, "Not Added Yet", Toast.LENGTH_SHORT).show();
+//				return false;
+//			}
+//        	
+//        });
         
         Preference currentVersion = getPreferenceScreen().findPreference("currentVersion");
         currentVersion.setSummary(getApplicationVersion());

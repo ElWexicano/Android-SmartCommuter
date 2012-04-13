@@ -24,7 +24,7 @@
             android:key="realtimeRefreshInterval"
             android:title="@string/refreshRealTimeTitle" 
             android:summary="@string/refreshRealTimeSummary"
-            android:defaultValue="30000"
+            android:defaultValue="300000"
             android:entries="@array/realRefreshArray"
             android:entryValues="@array/realRefreshValuesArray"/>
         
@@ -72,9 +72,9 @@
         android:title="@string/about" 
         android:key="about_settings">
         
-        <Preference 
+        <!--<Preference 
             android:key="showTutorial"
-            android:title="Show Tutorial"/>
+            android:title="Show Tutorial"/>-->
         
         <Preference 
             android:key="currentVersion"
