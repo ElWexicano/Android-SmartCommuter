@@ -73,7 +73,7 @@ public class StationRealtimeActivity extends SmartTabContentActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
+		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		realtimeRefreshInterval = Integer.parseInt(prefs.getString("realtimeRefreshInterval", "30000"));
 		
 		getRealtimeUpdates = true;
