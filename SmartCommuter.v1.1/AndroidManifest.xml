@@ -97,7 +97,12 @@
 	        android:excludeFromRecents="true"
 	        android:finishOnTaskLaunch="true" />
         
+		<activity 
+		    android:name=".controllers.screens.TutorialActivity"
+		    android:screenOrientation="portrait" />
+		
         <uses-library android:name="com.google.android.maps" />
+        
         
 </application>
 

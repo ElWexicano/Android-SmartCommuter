@@ -3,7 +3,91 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="@color/tutorialBGColor" >
     
+    <ViewFlipper
+        android:id="@+id/tutorialSwitcher"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/infobar"
+        android:layout_alignParentTop="true" >
+        
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/img_tutorial1"
+            android:contentDescription="@string/tutorialImageContent" />
+        
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/img_tutorial2"
+            android:contentDescription="@string/tutorialImageContent" />
+        
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/img_tutorial3"
+			android:contentDescription="@string/tutorialImageContent" />
+        
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/img_tutorial4"
+            android:contentDescription="@string/tutorialImageContent" />
+        
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/img_tutorial5"
+            android:contentDescription="@string/tutorialImageContent" />
+        
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/img_tutorial6"
+            android:contentDescription="@string/tutorialImageContent" />
+        
+    </ViewFlipper>
+    
+    <RelativeLayout
+        android:id="@+id/infobar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:background="@color/appFooterBGColor" >
+
+        <TextView
+            android:id="@+id/nextTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:text="@string/nextText"
+            android:textColor="@color/appFooterFontColor"
+            android:gravity="center"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/previousTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:text="@string/previousText"
+            android:textColor="@color/appFooterFontColor" 
+            android:gravity="center"
+            android:textStyle="bold"/>
+        
+    </RelativeLayout>
 
 </RelativeLayout>

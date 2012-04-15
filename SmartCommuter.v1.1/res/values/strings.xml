@@ -4,7 +4,7 @@
     <string name="appName">SmartCommuter</string>
     <string name="appDisplayName">Smart Commuter</string>
     <string name="appDesc">SmartCommuter provides free up to the minute information on Public Transport Systems in Ireland.</string>
-    <string name="appMoreInfo">For more information about SmartCommuter or to provide feedback please visit www.oursite.com</string>
+    <string name="appMoreInfo">For more information about SmartCommuter or to provide feedback please visit our website.</string>
     <string name="appAbout">About SmartCommuter</string>
     <string name="appWebsite">www.smartcommuter.ie</string>
     <string name="developer">Developed by Shane Bryan Doyle</string>
@@ -53,6 +53,11 @@
     <string name="arrivalsListEmptyMessage">No Arrivals Expected !</string>
     <string name="departuresListEmptyMessage">No Departures Expected !</string>
     <string name="directionsListEmptyMessage">Unable to provide Directions !</string>
+    
+    <string name="nextText">Next</string>
+    <string name="previousText">Previous</string>
+    <string name="finishText">Finish</string>
+    <string name="tutorialImageContent">SmartCommuter Tutorial</string>
     
     <!-- Settings Strings -->
     

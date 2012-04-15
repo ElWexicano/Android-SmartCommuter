@@ -15,6 +15,7 @@
     <color name="pressedBGColor">#cccccc</color>
     <color name="tabPressedBGColor">#494949</color>
     <color name="appFooterBGColor">#dedede</color>
+    <color name="tutorialBGColor">#ededed</color>
     
     <!-- Font Colours -->
     <color name="appFontColor">#363737</color>

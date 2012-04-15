@@ -5,6 +5,7 @@ import ie.smartcommuter.models.DatabaseManager;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -67,16 +68,17 @@ public class SettingsActivity extends PreferenceActivity {
         	
         });
         
-//        Preference showTutorial = getPreferenceScreen().findPreference("showTutorial");
-//        showTutorial.setOnPreferenceClickListener(new OnPreferenceClickListener(){
-//
-//			@Override
-//			public boolean onPreferenceClick(Preference preference) {
-//				Toast.makeText(context, "Not Added Yet", Toast.LENGTH_SHORT).show();
-//				return false;
-//			}
-//        	
-//        });
+        Preference showTutorial = getPreferenceScreen().findPreference("showTutorial");
+        showTutorial.setOnPreferenceClickListener(new OnPreferenceClickListener(){
+
+			@Override
+			public boolean onPreferenceClick(Preference preference) {
+				Intent newActivity = new Intent(context, TutorialActivity.class);
+				startActivity(newActivity);
+				return false;
+			}
+        	
+        });
         
         Preference currentVersion = getPreferenceScreen().findPreference("currentVersion");
         currentVersion.setSummary(getApplicationVersion());

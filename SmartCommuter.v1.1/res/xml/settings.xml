@@ -72,9 +72,9 @@
         android:title="@string/about" 
         android:key="about_settings">
         
-        <!--<Preference 
+        <Preference 
             android:key="showTutorial"
-            android:title="Show Tutorial"/>-->
+            android:title="Show Tutorial"/>
         
         <Preference 
             android:key="currentVersion"
