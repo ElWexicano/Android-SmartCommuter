@@ -61,19 +61,6 @@ public class StationDirectionsActivity extends SmartTabContentActivity implement
         station = (Station) bundle.getSerializable("station");
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        
-        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-        	openGPSDialog();
-        }
-        
-        provider = LocationManager.GPS_PROVIDER;
-        location = locationManager.getLastKnownLocation(provider);
-        if(location==null) {
-        	Toast.makeText(this, "Couldn't locate a provider to find your location", Toast.LENGTH_LONG).show();
-        	finish();
-        }
-        
-        runnable = updateDirectionsRunnable();
     }
 	
 	@Override
@@ -88,8 +75,17 @@ public class StationDirectionsActivity extends SmartTabContentActivity implement
         	}
         }
         
-		locationManager.requestLocationUpdates(provider, 180000, 200, this);
-		new Thread(runnable).start();
+        provider = LocationManager.GPS_PROVIDER;
+        location = locationManager.getLastKnownLocation(provider);
+        
+        runnable = updateDirectionsRunnable();
+        
+        if(location!=null) {
+        	address = new Address(location);
+    		new Thread(runnable).start();
+        }
+        
+        locationManager.requestLocationUpdates(provider, 180000, 200, this);
 	}
 
 	@Override
@@ -101,7 +97,6 @@ public class StationDirectionsActivity extends SmartTabContentActivity implement
 	@Override
 	public void onLocationChanged(Location arg0) { 
 		location = arg0;
-//		new Thread(runnable).start(); This turns on automatic updates.
 	}
 
 	@Override

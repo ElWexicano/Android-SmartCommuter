@@ -21,7 +21,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.Toast;
 
 /**
  * This class is used for the Nearby Stations Screen
@@ -50,17 +49,10 @@ public class NearbyStationsActivity extends SmartTabActivity implements Location
         
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         
-        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-        	openGPSDialog();
-        } 
-        
         provider = LocationManager.GPS_PROVIDER;
         location = locationManager.getLastKnownLocation(provider);
-        
-        if(location==null) {
-        	Toast.makeText(this, "Couldn't locate a provider to find your location", Toast.LENGTH_LONG).show();
-        	finish();
-        } else {
+
+        if(location!=null) {
             address = new Address(location);
 
             databaseManager = new DatabaseManager(this);
@@ -90,8 +82,7 @@ public class NearbyStationsActivity extends SmartTabActivity implements Location
         		dialog.dismiss();
         	}
         }
-        
-		locationManager.requestLocationUpdates(provider, 180000, 200, this);
+		locationManager.requestLocationUpdates(provider, 180000, 500, this);
 	}
 
 	@Override
@@ -157,7 +148,6 @@ public class NearbyStationsActivity extends SmartTabActivity implements Location
     	
 		@Override
 		public void onClick(View arg0) {
-		
 			dialog.dismiss();
 			
 			Intent intent = null;

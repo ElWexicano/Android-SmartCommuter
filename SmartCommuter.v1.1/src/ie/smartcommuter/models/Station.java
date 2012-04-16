@@ -112,7 +112,7 @@ public class Station implements Serializable {
 		request.addProperty("stationType", getStationType());
 		request.addProperty("stationApiCode", getApiCode());
 		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-		envelope.dotNet = true;
+//		envelope.dotNet = true;
 		envelope.setOutputSoapObject(request);
 		HttpTransportSE androidHttpTransport;
 
@@ -128,8 +128,6 @@ public class Station implements Serializable {
 		} catch (XmlPullParserException e) {
 			e.printStackTrace();
 		}
-        
-
 
     	int count = 0;
     	
