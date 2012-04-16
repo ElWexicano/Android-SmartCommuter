@@ -6,6 +6,7 @@ import ie.smartcommuter.R;
 import ie.smartcommuter.controllers.SmartTabContentActivity;
 import ie.smartcommuter.controllers.StationArrayAdapter;
 import ie.smartcommuter.models.Station;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ListView;
@@ -16,10 +17,17 @@ import android.widget.ListView;
  * @author Shane Bryan Doyle
  */
 public class NearbyStationsListActivity extends SmartTabContentActivity {
+	
+	private Context context;
+	private StationArrayAdapter listAdapter;
+	private ListView nearbyStationsList;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.screen_nearby_list);
+        
+        context = this;
         
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -28,12 +36,22 @@ public class NearbyStationsListActivity extends SmartTabContentActivity {
 		List<Station> nearbyStations = (List<Station>) bundle.getSerializable("nearbyStations");
         
         if(nearbyStations!=null) {
-            StationArrayAdapter listAdapter = new StationArrayAdapter(this, nearbyStations);
+            listAdapter = new StationArrayAdapter(this, nearbyStations);
             
-            ListView favouriteStationsList = (ListView)findViewById(R.id.nearbyStationsList);
-            favouriteStationsList.setOnItemClickListener(new StationItemListener());
-            favouriteStationsList.setAdapter(listAdapter);
-            favouriteStationsList.setEmptyView(findViewById(R.id.nearbyListEmpty));
+            nearbyStationsList = (ListView)findViewById(R.id.nearbyStationsList);
+            nearbyStationsList.setOnItemClickListener(new StationItemListener());
+            nearbyStationsList.setAdapter(listAdapter);
+            nearbyStationsList.setEmptyView(findViewById(R.id.nearbyListEmpty));
         }
     }
+    
+    /**
+     * This method is used to update the nearest stations list.
+     * @param stations
+     */
+    public void updateNearbyStations(List<Station> stations) {
+		listAdapter = new StationArrayAdapter(context, stations);
+		nearbyStationsList.setAdapter(listAdapter);
+    }
+
 }

@@ -34,7 +34,6 @@ public class StationDirectionsActivity extends SmartTabContentActivity implement
 	private Station station;
 	private Address address;
 	private Location location;
-	private String provider;
 	private Dialog dialog;
 	private Directions directions;
 	private ListView directionsList;
@@ -43,6 +42,7 @@ public class StationDirectionsActivity extends SmartTabContentActivity implement
 	private Handler handler;
 	private Runnable runnable;
 	private Boolean hideProgressBar;
+	private ProgressBar progressBar;
 	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +60,7 @@ public class StationDirectionsActivity extends SmartTabContentActivity implement
         
         station = (Station) bundle.getSerializable("station");
 
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
     }
 	
 	@Override
@@ -70,43 +70,40 @@ public class StationDirectionsActivity extends SmartTabContentActivity implement
         if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
         	openGPSDialog();
         } else {
+
+    		location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+    		runnable = updateDirectionsRunnable();
+    		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 180000, 200, this);
+            
         	if(dialog.isShowing()) {
         		dialog.dismiss();
         	}
-        }
-        
-        provider = LocationManager.GPS_PROVIDER;
-        location = locationManager.getLastKnownLocation(provider);
-        
-        runnable = updateDirectionsRunnable();
-        
-        if(location!=null) {
-        	address = new Address(location);
-    		new Thread(runnable).start();
-        }
-        
-        locationManager.requestLocationUpdates(provider, 180000, 200, this);
+        } 
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
 		locationManager.removeUpdates(this);
+		handler.removeCallbacks(runnable);
 	}
 
 	@Override
-	public void onLocationChanged(Location arg0) { 
-		location = arg0;
+	public void onLocationChanged(Location loc) { 
+		if(loc!=null) {
+			location = loc;
+			new Thread(runnable).start();
+		}
 	}
 
 	@Override
-	public void onProviderDisabled(String arg0) {}
+	public void onProviderDisabled(String provider) {}
 
 	@Override
-	public void onProviderEnabled(String arg0) {}
+	public void onProviderEnabled(String provider) {}
 
 	@Override
-	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {}
+	public void onStatusChanged(String provider, int status, Bundle extras) {}
 	
     /**
      * This method is used to display the GPS Dialog
@@ -154,7 +151,6 @@ public class StationDirectionsActivity extends SmartTabContentActivity implement
 				startActivity(intent);
 				break;
 			case 1: 
-				finish();
 				break;
 			}
 		}
@@ -165,7 +161,7 @@ public class StationDirectionsActivity extends SmartTabContentActivity implement
      * the directions on the screen.
      * @return
      */
-    private Runnable updateDirectionsRunnable() {
+    private synchronized Runnable updateDirectionsRunnable() {
     	Runnable runnable = new Runnable() {
 
 			@Override
@@ -175,9 +171,9 @@ public class StationDirectionsActivity extends SmartTabContentActivity implement
 
 					@Override
 					public void run() {
-						location = locationManager.getLastKnownLocation(provider);
 						
 						if(location!=null) {
+							
 							address = new Address(location);
 							
 					        directions = new Directions();
@@ -223,7 +219,7 @@ public class StationDirectionsActivity extends SmartTabContentActivity implement
      * to an empty list message.
      */
     private void updateEmptyListMessage() {
-    	ProgressBar progressBar = (ProgressBar) findViewById(R.id.directionsProgressBar);
+    	progressBar = (ProgressBar) findViewById(R.id.directionsProgressBar);
     	progressBar.setVisibility(View.INVISIBLE);
     	
     	TextView directionsListEmpty = (TextView) findViewById(R.id.directionsListEmpty);

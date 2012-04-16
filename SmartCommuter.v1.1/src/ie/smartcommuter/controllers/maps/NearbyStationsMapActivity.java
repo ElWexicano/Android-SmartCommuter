@@ -10,6 +10,7 @@ import ie.smartcommuter.controllers.SmartMapActivity;
 import ie.smartcommuter.controllers.SmartOverlay;
 import ie.smartcommuter.models.Address;
 import ie.smartcommuter.models.Station;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
@@ -24,6 +25,9 @@ import android.preference.PreferenceManager;
 public class NearbyStationsMapActivity extends SmartMapActivity {
 	
 	private Address userLocation;
+	private Context context;
+	private Drawable drawable;
+	private List<Overlay> mapOverlays;
 	private List<Station> nearbyStations;
 	
     @SuppressWarnings("unchecked")
@@ -31,6 +35,7 @@ public class NearbyStationsMapActivity extends SmartMapActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map_google);
+        context = this;
         
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -44,13 +49,36 @@ public class NearbyStationsMapActivity extends SmartMapActivity {
 		super.onResume();
 		
         mapView = initGoogleMap(userLocation);
+        mapOverlays = mapView.getOverlays();
         
-        List<Overlay> mapOverlays = mapView.getOverlays();
-        
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        Drawable drawable = getUserDrawable(prefs.getString("googleMapUserIconType", "male"));
-        
-        SmartOverlay overlay = new SmartOverlay(this, drawable);
+        SmartOverlay overlay = drawMapOverlays();
+        mapOverlays.add(overlay);
+	}
+
+    /**
+     * This method is used to update the nearest stations map.
+     * @param stations
+     */
+    public void updateNearbyStations(List<Station> stations, Address address) {
+    	userLocation = address;
+    	nearbyStations = stations;
+    	
+        mapView = initGoogleMap(userLocation);
+        mapOverlays = mapView.getOverlays();
+        SmartOverlay overlay = drawMapOverlays();
+        mapOverlays.add(overlay);
+    }
+	
+    /**
+     * This method is used to draw the overlays on the map.
+     * @return
+     */
+	private SmartOverlay drawMapOverlays() {
+		
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        drawable = getUserDrawable(prefs.getString("googleMapUserIconType", "male"));
+		
+		SmartOverlay overlay = new SmartOverlay(context, drawable);
         
         OverlayItem overlayItem = new OverlayItem(userLocation.toGeoPoint(), "User Location", "");
 
@@ -66,8 +94,7 @@ public class NearbyStationsMapActivity extends SmartMapActivity {
         	}
         	
         }
-        
-        mapOverlays.add(overlay);
+		return overlay;
 	}
-
+ 
 }

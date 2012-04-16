@@ -97,17 +97,22 @@ public class SearchActivity extends SmartActivity {
 			
 			String selected = arg0.getItemAtPosition(arg2).toString();
 
-			if(selected.equals("Bus")) {
-				listAdapter.updateStationModeFilter("Bus");
-			} else if (selected.equals("Rail")) {
-				listAdapter.updateStationModeFilter("Rail");
-			} else if (selected.equals("Tram")) {
-				listAdapter.updateStationModeFilter("Tram");
-			} else {
-				listAdapter.updateStationModeFilter("All");
+			if(selected!=null) {
+				
+				if(selected.equals("Bus")) {
+					listAdapter.updateStationModeFilter("Bus");
+				} else if (selected.equals("Rail")) {
+					listAdapter.updateStationModeFilter("Rail");
+				} else if (selected.equals("Tram")) {
+					listAdapter.updateStationModeFilter("Tram");
+				} else {
+					listAdapter.updateStationModeFilter("All");
+				}
+				
+				listAdapter.getFilter().filter(stationNameText.getText());
+				
 			}
 			
-			listAdapter.getFilter().filter(stationNameText.getText());
 		}
 
 		@Override

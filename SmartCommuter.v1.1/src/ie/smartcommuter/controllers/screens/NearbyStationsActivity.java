@@ -10,6 +10,7 @@ import ie.smartcommuter.controllers.tabcontents.NearbyStationsListActivity;
 import ie.smartcommuter.models.Address;
 import ie.smartcommuter.models.DatabaseManager;
 import ie.smartcommuter.models.Station;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.location.Location;
@@ -32,7 +33,6 @@ public class NearbyStationsActivity extends SmartTabActivity implements Location
 	private DatabaseManager databaseManager;
 	private List<Station> nearbyStations;
 	private LocationManager locationManager;
-	private String provider;
 	private Location location;
 	private Address address;
 	private Bundle activityInfo;
@@ -48,9 +48,7 @@ public class NearbyStationsActivity extends SmartTabActivity implements Location
         dialog = new Dialog(this);
         
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        
-        provider = LocationManager.GPS_PROVIDER;
-        location = locationManager.getLastKnownLocation(provider);
+        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
         if(location!=null) {
             address = new Address(location);
@@ -81,8 +79,11 @@ public class NearbyStationsActivity extends SmartTabActivity implements Location
         	if(dialog.isShowing()) {
         		dialog.dismiss();
         	}
+        	locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 180000, 200, this);
+        	
+
         }
-		locationManager.requestLocationUpdates(provider, 180000, 500, this);
+	
 	}
 
 	@Override
@@ -92,17 +93,22 @@ public class NearbyStationsActivity extends SmartTabActivity implements Location
 	}
 
 	@Override
-	public void onLocationChanged(Location arg0) {
-		location = arg0;
-        address = new Address(location);
-        
-        databaseManager = new DatabaseManager(this);
-        databaseManager.open();
-        nearbyStations = databaseManager.getNearbyStations(address);
-        databaseManager.close();
-        
-        activityInfo.putSerializable("nearbyStations", (Serializable) nearbyStations);
-        activityInfo.putSerializable("userLocation", (Serializable) address);
+	public void onLocationChanged(Location loc) {
+		if(loc!=null) {
+			location = loc;
+	        address = new Address(location);
+	        
+	        databaseManager = new DatabaseManager(this);
+	        databaseManager.open();
+	        nearbyStations = databaseManager.getNearbyStations(address);
+	        databaseManager.close();
+	        
+	        Activity nearbyStationsListActivity = getLocalActivityManager().getActivity("List");
+	        ((NearbyStationsListActivity) nearbyStationsListActivity).updateNearbyStations(nearbyStations);
+	        
+	        Activity nearbyStationsMapActivity = getLocalActivityManager().getActivity("Map");
+	        ((NearbyStationsMapActivity) nearbyStationsMapActivity).updateNearbyStations(nearbyStations, address);
+		}
 	}
 
 	@Override

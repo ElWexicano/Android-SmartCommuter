@@ -5,7 +5,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:clickable="true"
-    android:apiKey="0jA4lqB7yFxbZqq-KxFPOQWoWigjz9giff3iLSw "
+    android:apiKey="0jA4lqB7yFxbZqq-KxFPOQWoWigjz9giff3iLSw"
 />
 <!-- Debug Key = 0jA4lqB7yFxbZqq-KxFPOQWoWigjz9giff3iLSw -->
 <!-- Live Key = 0jA4lqB7yFxYAjN4TIVcw29ZIFEfBy0LoaeXJHA -->
