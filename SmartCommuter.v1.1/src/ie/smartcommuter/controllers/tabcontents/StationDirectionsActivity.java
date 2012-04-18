@@ -21,7 +21,6 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * This is a class is used to display the directions
@@ -78,6 +77,8 @@ public class StationDirectionsActivity extends SmartTabContentActivity implement
         	if(dialog.isShowing()) {
         		dialog.dismiss();
         	}
+
+    		new Thread(runnable).start();
         } 
 	}
 
@@ -90,10 +91,8 @@ public class StationDirectionsActivity extends SmartTabContentActivity implement
 
 	@Override
 	public void onLocationChanged(Location loc) { 
-		if(loc!=null) {
-			location = loc;
-			new Thread(runnable).start();
-		}
+		location = loc;
+		new Thread(runnable).start();
 	}
 
 	@Override
@@ -151,6 +150,7 @@ public class StationDirectionsActivity extends SmartTabContentActivity implement
 				startActivity(intent);
 				break;
 			case 1: 
+				finish();
 				break;
 			}
 		}
@@ -171,16 +171,16 @@ public class StationDirectionsActivity extends SmartTabContentActivity implement
 
 					@Override
 					public void run() {
+
+						address = new Address(location);
 						
-						if(location!=null) {
-							
-							address = new Address(location);
-							
-					        directions = new Directions();
-					        directions.setStartLocation(address);
-					        directions.setEndLocation(station.getAddress());
-					        directions.generate();
-					        
+				        directions = new Directions();
+				        directions.setStartLocation(address);
+				        directions.setEndLocation(station.getAddress());
+				        directions.generate();
+				        
+				        if(directions!=null) {
+				        	
 					        directionsAdapter = new DirectionArrayAdapter(context, directions.getStages());
 					        
 					        View header = getLayoutInflater().inflate(R.layout.row_directions_header, null, false);
@@ -198,14 +198,12 @@ public class StationDirectionsActivity extends SmartTabContentActivity implement
 					        if(directions.getStages().size()>0) {
 					        	directionsList.setAdapter(directionsAdapter);
 					        }
-					        
-					        if(!hideProgressBar) {
-					        	updateEmptyListMessage();
-					        }
-						} else {
-				        	Toast.makeText(context, "Couldn't locate a provider to find your location", Toast.LENGTH_LONG).show();
-				        	finish();
-						}
+				        	
+				        }
+				        
+				        if(!hideProgressBar) {
+				        	updateEmptyListMessage();
+				        }
 					}
 				});
 			}

@@ -18,7 +18,7 @@
             android:key="automaticProblemReporting"
             android:summary="@string/autoProblemReportSummary"
             android:title="@string/autoProblemReportTitle"
-            android:defaultValue="false"/>
+            android:defaultValue="true"/>
         
         <ListPreference 
             android:key="realtimeRefreshInterval"

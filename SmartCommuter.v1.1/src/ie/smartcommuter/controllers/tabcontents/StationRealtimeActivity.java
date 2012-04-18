@@ -68,6 +68,7 @@ public class StationRealtimeActivity extends SmartTabContentActivity {
 	protected void onPause() {
 		super.onPause();
 		getRealtimeUpdates = false;
+		handler.removeCallbacks(runnable);
 	}
 
 	@Override
@@ -86,7 +87,7 @@ public class StationRealtimeActivity extends SmartTabContentActivity {
 	 * the realtime information on the screen.
 	 * @return
 	 */
-	private Runnable getRealtimeRunnable() {
+	private synchronized Runnable getRealtimeRunnable() {
 		Runnable runnable = new Runnable() {
 			@Override
 			public void run() {

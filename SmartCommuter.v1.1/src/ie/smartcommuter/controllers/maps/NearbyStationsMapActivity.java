@@ -65,6 +65,7 @@ public class NearbyStationsMapActivity extends SmartMapActivity {
     	
         mapView = initGoogleMap(userLocation);
         mapOverlays = mapView.getOverlays();
+        mapOverlays.clear();
         SmartOverlay overlay = drawMapOverlays();
         mapOverlays.add(overlay);
     }

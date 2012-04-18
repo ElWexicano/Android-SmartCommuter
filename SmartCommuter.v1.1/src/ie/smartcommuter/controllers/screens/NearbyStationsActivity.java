@@ -57,16 +57,17 @@ public class NearbyStationsActivity extends SmartTabActivity implements Location
             databaseManager.open();
             nearbyStations = databaseManager.getNearbyStations(address);
             databaseManager.close();
-            
-            activityInfo = new Bundle();
-            activityInfo.putSerializable("nearbyStations", (Serializable) nearbyStations);
-            activityInfo.putSerializable("userLocation", (Serializable) address);
-            
-            tabHost = getTabHost();
-            addTab(NearbyStationsListActivity.class, activityInfo, "List");
-            addTab(NearbyStationsMapActivity.class, activityInfo, "Map");
-            tabHost.setCurrentTab(0);
         }
+        
+        activityInfo = new Bundle();
+        activityInfo.putSerializable("nearbyStations", (Serializable) nearbyStations);
+        activityInfo.putSerializable("userLocation", (Serializable) address);
+        
+        tabHost = getTabHost();
+        addTab(NearbyStationsListActivity.class, activityInfo, "List");
+        addTab(NearbyStationsMapActivity.class, activityInfo, "Map");
+        tabHost.setCurrentTab(0);
+
     }
     
 	@Override
@@ -81,7 +82,6 @@ public class NearbyStationsActivity extends SmartTabActivity implements Location
         	}
         	locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 180000, 200, this);
         	
-
         }
 	
 	}
@@ -94,21 +94,21 @@ public class NearbyStationsActivity extends SmartTabActivity implements Location
 
 	@Override
 	public void onLocationChanged(Location loc) {
-		if(loc!=null) {
-			location = loc;
-	        address = new Address(location);
-	        
-	        databaseManager = new DatabaseManager(this);
-	        databaseManager.open();
-	        nearbyStations = databaseManager.getNearbyStations(address);
-	        databaseManager.close();
-	        
-	        Activity nearbyStationsListActivity = getLocalActivityManager().getActivity("List");
-	        ((NearbyStationsListActivity) nearbyStationsListActivity).updateNearbyStations(nearbyStations);
-	        
-	        Activity nearbyStationsMapActivity = getLocalActivityManager().getActivity("Map");
-	        ((NearbyStationsMapActivity) nearbyStationsMapActivity).updateNearbyStations(nearbyStations, address);
-		}
+
+		location = loc;
+        address = new Address(location);
+        
+        databaseManager = new DatabaseManager(this);
+        databaseManager.open();
+        nearbyStations = databaseManager.getNearbyStations(address);
+        databaseManager.close();
+        
+        Activity nearbyStationsListActivity = getLocalActivityManager().getActivity("List");
+        ((NearbyStationsListActivity) nearbyStationsListActivity).updateNearbyStations(nearbyStations);
+        
+        Activity nearbyStationsMapActivity = getLocalActivityManager().getActivity("Map");
+        ((NearbyStationsMapActivity) nearbyStationsMapActivity).updateNearbyStations(nearbyStations, address);
+
 	}
 
 	@Override
