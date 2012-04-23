@@ -2,7 +2,6 @@ package ie.smartcommuter.controllers.screens;
 
 import java.io.Serializable;
 import java.util.List;
-
 import ie.smartcommuter.R;
 import ie.smartcommuter.controllers.SmartTabActivity;
 import ie.smartcommuter.controllers.maps.NearbyStationsMapActivity;
@@ -22,6 +21,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 
 /**
  * This class is used for the Nearby Stations Screen
@@ -31,10 +31,10 @@ import android.widget.Button;
 public class NearbyStationsActivity extends SmartTabActivity implements LocationListener{
 
 	private DatabaseManager databaseManager;
-	private List<Station> nearbyStations;
+	public static List<Station> nearbyStations;
 	private LocationManager locationManager;
 	private Location location;
-	private Address address;
+	public static Address address;
 	private Bundle activityInfo;
 	private Dialog dialog;
 	
@@ -51,12 +51,7 @@ public class NearbyStationsActivity extends SmartTabActivity implements Location
         location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
         if(location!=null) {
-            address = new Address(location);
-
-            databaseManager = new DatabaseManager(this);
-            databaseManager.open();
-            nearbyStations = databaseManager.getNearbyStations(address);
-            databaseManager.close();
+            getNearbyStations();
         }
         
         activityInfo = new Bundle();
@@ -67,7 +62,6 @@ public class NearbyStationsActivity extends SmartTabActivity implements Location
         addTab(NearbyStationsListActivity.class, activityInfo, "List");
         addTab(NearbyStationsMapActivity.class, activityInfo, "Map");
         tabHost.setCurrentTab(0);
-
     }
     
 	@Override
@@ -80,8 +74,14 @@ public class NearbyStationsActivity extends SmartTabActivity implements Location
         	if(dialog.isShowing()) {
         		dialog.dismiss();
         	}
+        	
+        	locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        	location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         	locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 180000, 200, this);
         	
+        	if(location!=null) {
+                updateNearbyStationTabs();
+        	}
         }
 	
 	}
@@ -94,31 +94,52 @@ public class NearbyStationsActivity extends SmartTabActivity implements Location
 
 	@Override
 	public void onLocationChanged(Location loc) {
-
 		location = loc;
+        updateNearbyStationTabs();
+	}
+
+	@Override
+	public void onProviderDisabled(String arg0) { 
+		Toast.makeText(this, "GPS Disabled",Toast.LENGTH_SHORT).show();
+	}
+
+	@Override
+	public void onProviderEnabled(String arg0) { 
+		Toast.makeText(this, "GPS Enabled",Toast.LENGTH_SHORT).show();
+	}
+
+	@Override
+	public void onStatusChanged(String arg0, int arg1, Bundle arg2) { }
+	
+	/**
+	 * This method is used to get nearby stations.
+	 */
+	protected void getNearbyStations() {
         address = new Address(location);
         
         databaseManager = new DatabaseManager(this);
         databaseManager.open();
         nearbyStations = databaseManager.getNearbyStations(address);
         databaseManager.close();
-        
-        Activity nearbyStationsListActivity = getLocalActivityManager().getActivity("List");
-        ((NearbyStationsListActivity) nearbyStationsListActivity).updateNearbyStations(nearbyStations);
-        
-        Activity nearbyStationsMapActivity = getLocalActivityManager().getActivity("Map");
-        ((NearbyStationsMapActivity) nearbyStationsMapActivity).updateNearbyStations(nearbyStations, address);
-
 	}
-
-	@Override
-	public void onProviderDisabled(String arg0) { }
-
-	@Override
-	public void onProviderEnabled(String arg0) { }
-
-	@Override
-	public void onStatusChanged(String arg0, int arg1, Bundle arg2) { }
+	
+	/**
+	 * This method is used to update the users location and
+	 * to get stations that are near the users location.
+	 */
+	protected void updateNearbyStationTabs() {
+		getNearbyStations();
+        
+        if(getLocalActivityManager().getActivity("List")!=null) {
+            Activity nearbyStationsListActivity = getLocalActivityManager().getActivity("List");
+            ((NearbyStationsListActivity) nearbyStationsListActivity).updateNearbyStations(nearbyStations);
+        }
+        
+        if(getLocalActivityManager().getActivity("Map")!=null) {
+            Activity nearbyStationsMapActivity = getLocalActivityManager().getActivity("Map");
+            ((NearbyStationsMapActivity) nearbyStationsMapActivity).updateNearbyStations(nearbyStations, address);
+        }
+	}
 	
     /**
      * This method is used to display the GPS Dialog

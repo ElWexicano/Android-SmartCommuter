@@ -1,10 +1,12 @@
 package ie.smartcommuter.controllers.tabcontents;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ie.smartcommuter.R;
 import ie.smartcommuter.controllers.SmartTabContentActivity;
 import ie.smartcommuter.controllers.StationArrayAdapter;
+import ie.smartcommuter.controllers.screens.NearbyStationsActivity;
 import ie.smartcommuter.models.Station;
 import android.content.Context;
 import android.content.Intent;
@@ -35,17 +37,28 @@ public class NearbyStationsListActivity extends SmartTabContentActivity {
         @SuppressWarnings("unchecked")
 		List<Station> nearbyStations = (List<Station>) bundle.getSerializable("nearbyStations");
         
-        if(nearbyStations!=null) {
-            listAdapter = new StationArrayAdapter(this, nearbyStations);
-            
-            nearbyStationsList = (ListView)findViewById(R.id.nearbyStationsList);
-            nearbyStationsList.setOnItemClickListener(new StationItemListener());
-            nearbyStationsList.setAdapter(listAdapter);
-            nearbyStationsList.setEmptyView(findViewById(R.id.nearbyListEmpty));
+        if(nearbyStations==null) {
+        	nearbyStations = new ArrayList<Station>();
         }
+        
+        listAdapter = new StationArrayAdapter(this, nearbyStations);
+        
+        nearbyStationsList = (ListView)findViewById(R.id.nearbyStationsList);
+        nearbyStationsList.setOnItemClickListener(new StationItemListener());
+        nearbyStationsList.setAdapter(listAdapter);
+        nearbyStationsList.setEmptyView(findViewById(R.id.nearbyListEmpty));
     }
     
-    /**
+    @Override
+	protected void onResume() {
+		super.onResume();
+		
+		if(NearbyStationsActivity.nearbyStations!=null) {
+			updateNearbyStations(NearbyStationsActivity.nearbyStations);
+		}
+	}
+
+	/**
      * This method is used to update the nearest stations list.
      * @param stations
      */
@@ -53,5 +66,5 @@ public class NearbyStationsListActivity extends SmartTabContentActivity {
 		listAdapter = new StationArrayAdapter(context, stations);
 		nearbyStationsList.setAdapter(listAdapter);
     }
-
+    
 }

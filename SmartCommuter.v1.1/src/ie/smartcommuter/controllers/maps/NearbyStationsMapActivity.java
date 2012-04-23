@@ -1,5 +1,6 @@
 package ie.smartcommuter.controllers.maps;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.android.maps.Overlay;
@@ -8,6 +9,7 @@ import com.google.android.maps.OverlayItem;
 import ie.smartcommuter.R;
 import ie.smartcommuter.controllers.SmartMapActivity;
 import ie.smartcommuter.controllers.SmartOverlay;
+import ie.smartcommuter.controllers.screens.NearbyStationsActivity;
 import ie.smartcommuter.models.Address;
 import ie.smartcommuter.models.Station;
 import android.content.Context;
@@ -42,17 +44,27 @@ public class NearbyStationsMapActivity extends SmartMapActivity {
         
         userLocation = (Address) bundle.getSerializable("userLocation");
         nearbyStations = (List<Station>) bundle.getSerializable("nearbyStations");
+        
+
     }
 
 	@Override
 	protected void onResume() {
 		super.onResume();
 		
-        mapView = initGoogleMap(userLocation);
-        mapOverlays = mapView.getOverlays();
+        if(NearbyStationsActivity.nearbyStations!=null && NearbyStationsActivity.address!=null) {
+        	userLocation = NearbyStationsActivity.address;
+        	nearbyStations = NearbyStationsActivity.nearbyStations;
+        }
         
-        SmartOverlay overlay = drawMapOverlays();
-        mapOverlays.add(overlay);
+        if(nearbyStations==null) {
+        	nearbyStations = new ArrayList<Station>();
+        }
+		
+		if(userLocation!=null) {
+			updateNearbyStations(nearbyStations,userLocation);
+		}
+		
 	}
 
     /**

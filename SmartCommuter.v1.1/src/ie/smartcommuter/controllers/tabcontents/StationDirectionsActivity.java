@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * This is a class is used to display the directions
@@ -70,6 +71,7 @@ public class StationDirectionsActivity extends SmartTabContentActivity implement
         	openGPSDialog();
         } else {
 
+        	locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
     		location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
     		runnable = updateDirectionsRunnable();
     		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 180000, 200, this);
@@ -96,10 +98,14 @@ public class StationDirectionsActivity extends SmartTabContentActivity implement
 	}
 
 	@Override
-	public void onProviderDisabled(String provider) {}
+	public void onProviderDisabled(String provider) {
+		Toast.makeText(this, "GPS Disabled",Toast.LENGTH_SHORT).show();
+	}
 
 	@Override
-	public void onProviderEnabled(String provider) {}
+	public void onProviderEnabled(String provider) {
+		Toast.makeText(this, "GPS Enabled",Toast.LENGTH_SHORT).show();
+	}
 
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {}
@@ -171,14 +177,16 @@ public class StationDirectionsActivity extends SmartTabContentActivity implement
 
 					@Override
 					public void run() {
-
-						address = new Address(location);
 						
-				        directions = new Directions();
-				        directions.setStartLocation(address);
-				        directions.setEndLocation(station.getAddress());
-				        directions.generate();
-				        
+						if(location!=null) {
+							address = new Address(location);
+							
+					        directions = new Directions();
+					        directions.setStartLocation(address);
+					        directions.setEndLocation(station.getAddress());
+					        directions.generate();
+						}
+
 				        if(directions!=null) {
 				        	
 					        directionsAdapter = new DirectionArrayAdapter(context, directions.getStages());
@@ -195,7 +203,13 @@ public class StationDirectionsActivity extends SmartTabContentActivity implement
 					        	directionsList.addHeaderView(header);
 					        }
 					        
-					        if(directions.getStages().size()>0) {
+					        int numberOfStages = 0;
+					        
+					        if(directions.getStages()!=null) {
+					        	numberOfStages = directions.getStages().size();
+					        }
+					        
+					        if(numberOfStages>0) {
 					        	directionsList.setAdapter(directionsAdapter);
 					        }
 				        	
