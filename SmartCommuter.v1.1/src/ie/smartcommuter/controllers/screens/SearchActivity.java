@@ -69,14 +69,11 @@ public class SearchActivity extends SmartActivity {
      */
     private class SearchTextChangedListener implements TextWatcher {
 
-		@Override
 		public void afterTextChanged(Editable s) {}
 
-		@Override
 		public void beforeTextChanged(CharSequence s, int start, int count,
 				int after) {}
 
-		@Override
 		public void onTextChanged(CharSequence s, int start, int before,
 				int count) {
 			listAdapter.getFilter().filter(s);
@@ -91,7 +88,6 @@ public class SearchActivity extends SmartActivity {
      */
     private class SearchSpinnerChangedListener implements OnItemSelectedListener {
 
-		@Override
 		public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
 				long arg3) {
 			
@@ -115,7 +111,6 @@ public class SearchActivity extends SmartActivity {
 			
 		}
 
-		@Override
 		public void onNothingSelected(AdapterView<?> arg0) {}
     }
 }

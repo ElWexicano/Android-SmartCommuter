@@ -9,9 +9,11 @@ import ie.smartcommuter.controllers.tabcontents.NearbyStationsListActivity;
 import ie.smartcommuter.models.Address;
 import ie.smartcommuter.models.DatabaseManager;
 import ie.smartcommuter.models.Station;
+import ie.smartcommuter.models.Utilities;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -37,6 +39,7 @@ public class NearbyStationsActivity extends SmartTabActivity implements Location
 	public static Address address;
 	private Bundle activityInfo;
 	private Dialog dialog;
+	private String provider;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,9 @@ public class NearbyStationsActivity extends SmartTabActivity implements Location
         dialog = new Dialog(this);
         
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        
+        Criteria criteria = new Criteria();
+		provider = locationManager.getBestProvider(criteria, false);
         location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
         if(location!=null) {
@@ -68,21 +74,11 @@ public class NearbyStationsActivity extends SmartTabActivity implements Location
 	protected void onResume() {
 		super.onResume();
 		
-        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-        	openGPSDialog();
-        } else {
-        	if(dialog.isShowing()) {
-        		dialog.dismiss();
-        	}
-        	
-        	locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        	location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        	locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 180000, 200, this);
-        	
-        	if(location!=null) {
-                updateNearbyStationTabs();
-        	}
-        }
+    	locationManager.requestLocationUpdates(provider, 180000, 200, this);
+    	
+    	if(location!=null) {
+            updateNearbyStationTabs();
+    	}
 	
 	}
 
@@ -92,23 +88,21 @@ public class NearbyStationsActivity extends SmartTabActivity implements Location
 		locationManager.removeUpdates(this);
 	}
 
-	@Override
 	public void onLocationChanged(Location loc) {
-		location = loc;
-        updateNearbyStationTabs();
+		if(Utilities.isBetterLocation(loc, location)) {
+			location = loc;
+	        updateNearbyStationTabs();
+		}
 	}
 
-	@Override
 	public void onProviderDisabled(String arg0) { 
 		Toast.makeText(this, "GPS Disabled",Toast.LENGTH_SHORT).show();
 	}
 
-	@Override
 	public void onProviderEnabled(String arg0) { 
 		Toast.makeText(this, "GPS Enabled",Toast.LENGTH_SHORT).show();
 	}
 
-	@Override
 	public void onStatusChanged(String arg0, int arg1, Bundle arg2) { }
 	
 	/**
@@ -173,7 +167,6 @@ public class NearbyStationsActivity extends SmartTabActivity implements Location
     		operationId = id;
     	}
     	
-		@Override
 		public void onClick(View arg0) {
 			dialog.dismiss();
 			
@@ -190,4 +183,5 @@ public class NearbyStationsActivity extends SmartTabActivity implements Location
 			}
 		}
     }
+     
 }

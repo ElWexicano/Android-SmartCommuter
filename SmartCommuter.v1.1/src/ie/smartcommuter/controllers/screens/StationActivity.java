@@ -30,7 +30,7 @@ public class StationActivity extends SmartTabActivity {
 	private DatabaseManager databaseManager;
 	private Boolean isFavourite;
 	private Station station;
-	private ImageView favouritesImage;
+	private ImageView favouritesImage, stationCompanyImage;
 	private SharedPreferences prefs;
 	
     @Override
@@ -55,11 +55,13 @@ public class StationActivity extends SmartTabActivity {
         TextView stationAddressTextView = (TextView) findViewById(R.id.stationAddressTextView);
         stationNameTextView.setText(station.getName());
         stationAddressTextView.setText(station.getAddress().getLocation());
-        favouritesImage = (ImageView) findViewById(R.id.stationDetailsFavouriteImageView);
         
+        stationCompanyImage = (ImageView) findViewById(R.id.stationCompanyImageView);
+        stationCompanyImage.setImageResource(station.getStationLogo());
+
+        favouritesImage = (ImageView) findViewById(R.id.stationDetailsFavouriteImageView);
         favouritesImage.setOnClickListener(new OnClickListener() {
 
-			@Override
 			public void onClick(View arg0) {
 				
 				databaseManager.open();

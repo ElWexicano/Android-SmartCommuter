@@ -16,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
@@ -60,7 +61,6 @@ public class SmartTabContentActivity extends Activity {
 	 */
 	public class StationItemListener implements OnItemClickListener {
 		
-		@Override
 		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 			
 			Bundle activityInfo = new Bundle();
@@ -121,5 +121,24 @@ public class SmartTabContentActivity extends Activity {
 		}
 		
 		return version;
+    }
+	
+	
+    /**
+     * This method is used to change the original loading message
+     * to an empty list message.
+     * @param progressBarResourceId
+     * @param textViewIntId
+     * @param textViewMessageIntId
+     * @return Boolean
+     */
+    protected boolean updateEmptyListMessage(int progressBarResourceId, int textViewIntId, int textViewMessageIntId) {
+    	ProgressBar progressBar = (ProgressBar) findViewById(progressBarResourceId);
+    	progressBar.setVisibility(View.INVISIBLE);
+    	
+    	TextView directionsListEmpty = (TextView) findViewById(textViewIntId);
+    	directionsListEmpty.setText(textViewMessageIntId);
+    	
+    	return true;
     }
 }

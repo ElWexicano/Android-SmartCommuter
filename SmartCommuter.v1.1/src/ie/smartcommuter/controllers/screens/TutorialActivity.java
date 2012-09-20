@@ -51,7 +51,6 @@ public class TutorialActivity extends SmartActivity {
 			this.viewNext = viewNext;
 		}
 		
-		@Override
 		public void onClick(View arg0) {
 			
 			int currentSlide = viewFlipper.getDisplayedChild();

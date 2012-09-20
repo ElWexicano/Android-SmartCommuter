@@ -28,6 +28,15 @@
             android:entries="@array/realRefreshArray"
             android:entryValues="@array/realRefreshValuesArray"/>
         
+        <ListPreference 
+            android:key="directionsMode"
+            android:title="@string/directionsModeTitle"
+            android:summary="@string/directionsModeSummary"
+            android:defaultValue="walking"
+            android:entries="@array/directionsModeArray"
+            android:entryValues="@array/directionsModeValuesArray"/>
+        
+        
     </PreferenceCategory>
     
     <PreferenceCategory 

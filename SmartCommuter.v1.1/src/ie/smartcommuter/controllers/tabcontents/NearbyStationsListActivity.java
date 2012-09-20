@@ -23,6 +23,7 @@ public class NearbyStationsListActivity extends SmartTabContentActivity {
 	private Context context;
 	private StationArrayAdapter listAdapter;
 	private ListView nearbyStationsList;
+	private Boolean hideProgressBar;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,6 +31,7 @@ public class NearbyStationsListActivity extends SmartTabContentActivity {
         setContentView(R.layout.screen_nearby_list);
         
         context = this;
+        hideProgressBar = false;
         
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -65,6 +67,10 @@ public class NearbyStationsListActivity extends SmartTabContentActivity {
     public void updateNearbyStations(List<Station> stations) {
 		listAdapter = new StationArrayAdapter(context, stations);
 		nearbyStationsList.setAdapter(listAdapter);
+		
+        if(hideProgressBar) {
+        	hideProgressBar = updateEmptyListMessage(R.id.nearbyStationsProgressBar,
+        			R.id.nearbyListEmpty,R.string.nearbyListEmptyMessage);
+        }
     }
-    
 }

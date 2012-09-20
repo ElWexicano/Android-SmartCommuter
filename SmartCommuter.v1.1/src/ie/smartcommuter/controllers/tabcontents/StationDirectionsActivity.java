@@ -6,20 +6,23 @@ import ie.smartcommuter.controllers.SmartTabContentActivity;
 import ie.smartcommuter.models.Address;
 import ie.smartcommuter.models.Directions;
 import ie.smartcommuter.models.Station;
+import ie.smartcommuter.models.Utilities;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,11 +41,12 @@ public class StationDirectionsActivity extends SmartTabContentActivity implement
 	private Directions directions;
 	private ListView directionsList;
 	private DirectionArrayAdapter directionsAdapter;
+	private SharedPreferences prefs;
 	private Context context;
 	private Handler handler;
 	private Runnable runnable;
 	private Boolean hideProgressBar;
-	private ProgressBar progressBar;
+	private String provider;
 	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +56,8 @@ public class StationDirectionsActivity extends SmartTabContentActivity implement
         handler = new Handler();
         hideProgressBar = false;
         
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        
         directionsList = (ListView) findViewById(R.id.directionsListView);
         directionsList.setEmptyView(findViewById(R.id.directionsListEmpty));
         
@@ -60,28 +66,21 @@ public class StationDirectionsActivity extends SmartTabContentActivity implement
         
         station = (Station) bundle.getSerializable("station");
 
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        
+        Criteria criteria = new Criteria();
+		provider = locationManager.getBestProvider(criteria, false);
+        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);   
     }
 	
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
-        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-        	openGPSDialog();
-        } else {
 
-        	locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-    		location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-    		runnable = updateDirectionsRunnable();
-    		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 180000, 200, this);
-            
-        	if(dialog.isShowing()) {
-        		dialog.dismiss();
-        	}
+		runnable = updateDirectionsRunnable();
+		locationManager.requestLocationUpdates(provider, 180000, 200, this);
 
-    		new Thread(runnable).start();
-        } 
+		new Thread(runnable).start();
 	}
 
 	@Override
@@ -91,23 +90,21 @@ public class StationDirectionsActivity extends SmartTabContentActivity implement
 		handler.removeCallbacks(runnable);
 	}
 
-	@Override
 	public void onLocationChanged(Location loc) { 
-		location = loc;
-		new Thread(runnable).start();
+		if(Utilities.isBetterLocation(loc, location)) {
+			location = loc;
+			new Thread(runnable).start();
+		}
 	}
 
-	@Override
 	public void onProviderDisabled(String provider) {
 		Toast.makeText(this, "GPS Disabled",Toast.LENGTH_SHORT).show();
 	}
 
-	@Override
 	public void onProviderEnabled(String provider) {
 		Toast.makeText(this, "GPS Enabled",Toast.LENGTH_SHORT).show();
 	}
 
-	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {}
 	
     /**
@@ -128,7 +125,6 @@ public class StationDirectionsActivity extends SmartTabContentActivity implement
 		dontUseFeatureButton.setOnClickListener(new GPSDialogButtonListener(1));
     }
     
-    
     /**
      * This class is used to either direct the user
      * to the Enable GPS screen or the previous
@@ -143,9 +139,7 @@ public class StationDirectionsActivity extends SmartTabContentActivity implement
     		this.operationId = id;
     	}
     	
-		@Override
 		public void onClick(View arg0) {
-			
 			dialog.dismiss();
 			
 			Intent intent = null;
@@ -170,25 +164,21 @@ public class StationDirectionsActivity extends SmartTabContentActivity implement
     private synchronized Runnable updateDirectionsRunnable() {
     	Runnable runnable = new Runnable() {
 
-			@Override
 			public void run() {
-				
 				handler.post(new Runnable() {
 
-					@Override
 					public void run() {
-						
 						if(location!=null) {
 							address = new Address(location);
 							
 					        directions = new Directions();
 					        directions.setStartLocation(address);
 					        directions.setEndLocation(station.getAddress());
+					        directions.setMode(prefs.getString("directionsMode", "walking"));
 					        directions.generate();
 						}
 
 				        if(directions!=null) {
-				        	
 					        directionsAdapter = new DirectionArrayAdapter(context, directions.getStages());
 					        
 					        View header = getLayoutInflater().inflate(R.layout.row_directions_header, null, false);
@@ -208,15 +198,14 @@ public class StationDirectionsActivity extends SmartTabContentActivity implement
 					        if(directions.getStages()!=null) {
 					        	numberOfStages = directions.getStages().size();
 					        }
-					        
 					        if(numberOfStages>0) {
 					        	directionsList.setAdapter(directionsAdapter);
-					        }
-				        	
+					        }			        	
 				        }
 				        
-				        if(!hideProgressBar) {
-				        	updateEmptyListMessage();
+				        if(hideProgressBar) {
+				        	hideProgressBar = updateEmptyListMessage(R.id.directionsProgressBar,
+				        			R.id.directionsListEmpty, R.string.directionsListEmptyMessage);
 				        }
 					}
 				});
@@ -225,19 +214,4 @@ public class StationDirectionsActivity extends SmartTabContentActivity implement
     	
 		return runnable;
     }
-
-    /**
-     * This method is used to change the original loading message
-     * to an empty list message.
-     */
-    private void updateEmptyListMessage() {
-    	progressBar = (ProgressBar) findViewById(R.id.directionsProgressBar);
-    	progressBar.setVisibility(View.INVISIBLE);
-    	
-    	TextView directionsListEmpty = (TextView) findViewById(R.id.directionsListEmpty);
-    	directionsListEmpty.setText(R.string.directionsListEmptyMessage);
-    	
-    	hideProgressBar = true;
-    }
-    
 }

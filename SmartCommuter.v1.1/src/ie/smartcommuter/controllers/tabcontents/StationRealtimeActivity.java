@@ -89,14 +89,14 @@ public class StationRealtimeActivity extends SmartTabContentActivity {
 	 */
 	private synchronized Runnable getRealtimeRunnable() {
 		Runnable runnable = new Runnable() {
-			@Override
+
 			public void run() {
 				
 				while(getRealtimeUpdates) {
 					station.getRealTimeData();
 					
 					handler.post(new Runnable() {
-						@Override
+
 						public void run() {
 					        arrivalsAdapter = new RealtimeArrayAdapter(context, station.getArrivals());
 					        arrivals.setAdapter(arrivalsAdapter);

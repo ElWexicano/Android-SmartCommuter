@@ -30,6 +30,7 @@ public class Directions {
 	private Address endLocation;
 	private List<Stage> stages;
 	private String summary;
+	private String mode = "Walking";
 	
 	public Directions() { }
 
@@ -81,6 +82,14 @@ public class Directions {
 		this.summary = summary;
 	}
 
+	public String getMode() {
+		return mode;
+	}
+	
+	public void setMode(String mode) {
+		this.mode = mode;
+	}
+	
 	/**
 	 * This method is used to generate the directions
 	 * for the address.
@@ -95,7 +104,7 @@ public class Directions {
 				JSONArray jsonArray = jsonObject.getJSONArray("routes");
 				jsonObject = jsonArray.getJSONObject(0);
 				
-				String summary = "Walking via ";
+				String summary = getMode()+" via ";
 				summary += jsonObject.getString("summary");
 				setSummary(summary);
 				
@@ -135,13 +144,10 @@ public class Directions {
 					
 					listStages.add(stage);
 				}
-				
 				if(listStages.size()!=0) {
 					setStages(listStages);
 				}
-				
 			}
-			
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -163,7 +169,8 @@ public class Directions {
         StringBuilder url = new StringBuilder();
         url.append("http://maps.googleapis.com/maps/api/directions/json?origin=")
         	.append(lat1).append(",").append(lon1).append("&destination=")
-        	.append(lat2).append(",").append(lon2).append("&mode=walking&sensor=true");
+        	.append(lat2).append(",").append(lon2).append("&mode=")
+        	.append(getMode().toLowerCase()).append("&sensor=true");
 
         HttpClient client = new DefaultHttpClient();
 		HttpGet httpGet = new HttpGet(url.toString());

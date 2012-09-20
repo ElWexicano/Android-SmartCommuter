@@ -1,15 +1,20 @@
 package ie.smartcommuter.models;
 
+import ie.smartcommuter.R;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.ksoap2.SoapEnvelope;
+import org.ksoap2.SoapFault;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 import org.xmlpull.v1.XmlPullParserException;
+
+import android.util.Log;
 
 
 /**
@@ -19,10 +24,10 @@ import org.xmlpull.v1.XmlPullParserException;
  */
 public class Station implements Serializable {
 	
-	private static final String NAMESPACE = "http://service.smartcommuter.ie";
-	private static final String URL = "http://www.hawke-wit.net/axis2/services/RealTime?wsdl";
+	private static final String NAMESPACE = "http://ie.smartcommuter.service.RealTimeWebService/";
+	private static final String URL = "http://smartcommuterws.cloudfoundry.com/services/RealTimeWebService?wsdl";
 	private static final String METHOD_NAME = "getStationData";
-	private static final String SOAP_ACTION = "RealTime";
+	private static final String SOAP_ACTION = "RealTimeWebService";
 	private static final int TIMEOUT = 20000;
 	private static final long serialVersionUID = 1L;
 	private int id;
@@ -93,6 +98,29 @@ public class Station implements Serializable {
 		return type;
 	}
 	
+	/**
+	 * Meth
+	 * @return
+	 */
+	public int getStationLogo() {
+		
+		int drawable = R.drawable.img_bus_eireann;
+		
+		if(this.getCompany().getName().equals("Bus Éireann")) {
+			drawable = R.drawable.img_bus_eireann;
+		} else if(this.getCompany().getName().equals("Dublin Bus")) {
+			drawable = R.drawable.img_dublin_bus;
+		} else if(this.getCompany().getName().equals("Irish Rail")) {
+			drawable = R.drawable.img_irish_rail;
+		} else if(this.getCompany().getName().equals("JJ Kavanagh & Sons")) {
+			drawable = R.drawable.img_jj_kavanagh;
+		} else if(this.getCompany().getName().equals("Luas")) {
+			drawable = R.drawable.img_luas;
+		}
+		
+		return drawable;
+	}
+	
 	
 	@Override
 	public String toString() {
@@ -112,7 +140,6 @@ public class Station implements Serializable {
 		request.addProperty("stationType", getStationType());
 		request.addProperty("stationApiCode", getApiCode());
 		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-//		envelope.dotNet = true;
 		envelope.setOutputSoapObject(request);
 		HttpTransportSE androidHttpTransport;
 
@@ -122,7 +149,25 @@ public class Station implements Serializable {
         	androidHttpTransport = new HttpTransportSE(URL,TIMEOUT);
         	androidHttpTransport.debug = true;
 			androidHttpTransport.call(SOAP_ACTION, envelope);
-			response = (SoapObject)envelope.bodyIn;
+			
+			
+		    if (envelope.bodyIn instanceof SoapFault) {
+		        String str= ((SoapFault) envelope.bodyIn).faultstring;
+		        Log.i("", str);
+
+		        // Another way to travers through the SoapFault object
+		    /*  Node detailsString =str= ((SoapFault) envelope.bodyIn).detail; 
+		        Element detailElem = (Element) details.getElement(0) 
+		                     .getChild(0); 
+		        Element e = (Element) detailElem.getChild(2);faultstring; 
+		        Log.i("", e.getName() + " " + e.getText(0)str); */
+		    } else {
+		        response = (SoapObject)envelope.bodyIn;
+		        Log.d("WS", String.valueOf(response));
+		    }
+			
+			
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (XmlPullParserException e) {

@@ -48,4 +48,17 @@
         <item name="900000">900000</item>
     </string-array>
     
+    <string-array name="directionsModeArray">
+        <item name="cycling">Cycling</item>
+        <item name="driving">Driving</item>
+        <item name="walking">Walking</item>
+    </string-array>
+
+    <string-array name="directionsModeValuesArray">
+        <item name="cycling">Cycling</item>
+        <item name="driving">Driving</item>
+        <item name="walking">Walking</item>
+    </string-array>
+    
+    
 </resources>

@@ -6,7 +6,7 @@
     <string name="appDesc">SmartCommuter provides free up to the minute information on Public Transport Systems in Ireland.</string>
     <string name="appMoreInfo">For more information about SmartCommuter or to provide feedback please visit our website.</string>
     <string name="appAbout">About SmartCommuter</string>
-    <string name="appWebsite">www.smartcommuter.ie</string>
+    <string name="appWebsite">Control your Commuting Experience!!</string>
     <string name="developer">Developed by Shane Bryan Doyle</string>
     <string name="versionLabel">Current Version:</string>
     <string name="version">1</string>
@@ -82,6 +82,7 @@
     <string name="clearRecentlyViewedStationsMessage">Are you sure you want to clear all Recently Viewed Stations?</string>
     <string name="refreshRealTimeTitle">Realtime Update Interval</string>
     <string name="refreshRealTimeSummary">Define how often Realtime Information will be updated</string>
-    
+    <string name="directionsModeTitle">Mode of Directions</string>
+    <string name="directionsModeSummary">Do you want cycling, driving or walking directions</string>
 
 </resources>

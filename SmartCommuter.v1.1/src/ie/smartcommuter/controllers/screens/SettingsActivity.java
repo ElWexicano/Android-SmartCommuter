@@ -38,7 +38,6 @@ public class SettingsActivity extends PreferenceActivity {
         Preference problemReporting = getPreferenceScreen().findPreference("automaticProblemReporting");
         problemReporting.setOnPreferenceClickListener(new OnPreferenceClickListener(){
 
-			@Override
 			public boolean onPreferenceClick(Preference arg0) {
 				Toast.makeText(context, R.string.restartMessage, Toast.LENGTH_SHORT).show();
 				return false;
@@ -49,7 +48,6 @@ public class SettingsActivity extends PreferenceActivity {
         Preference clearFavourites = getPreferenceScreen().findPreference("clearFavouriteStations");
         clearFavourites.setOnPreferenceClickListener(new OnPreferenceClickListener(){
 
-			@Override
 			public boolean onPreferenceClick(Preference preference) {
 				displayClearAllAlertDialog("favourites");
 				return false;
@@ -60,7 +58,6 @@ public class SettingsActivity extends PreferenceActivity {
         Preference clearRecentlyViewed = getPreferenceScreen().findPreference("clearRecenltyViewedStations");
         clearRecentlyViewed.setOnPreferenceClickListener(new OnPreferenceClickListener(){
 
-			@Override
 			public boolean onPreferenceClick(Preference preference) {
 				displayClearAllAlertDialog("recents");
 				return false;
@@ -71,7 +68,6 @@ public class SettingsActivity extends PreferenceActivity {
         Preference showTutorial = getPreferenceScreen().findPreference("showTutorial");
         showTutorial.setOnPreferenceClickListener(new OnPreferenceClickListener(){
 
-			@Override
 			public boolean onPreferenceClick(Preference preference) {
 				Intent newActivity = new Intent(context, TutorialActivity.class);
 				startActivity(newActivity);
@@ -123,7 +119,7 @@ public class SettingsActivity extends PreferenceActivity {
 		builder.setMessage(message)
 			.setCancelable(false)
 			.setPositiveButton("Yes", new OnClickListener() {
-				@Override
+
 				public void onClick(DialogInterface arg0, int arg1) {
 					databaseManager.open();
 					
@@ -139,7 +135,7 @@ public class SettingsActivity extends PreferenceActivity {
 				}
 		       })
 		    .setNegativeButton("No", new OnClickListener() {
-				@Override
+
 				public void onClick(DialogInterface dialog, int which) {
 					dialog.cancel();
 				}});

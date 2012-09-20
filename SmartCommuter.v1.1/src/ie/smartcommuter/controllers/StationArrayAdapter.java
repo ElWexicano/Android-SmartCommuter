@@ -51,24 +51,12 @@ public class StationArrayAdapter extends ArrayAdapter<Station>{
 			view = inflater.inflate(R.layout.row_station_odd, parent, false);
 		}
 		
-		
 		view.setId(station.getId());
 		
 		TextView stationNameView = (TextView) view.findViewById(R.id.stationNameText);
 		ImageView stationImageView = (ImageView) view.findViewById(R.id.stationLogo);
 		stationNameView.setText(station.getName());
-		
-		if(station.getCompany().getName().equals("Bus Éireann")) {
-			stationImageView.setImageResource(R.drawable.img_bus_eireann);
-		} else if(station.getCompany().getName().equals("Dublin Bus")) {
-			stationImageView.setImageResource(R.drawable.img_dublin_bus);
-		} else if(station.getCompany().getName().equals("Irish Rail")) {
-			stationImageView.setImageResource(R.drawable.img_irish_rail);
-		} else if(station.getCompany().getName().equals("JJ Kavanagh & Sons")) {
-			stationImageView.setImageResource(R.drawable.img_jj_kavanagh);
-		} else if(station.getCompany().getName().equals("Luas")) {
-			stationImageView.setImageResource(R.drawable.img_luas);
-		}
+		stationImageView.setImageResource(station.getStationLogo());
 		
 		return view;
 	}

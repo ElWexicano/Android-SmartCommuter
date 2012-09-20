@@ -16,10 +16,10 @@ import android.preference.PreferenceManager;
  * Testing.
  * @author Shane Bryan Doyle
  */
-@ReportsCrashes(formKey = "dDZ3REFVbFR0anJqQ21CQW82UGJLTkE6MQ",
-						mode = ReportingInteractionMode.TOAST,
-						forceCloseDialogAfterToast = false, 
-						resToastText = R.string.crashMessage) 
+//@ReportsCrashes(formKey = "dDZ3REFVbFR0anJqQ21CQW82UGJLTkE6MQ",
+//						mode = ReportingInteractionMode.TOAST,
+//						forceCloseDialogAfterToast = false, 
+//						resToastText = R.string.crashMessage) 
 public class MyApplication extends Application {
 
     @Override
@@ -28,7 +28,7 @@ public class MyApplication extends Application {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
     	
         if(prefs.getBoolean("automaticProblemReporting",true)) {
-        	ACRA.init(this);
+//        	ACRA.init(this);
         }
         
         super.onCreate();

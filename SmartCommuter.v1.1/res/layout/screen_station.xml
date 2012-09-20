@@ -18,24 +18,29 @@
         <TableLayout
             android:id="@+id/tableLayout1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content">
 
             <TableRow
                 android:id="@+id/tableRow1"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1" >
-
+                
+                <ImageView
+                    android:id="@+id/stationDetailsFavouriteImageView"
+                    android:src="@android:drawable/star_off" 
+                    style="@style/stationDetailsFavourite" />
+                
                 <TextView
                     android:id="@+id/stationNameTextView"
                     style="@style/stationDetailsName"
                     android:text="@string/stationNameExample" />
 
                 <ImageView
-                    android:id="@+id/stationDetailsFavouriteImageView"
-                    android:src="@android:drawable/star_off" 
-                    style="@style/stationDetailsFavourite" />
-
+                    android:id="@+id/stationCompanyImageView"
+                    android:src="@drawable/img_dublin_bus"
+					style="@style/stationDetailsLogo" />
+                
             </TableRow>
 
         </TableLayout>

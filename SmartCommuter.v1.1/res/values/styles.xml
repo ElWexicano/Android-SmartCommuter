@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
     
     <style name="appWindowTitleBackground">
         <item name="android:background">@color/headerBGColor</item>
@@ -81,20 +81,31 @@
         <item name="android:textSize">16dp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/appFontColor</item>
+        <item name="android:gravity">center</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">0.90</item>
+        <item name="android:maxLines">1</item>
     </style>
     
     <style name="stationDetailsAddress">
         <item name="android:textSize">14dp</item>
         <item name="android:textColor">@color/stationAddressFontColor</item>
+        <item name="android:gravity">center</item>
+        <item name="android:maxLines">1</item>
     </style>
     
     <style name="stationDetailsFavourite">
         <item name="android:layout_width">22dp</item>
         <item name="android:layout_height">22dp</item>
         <item name="android:layout_weight">0.10</item>
+    </style>
+    
+    <style name="stationDetailsLogo">
+        <item name="android:layout_width">63dp</item>
+        <item name="android:layout_height">20dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_alignParentLeft">true</item>
     </style>
     
 	<!-- Station Details Styles (End) -->

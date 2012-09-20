@@ -73,7 +73,6 @@ public class HomeActivity extends SmartActivity {
     		this.operationId = i;
     	}
     	
-		@Override
 		public void onClick(View arg0) {
 			
 			Intent activityIntent = null;
