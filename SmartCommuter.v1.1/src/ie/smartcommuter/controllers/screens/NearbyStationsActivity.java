@@ -1,7 +1,5 @@
 package ie.smartcommuter.controllers.screens;
 
-import java.io.Serializable;
-import java.util.List;
 import ie.smartcommuter.R;
 import ie.smartcommuter.controllers.SmartTabActivity;
 import ie.smartcommuter.controllers.maps.NearbyStationsMapActivity;
@@ -10,6 +8,10 @@ import ie.smartcommuter.models.Address;
 import ie.smartcommuter.models.DatabaseManager;
 import ie.smartcommuter.models.Station;
 import ie.smartcommuter.models.Utilities;
+
+import java.io.Serializable;
+import java.util.List;
+
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
@@ -20,26 +22,26 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
 
 /**
  * This class is used for the Nearby Stations Screen
  * of the Application.
- * @author Shane Bryan Doyle
+ * @author Shane Doyle
  */
 public class NearbyStationsActivity extends SmartTabActivity implements LocationListener{
 
-	private DatabaseManager databaseManager;
+	private DatabaseManager mDatabaseManager;
 	public static List<Station> nearbyStations;
-	private LocationManager locationManager;
-	private Location location;
+	private LocationManager mLocationManager;
+	private Location mLocation;
 	public static Address address;
-	private Bundle activityInfo;
-	private Dialog dialog;
-	private String provider;
+	private Bundle mActivityInfo;
+	private Dialog mDialog;
+	private String mProvider;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,25 +50,25 @@ public class NearbyStationsActivity extends SmartTabActivity implements Location
         requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.screen_nearby);
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.title_bar);
-        dialog = new Dialog(this);
+        mDialog = new Dialog(this);
         
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         
         Criteria criteria = new Criteria();
-		provider = locationManager.getBestProvider(criteria, false);
-        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		mProvider = mLocationManager.getBestProvider(criteria, false);
+        mLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
-        if(location!=null) {
+        if(mLocation!=null) {
             getNearbyStations();
         }
         
-        activityInfo = new Bundle();
-        activityInfo.putSerializable("nearbyStations", (Serializable) nearbyStations);
-        activityInfo.putSerializable("userLocation", (Serializable) address);
+        mActivityInfo = new Bundle();
+        mActivityInfo.putSerializable("nearbyStations", (Serializable) nearbyStations);
+        mActivityInfo.putSerializable("userLocation", (Serializable) address);
         
         tabHost = getTabHost();
-        addTab(NearbyStationsListActivity.class, activityInfo, "List");
-        addTab(NearbyStationsMapActivity.class, activityInfo, "Map");
+        addTab(NearbyStationsListActivity.class, mActivityInfo, "List");
+        addTab(NearbyStationsMapActivity.class, mActivityInfo, "Map");
         tabHost.setCurrentTab(0);
     }
     
@@ -74,9 +76,9 @@ public class NearbyStationsActivity extends SmartTabActivity implements Location
 	protected void onResume() {
 		super.onResume();
 		
-    	locationManager.requestLocationUpdates(provider, 180000, 200, this);
+    	mLocationManager.requestLocationUpdates(mProvider, 180000, 200, this);
     	
-    	if(location!=null) {
+    	if(mLocation!=null) {
             updateNearbyStationTabs();
     	}
 	
@@ -85,12 +87,12 @@ public class NearbyStationsActivity extends SmartTabActivity implements Location
 	@Override
 	protected void onPause() {
 		super.onPause();
-		locationManager.removeUpdates(this);
+		mLocationManager.removeUpdates(this);
 	}
 
 	public void onLocationChanged(Location loc) {
-		if(Utilities.isBetterLocation(loc, location)) {
-			location = loc;
+		if(Utilities.isBetterLocation(loc, mLocation)) {
+			mLocation = loc;
 	        updateNearbyStationTabs();
 		}
 	}
@@ -109,12 +111,12 @@ public class NearbyStationsActivity extends SmartTabActivity implements Location
 	 * This method is used to get nearby stations.
 	 */
 	protected void getNearbyStations() {
-        address = new Address(location);
+        address = new Address(mLocation);
         
-        databaseManager = new DatabaseManager(this);
-        databaseManager.open();
-        nearbyStations = databaseManager.getNearbyStations(address);
-        databaseManager.close();
+        mDatabaseManager = new DatabaseManager(this);
+        mDatabaseManager.open();
+        nearbyStations = mDatabaseManager.getNearbyStations(address);
+        mDatabaseManager.close();
 	}
 	
 	/**
@@ -140,15 +142,15 @@ public class NearbyStationsActivity extends SmartTabActivity implements Location
      * when the GPS is turned off.
      */
     protected void openGPSDialog() {
-		dialog.setTitle(R.string.gpsAlertTitle);
-		dialog.setContentView(R.layout.dialog_gps);
+		mDialog.setTitle(R.string.gps_alert_title);
+		mDialog.setContentView(R.layout.dialog_gps);
 		
-		dialog.setCancelable(false);
-		dialog.setCanceledOnTouchOutside(false);
-		dialog.show();
+		mDialog.setCancelable(false);
+		mDialog.setCanceledOnTouchOutside(false);
+		mDialog.show();
 		
-		Button enableGPSButton = (Button) dialog.findViewById(R.id.enableGPSButton);
-		Button dontUseFeatureButton = (Button) dialog.findViewById(R.id.dontUseButton);
+		Button enableGPSButton = (Button) mDialog.findViewById(R.id.enableGPSButton);
+		Button dontUseFeatureButton = (Button) mDialog.findViewById(R.id.dontUseButton);
 		enableGPSButton.setOnClickListener(new GPSDialogButtonListener(0));
 		dontUseFeatureButton.setOnClickListener(new GPSDialogButtonListener(1));
     }
@@ -157,22 +159,22 @@ public class NearbyStationsActivity extends SmartTabActivity implements Location
      * This class is used to either direct the user
      * to the Enable GPS screen or the previous
      * activity.
-     * @author Shane Bryan Doyle
+     * @author Shane Doyle
      */
     private class GPSDialogButtonListener implements OnClickListener {
     	
-    	int operationId;
+    	private int mOperationID;
     	
     	public GPSDialogButtonListener(int id) {
-    		operationId = id;
+    		mOperationID = id;
     	}
     	
 		public void onClick(View arg0) {
-			dialog.dismiss();
+			mDialog.dismiss();
 			
 			Intent intent = null;
 			
-			switch(operationId) {
+			switch(mOperationID) {
 			case 0:
 				intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
 				startActivity(intent);

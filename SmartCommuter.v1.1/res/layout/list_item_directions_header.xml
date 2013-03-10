@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/directionsHeader">
+
+    <TextView
+        android:id="@+id/directionSummary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:textSize="16dp"
+        android:textColor="@color/appFontColor"
+        android:text="@string/example_directions_summary" />
+
+    <TextView
+        android:id="@+id/directionDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/directionSummary"
+        style="@style/directionsHeaderText"
+        android:text="@string/example_directions_distance" />
+
+    <TextView
+        android:id="@+id/directionDuration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/directionSummary"
+        style="@style/directionsHeaderText"
+        android:text="@string/example_directions_duration" />
+
+</RelativeLayout>

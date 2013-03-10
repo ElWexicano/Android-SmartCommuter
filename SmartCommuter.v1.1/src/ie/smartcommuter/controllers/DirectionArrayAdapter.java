@@ -14,29 +14,29 @@ import android.widget.TextView;
 
 /**
  * This is a class is used to display directions in a list.
- * @author Shane Bryan Doyle
+ * @author Shane Doyle
  */
 public class DirectionArrayAdapter extends ArrayAdapter<Stage> {
 	
-	private Context context;
-	private List<Stage> stages;
+	private Context mContext;
+	private List<Stage> mStages;
 	
 	public DirectionArrayAdapter(Context context,List<Stage> stages) {
-		super(context, R.layout.row_directions, stages);
-		this.context = context;
+		super(context, R.layout.list_item_directions, stages);
+		this.mContext = context;
 		if(stages!=null) {
-			this.stages = stages;
+			this.mStages = stages;
 		}
 	}
 
 	@Override
 	public int getCount() {
-		return stages.size();
+		return mStages.size();
 	}
 
 	@Override
 	public Stage getItem(int position) {
-		return stages.get(position);
+		return mStages.get(position);
 	}
 
 	@Override
@@ -46,23 +46,23 @@ public class DirectionArrayAdapter extends ArrayAdapter<Stage> {
 
 	@Override
 	public int getPosition(Stage item) {
-		return stages.indexOf(item);
+		return mStages.indexOf(item);
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		
-		Stage stage = stages.get(position);
+		Stage stage = mStages.get(position);
 		
-		LayoutInflater inflater = (LayoutInflater) context
+		LayoutInflater inflater = (LayoutInflater) mContext
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		
 		View view;
 		
 		if(position % 2 == 0) {
-			view = inflater.inflate(R.layout.row_directions_odd, parent, false);
+			view = inflater.inflate(R.layout.list_item_directions_odd, parent, false);
 		} else {
-			view = inflater.inflate(R.layout.row_directions, parent, false);
+			view = inflater.inflate(R.layout.list_item_directions, parent, false);
 		}
 		
 		TextView directionTextView = (TextView) view.findViewById(R.id.directionTextView);

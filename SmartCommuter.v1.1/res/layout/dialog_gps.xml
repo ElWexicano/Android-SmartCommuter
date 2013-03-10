@@ -7,13 +7,13 @@
         android:id="@+id/textView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/gpsAlertMessageDesc" />
+        android:text="@string/gps_alert_message_desc" />
     
     <TextView
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/gpsAlertMessage" />
+        android:text="@string/gps_alert_message" />
     
     <LinearLayout
         android:id="@+id/linearLayout1"
@@ -24,12 +24,12 @@
 
         <Button
             android:id="@+id/enableGPSButton"
-            android:text="@string/gpsAlertButtonEnableGPS" 
+            android:text="@string/enable_gps" 
             style="@style/dialogButton" />
 
         <Button
             android:id="@+id/dontUseButton"
-            android:text="@string/gpsAlertButtonDontUse" 
+            android:text="@string/dont_use" 
 			style="@style/dialogButton" />
         
     </LinearLayout>

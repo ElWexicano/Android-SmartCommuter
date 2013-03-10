@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    style="@style/stationRow" >
+    
+    <TextView
+        android:id="@+id/text_station_name"
+        android:text="@string/example_station_name"
+        style="@style/stationRowText" />
+
+    <ImageView
+        android:id="@+id/image_view_station_logo"
+        android:src="@drawable/img_dublin_bus"
+		style="@style/stationRowImage" />
+    
+</RelativeLayout>

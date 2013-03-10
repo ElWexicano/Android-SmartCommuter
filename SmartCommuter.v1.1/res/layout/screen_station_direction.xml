@@ -13,7 +13,6 @@
     
 	<LinearLayout 
 	    android:id="@+id/directionsLoadingListView" 
-	    xmlns:android="http://schemas.android.com/apk/res/android"
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent"
 	    android:orientation="vertical"
@@ -30,7 +29,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:textColor="@color/appFontColor"
-	        android:text="@string/realTimeLoadingMessage" />
+	        android:text="@string/realtime_loading_message" />
 	
 	</LinearLayout>
     

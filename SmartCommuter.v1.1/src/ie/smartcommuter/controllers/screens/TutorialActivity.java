@@ -1,98 +1,87 @@
 package ie.smartcommuter.controllers.screens;
 
+import ie.smartcommuter.R;
+import ie.smartcommuter.controllers.SmartActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
-import ie.smartcommuter.R;
-import ie.smartcommuter.controllers.SmartActivity;
 
 /**
- * This class is used to display the tutorial
- * to the user.
- * @author Shane Bryan Doyle
+ * This class is used to display the tutorial to the user.
+ * 
+ * @author Shane Doyle
  */
 public class TutorialActivity extends SmartActivity {
 
-	private ViewFlipper viewFlipper;
-	private TextView previousTextView;
-	private TextView nextTextView;
-	private int numberSlides;
-	
+	private ViewFlipper mViewFlipper;
+	private TextView mPreviousTextView;
+	private TextView mNextTextView;
+	private int mNumberSlides;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		setContentView(R.layout.screen_tutorial);
-		
-		viewFlipper = (ViewFlipper) findViewById(R.id.tutorialSwitcher);
-		
-		previousTextView = (TextView) findViewById(R.id.previousTextView);
-		previousTextView.setVisibility(View.INVISIBLE);
-		previousTextView.setOnClickListener(new TutorialClickedListener(false));
-		
-		nextTextView = (TextView) findViewById(R.id.nextTextView);
-		nextTextView.setOnClickListener(new TutorialClickedListener(true));
-		
-		numberSlides = viewFlipper.getChildCount() - 1;
+
+		setContentView(R.layout.activity_tutorial);
+
+		mViewFlipper = (ViewFlipper) findViewById(R.id.tutorialSwitcher);
+
+		mPreviousTextView = (TextView) findViewById(R.id.previousTextView);
+		mPreviousTextView.setVisibility(View.INVISIBLE);
+		mPreviousTextView
+				.setOnClickListener(new TutorialClickedListener(false));
+
+		mNextTextView = (TextView) findViewById(R.id.nextTextView);
+		mNextTextView.setOnClickListener(new TutorialClickedListener(true));
+
+		mNumberSlides = mViewFlipper.getChildCount() - 1;
 	}
-	
+
 	/**
-	 * This class is used to listen to when user clicks
-	 * either back or forward.
-	 * @author Shane Bryan Doyle
+	 * This class is used to listen to when user clicks either back or forward.
+	 * 
+	 * @author Shane Doyle
 	 */
 	private class TutorialClickedListener implements OnClickListener {
-		
-		private boolean viewNext;
-		
+
+		private boolean mViewNext;
+
 		public TutorialClickedListener(boolean viewNext) {
-			this.viewNext = viewNext;
+			this.mViewNext = viewNext;
 		}
-		
+
 		public void onClick(View arg0) {
-			
-			int currentSlide = viewFlipper.getDisplayedChild();
-			
-			if(viewNext) {
-				if(currentSlide<numberSlides) {
-					viewFlipper.showNext();
-					if(currentSlide==0) {
-						previousTextView.setVisibility(View.VISIBLE);
+
+			int currentSlide = mViewFlipper.getDisplayedChild();
+
+			if (mViewNext) {
+				if (currentSlide < mNumberSlides) {
+					mViewFlipper.showNext();
+					if (currentSlide == 0) {
+						mPreviousTextView.setVisibility(View.VISIBLE);
 					}
-					if(currentSlide==(numberSlides-1)) {
-						nextTextView.setText(R.string.finishText);
+					if (currentSlide == (mNumberSlides - 1)) {
+						mNextTextView.setText(R.string.finish);
 					}
 				} else {
 					finish();
 				}
 			} else {
-				if(currentSlide>0) {
-					
-					if(currentSlide==numberSlides) {
-						nextTextView.setText(R.string.nextText);
+				if (currentSlide > 0) {
+
+					if (currentSlide == mNumberSlides) {
+						mNextTextView.setText(R.string.next);
 					}
-					
-					if(currentSlide==1) {
-						previousTextView.setVisibility(View.INVISIBLE);
+
+					if (currentSlide == 1) {
+						mPreviousTextView.setVisibility(View.INVISIBLE);
 					}
-					
-					viewFlipper.showPrevious();
+
+					mViewFlipper.showPrevious();
 				}
 			}
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-

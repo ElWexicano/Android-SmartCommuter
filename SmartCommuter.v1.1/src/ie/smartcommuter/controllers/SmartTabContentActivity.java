@@ -16,14 +16,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 
 /**
  * This is a superclass that is widely used by
  * classes that need Tab Content.
- * @author Shane Bryan Doyle
+ * @author Shane Doyle
  */
 public class SmartTabContentActivity extends Activity {
 
@@ -93,7 +93,7 @@ public class SmartTabContentActivity extends Activity {
 	 */
 	private void openInformationDialog() {
 		Dialog dialog = new Dialog(this);
-		dialog.setTitle(R.string.appAbout);
+		dialog.setTitle(R.string.app_about);
 		dialog.setContentView(R.layout.dialog_information);
 		
 		TextView currentVersion = (TextView) dialog.findViewById(R.id.versionTextView);

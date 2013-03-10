@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
-    <string-array name="stationTypeArray">
+    <string-array name="station_types">
         <item>All Transport Modes</item>
         <item>Bus</item>
         <item>Rail</item>
         <item>Tram</item>
     </string-array>
     
-    <string-array name="numberOfStationsArray">
+    <string-array name="number_of_stations">
         <item name="10">10 Stations</item>
         <item name="10">20 Stations</item>
         <item name="10">30 Stations</item>
         <item name="10">40 Stations</item>
     </string-array>
 
-    <string-array name="numberOfStationsValuesArray">
+    <string-array name="number_of_stations_values">
         <item name="10">10</item>
         <item name="10">20</item>
         <item name="10">30</item>
         <item name="10">40</item>
     </string-array>
     
-    <string-array name="userLocationIconTypeArray">
+    <string-array name="user_icon_types">
         <item name="male">Male</item>
         <item name="female">Female</item>
     </string-array>
     
-    <string-array name="userLocationIconTypeValueArray">
+    <string-array name="user_icon_types_values">
         <item name="male">male</item>
         <item name="female">female</item>
     </string-array>
     
-    <string-array name="realRefreshArray">
+    <string-array name="realtime_refresh_times">
         <item name="30000">Every 30 Seconds</item>
         <item name="60000">Every Minute</item>
         <item name="300000">Every 5 Minutes</item>
@@ -40,7 +40,7 @@
         <item name="900000">Every 15 Minutes</item>
     </string-array>
     
-    <string-array name="realRefreshValuesArray">
+    <string-array name="realtime_refresh_times_values">
         <item name="30000">30000</item>
         <item name="60000">60000</item>
         <item name="300000">300000</item>
@@ -48,17 +48,54 @@
         <item name="900000">900000</item>
     </string-array>
     
-    <string-array name="directionsModeArray">
+    <string-array name="direction_modes">
         <item name="cycling">Cycling</item>
         <item name="driving">Driving</item>
         <item name="walking">Walking</item>
     </string-array>
 
-    <string-array name="directionsModeValuesArray">
+    <string-array name="direction_modes_values">
         <item name="cycling">Cycling</item>
         <item name="driving">Driving</item>
         <item name="walking">Walking</item>
     </string-array>
     
+    <!-- The Following Strings are used for examples -->
+    <string-array name="example_stations">
+        <item>Some Bus Station</item>
+        <item>Some Rail Station</item>
+        <item>Some Luas Station</item>
+        <item>Some Bus Station</item>
+        <item>Some Rail Station</item>
+        <item>Some Luas Station</item>
+        <item>Some Rail Station</item>
+        <item>Some Luas Station</item>
+        <item>Some Bus Station</item>
+        <item>Some Rail Station</item>
+    </string-array>
+    
+    <string-array name="example_realtime">
+        <item>Route 1 - Station Name - Time</item>
+        <item>Route 1 - Station Name - Time</item>
+        <item>Route 1 - Station Name - Time</item>
+        <item>Route 1 - Station Name - Time</item>
+        <item>Route 1 - Station Name - Time</item>
+        <item>Route 1 - Station Name - Time</item>
+        <item>Route 1 - Station Name - Time</item>
+        <item>Route 1 - Station Name - Time</item>
+        <item>Route 1 - Station Name - Time</item>
+    </string-array>
+    
+    <string-array name="example_directions">
+        <item>Turn Left after 100m</item>
+        <item>Turn Right after 100m</item>
+        <item>Walk for 100m</item>
+        <item>Turn Left after 100m</item>
+        <item>Turn Right after 100m</item>
+        <item>Walk for 100m</item>
+        <item>Turn Left after 100m</item>
+        <item>Turn Right after 100m</item>
+        <item>Walk for 100m</item>
+    </string-array>
     
 </resources>

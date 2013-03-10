@@ -7,7 +7,7 @@
         android:id="@+id/databaseMessageTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/createDBProgressMessage" />
+        android:text="@string/db_progress_message" />
 
     <ProgressBar
         android:id="@+id/databaseProgressBar"

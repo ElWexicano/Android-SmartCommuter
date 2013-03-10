@@ -2,65 +2,67 @@ package ie.smartcommuter.models;
 
 import java.io.Serializable;
 
-import com.google.android.maps.GeoPoint;
-
 import android.location.Location;
 
+import com.google.android.maps.GeoPoint;
+
 /**
- * This is a class is to create instances
- * of a Station Address.
- * @author Shane Bryan Doyle
+ * This is a class is to create instances of a Station Address.
+ * 
+ * @author Shane Doyle
  */
+@SuppressWarnings("serial")
 public class Address implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	private String location;
-	private int latitude;
-	private int longitude;
-	
-	public Address() {}
-	
+	private String mLocation;
+	private int mLatitude;
+	private int mLongitude;
+
+	public Address() {
+	}
+
 	public Address(Location location) {
 		setLatitude(Double.toString(location.getLatitude()));
 		setLongitude(Double.toString(location.getLongitude()));
 	}
-	
+
 	public String getLocation() {
-		return location;
+		return mLocation;
 	}
-	
+
 	public void setLocation(String location) {
-		this.location = location;
+		this.mLocation = location;
 	}
-	
+
 	public int getLatitude() {
-		return latitude;
+		return mLatitude;
 	}
-	
+
 	public void setLatitude(String latitude) {
-		this.latitude = GeoLocation.degreesToMicroDegrees(Double.parseDouble(latitude));
+		this.mLatitude = GeoLocation.degreesToMicroDegrees(Double
+				.parseDouble(latitude));
 	}
-	
+
 	public int getLongitude() {
-		return longitude;
+		return mLongitude;
 	}
-	
+
 	public void setLongitude(String longitude) {
-		this.longitude = GeoLocation.degreesToMicroDegrees(Double.parseDouble(longitude));
+		this.mLongitude = GeoLocation.degreesToMicroDegrees(Double
+				.parseDouble(longitude));
 	}
-	
+
 	public Double distanceFromAddress(Address address) {
-		
+
 		double lat1 = GeoLocation.microDegreesToDegrees(this.getLatitude());
 		double lat2 = GeoLocation.microDegreesToDegrees(address.getLatitude());
 		double lon1 = GeoLocation.microDegreesToDegrees(this.getLongitude());
 		double lon2 = GeoLocation.microDegreesToDegrees(address.getLongitude());
-		
+
 		return GeoLocation.distanceBetweenPoints(lat1, lon1, lon2, lat2);
 	}
-	
+
 	public GeoPoint toGeoPoint() {
-		GeoPoint point = new GeoPoint(this.getLatitude(),this.getLongitude());
-		return point;
+		return new GeoPoint(this.getLatitude(), this.getLongitude());
 	}
 }

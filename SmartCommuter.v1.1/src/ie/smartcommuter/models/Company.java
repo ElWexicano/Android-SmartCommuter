@@ -1,32 +1,37 @@
 package ie.smartcommuter.models;
 
 /**
- * This is a class is to create instances
- * of Public Transport Companies.
- * @author Shane Bryan Doyle
+ * This is a class is to create instances of Public Transport Companies.
+ * 
+ * @author Shane Doyle
  */
 public class Company {
-	
-	private String name;
-	private ContactDetails details;
-	private String mode;
-	
+
+	private String mName;
+	private ContactDetails mDetails;
+	private String mMode;
+
 	public String getName() {
-		return name;
+		return mName;
 	}
+
 	public void setName(String name) {
-		this.name = name;
+		this.mName = name;
 	}
+
 	public ContactDetails getDetails() {
-		return details;
+		return mDetails;
 	}
+
 	public void setDetails(ContactDetails details) {
-		this.details = details;
+		this.mDetails = details;
 	}
+
 	public String getMode() {
-		return mode;
+		return mMode;
 	}
+
 	public void setMode(String mode) {
-		this.mode = mode;
+		this.mMode = mode;
 	}
 }

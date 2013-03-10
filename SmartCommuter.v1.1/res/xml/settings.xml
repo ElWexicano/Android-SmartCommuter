@@ -3,77 +3,77 @@
     xmlns:android="http://schemas.android.com/apk/res/android" >
     
     <PreferenceCategory 
-        android:title="@string/generalSettings" 
+        android:title="@string/general_settings" 
         android:key="general_settings">
         
         <ListPreference 
             android:key="googleMapUserIconType"
-            android:title="@string/locationIconTitle"
-            android:summary="@string/locationIconSummary"
+            android:title="@string/location_icon_title"
+            android:summary="@string/location_icon_summary"
             android:defaultValue="male"
-            android:entries="@array/userLocationIconTypeArray"
-            android:entryValues="@array/userLocationIconTypeValueArray"/>
+            android:entries="@array/user_icon_types"
+            android:entryValues="@array/user_icon_types_values"/>
         
         <CheckBoxPreference 
             android:key="automaticProblemReporting"
-            android:summary="@string/autoProblemReportSummary"
-            android:title="@string/autoProblemReportTitle"
+            android:summary="@string/auto_problem_report_summary"
+            android:title="@string/auto_problem_report_title"
             android:defaultValue="true"/>
         
         <ListPreference 
             android:key="realtimeRefreshInterval"
-            android:title="@string/refreshRealTimeTitle" 
-            android:summary="@string/refreshRealTimeSummary"
+            android:title="@string/refresh_realtime_title" 
+            android:summary="@string/refresh_realtime_summary"
             android:defaultValue="300000"
-            android:entries="@array/realRefreshArray"
-            android:entryValues="@array/realRefreshValuesArray"/>
+            android:entries="@array/realtime_refresh_times"
+            android:entryValues="@array/realtime_refresh_times_values"/>
         
         <ListPreference 
             android:key="directionsMode"
-            android:title="@string/directionsModeTitle"
-            android:summary="@string/directionsModeSummary"
+            android:title="@string/directions_mode_title"
+            android:summary="@string/directions_mode_summary"
             android:defaultValue="walking"
-            android:entries="@array/directionsModeArray"
-            android:entryValues="@array/directionsModeValuesArray"/>
+            android:entries="@array/direction_modes"
+            android:entryValues="@array/direction_modes_values"/>
         
         
     </PreferenceCategory>
     
     <PreferenceCategory 
-        android:title="@string/favouriteStationSettings" 
+        android:title="@string/favourite_station_settings" 
         android:key="favourite_station_settings">
 
         <ListPreference 
             android:key="maxFavouriteStations" 
-            android:title="@string/maximumFavouriteStationsTitle"
-            android:summary="@string/maximumFavouriteStationsSummary"
+            android:title="@string/maximum_favourite_stations_title"
+            android:summary="@string/maximum_favourite_stations_summary"
             android:defaultValue="10"
-            android:entries="@array/numberOfStationsArray"
-            android:entryValues="@array/numberOfStationsValuesArray"/>
+            android:entries="@array/number_of_stations"
+            android:entryValues="@array/number_of_stations_values"/>
         
         <Preference 
             android:key="clearFavouriteStations"
-            android:title="@string/clearFavouriteStationsTitle"
-            android:summary="@string/clearFavouriteStationsSummary"/>
+            android:title="@string/clear_favourite_stations_title"
+            android:summary="@string/clear_favourite_stations_summary"/>
         
     </PreferenceCategory>
     
     <PreferenceCategory 
-        android:title="@string/recentlyViewedSettings" 
+        android:title="@string/recently_viewed_settings" 
         android:key="recently_viewed_settings">
         
         <ListPreference 
             android:key="maxRecentlyViewedStations" 
-            android:title="@string/maximumRecentlyViewedStationsTitle"
-            android:summary="@string/maximumRecentlyViewedStationsSummary"
+            android:title="@string/maximum_recently_viewed_stations_title"
+            android:summary="@string/maximum_recently_viewed_stations_summary"
             android:defaultValue="10"
-            android:entries="@array/numberOfStationsArray"
-            android:entryValues="@array/numberOfStationsValuesArray"/>
+            android:entries="@array/number_of_stations"
+            android:entryValues="@array/number_of_stations_values"/>
         
         <Preference 
             android:key="clearRecenltyViewedStations"
-            android:title="@string/clearRecentlyViewedStationsTitle"
-            android:summary="@string/clearRecentlyViewedStationsSummary"/>
+            android:title="@string/clear_recently_viewed_stations_title"
+            android:summary="@string/clear_recently_viewed_stations_summary"/>
         
     </PreferenceCategory>
     

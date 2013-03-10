@@ -13,33 +13,33 @@ import android.view.Window;
  * This class is used to display the application 
  * Splash Screen. It is also used to create any
  * shared prefences that will be used.
- * @author Shane Bryan Doyle
+ * @author Shane Doyle
  */
 public class SplashScreenActivity extends Activity {
 
-	private Dialog dialog;
-	private Context context;
-	private DatabaseManager databaseManager;
+	private Dialog mDialog;
+	private Context mContext;
+	private DatabaseManager mDatabaseManager;
 	
 	
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);	    
 	    this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-	    context = this;
+	    mContext = this;
 	    
-	    dialog = ProgressDialog.show(this, "SmartCommuter", "Loading. Please wait...", true);
+	    mDialog = ProgressDialog.show(this, "SmartCommuter", "Loading. Please wait...", true);
 	    
 	    Thread splashTread = new Thread() {
 	        @Override
 	        public void run() {
 	            try {
-	    	        databaseManager = new DatabaseManager(context);
-	    	        databaseManager.open();
+	    	        mDatabaseManager = new DatabaseManager(mContext);
+	    	        mDatabaseManager.open();
 	            } finally {
-	            	if(dialog.isShowing()) {
-	            		dialog.dismiss();
+	            	if(mDialog.isShowing()) {
+	            		mDialog.dismiss();
 	            	}
-	            	databaseManager.close();
+	            	mDatabaseManager.close();
 	                startActivity(new Intent(SplashScreenActivity.this, HomeActivity.class));
 	            }
 	        }

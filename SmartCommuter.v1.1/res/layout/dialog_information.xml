@@ -13,7 +13,7 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/versionLabel"
+            android:text="@string/current_version"
             android:layout_marginRight="5dp" />
 
         <TextView
@@ -28,14 +28,14 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/appDesc" 
+        android:text="@string/app_desc" 
         android:layout_marginBottom="5dp" />
 
     <TextView
         android:id="@+id/moreInfoTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/appMoreInfo" 
+        android:text="@string/app_more_info" 
 		android:layout_marginBottom="5dp" />
     
 </LinearLayout>

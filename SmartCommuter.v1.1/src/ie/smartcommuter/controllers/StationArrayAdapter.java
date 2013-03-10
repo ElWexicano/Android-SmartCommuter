@@ -1,10 +1,12 @@
 package ie.smartcommuter.controllers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ie.smartcommuter.R;
 import ie.smartcommuter.models.Station;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,45 +18,45 @@ import android.widget.TextView;
 
 /**
  * This is a class is used to display stations in a list.
- * @author Shane Bryan Doyle
+ * @author Shane Doyle
  */
 public class StationArrayAdapter extends ArrayAdapter<Station>{
 	
-	private Context context;
-	private List<Station> stations;
-	private List<Station> originalStations;
+	private Context mContext;
+	private List<Station> mStations;
+	private List<Station> mOriginalStations;
 	private Filter mFilter;
 	private final Object mLock = new Object();
-	private String stationModeFilter;
+	private String mStationModeFilter;
 	
 	public StationArrayAdapter(Context context,  List<Station> stations) {
-		super(context, R.layout.row_station, stations);
+		super(context, R.layout.list_item_station, stations);
 		
-		this.context = context;
-		this.stations = stations;
-		this.originalStations = stations;
-		this.stationModeFilter = "All";
+		this.mContext = context;
+		this.mStations = stations;
+		this.mOriginalStations = stations;
+		this.mStationModeFilter = "All";
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		
-		Station station = stations.get(position);
+		Station station = mStations.get(position);
 		
-		LayoutInflater inflater = (LayoutInflater) context
+		LayoutInflater inflater = (LayoutInflater) mContext
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View view;
 		
 		if(position % 2 == 0) {
-			view = inflater.inflate(R.layout.row_station, parent, false);
+			view = inflater.inflate(R.layout.list_item_station, parent, false);
 		} else {
-			view = inflater.inflate(R.layout.row_station_odd, parent, false);
+			view = inflater.inflate(R.layout.list_item_station_odd, parent, false);
 		}
 		
 		view.setId(station.getId());
 		
-		TextView stationNameView = (TextView) view.findViewById(R.id.stationNameText);
-		ImageView stationImageView = (ImageView) view.findViewById(R.id.stationLogo);
+		TextView stationNameView = (TextView) view.findViewById(R.id.text_station_name);
+		ImageView stationImageView = (ImageView) view.findViewById(R.id.image_view_station_logo);
 		stationNameView.setText(station.getName());
 		stationImageView.setImageResource(station.getStationLogo());
 		
@@ -63,12 +65,12 @@ public class StationArrayAdapter extends ArrayAdapter<Station>{
 	
 	@Override
 	public int getCount() {
-		return stations.size();
+		return mStations.size();
 	}
 	
 	@Override
 	public Station getItem(int position) {
-		return stations.get(position);
+		return mStations.get(position);
 	}
 
 	@Override
@@ -78,7 +80,7 @@ public class StationArrayAdapter extends ArrayAdapter<Station>{
 	
     @Override
     public int getPosition(Station station) {
-        return stations.indexOf(station);
+        return mStations.indexOf(station);
     }
 	
     /**
@@ -104,21 +106,21 @@ public class StationArrayAdapter extends ArrayAdapter<Station>{
 
             FilterResults results = new FilterResults();
             
-            if (stations == null) {
+            if (mStations == null) {
                 synchronized (mLock) {
-                    stations = new ArrayList<Station>();
+                    mStations = new ArrayList<Station>();
                 }
             }
             if (prefix == null || prefix.length() == 0) {
         		synchronized (mLock) {
         			
-        			if(stationModeFilter.equals("All") ){
-                        results.values = originalStations;
-                        results.count = originalStations.size();
+        			if(mStationModeFilter.equals("All") ){
+                        results.values = mOriginalStations;
+                        results.count = mOriginalStations.size();
         			} else {
         				final List<Station> newStations = new ArrayList<Station>();
-        				for(Station station: originalStations) {
-        					if(stationModeFilter.equals(station.getCompany().getMode())) {
+        				for(Station station: mOriginalStations) {
+        					if(mStationModeFilter.equals(station.getCompany().getMode())) {
                         		newStations.add(station);
                         	}
         				}
@@ -128,16 +130,16 @@ public class StationArrayAdapter extends ArrayAdapter<Station>{
         			
         		}
             } else {
-                String prefixString = prefix.toString().toLowerCase();
+                String prefixString = prefix.toString().toLowerCase(Locale.UK);
 
                 final List<Station> newStations = new ArrayList<Station>();
                 
-                for(Station station: originalStations) {
-                	final String itemName = station.getName().toString().toLowerCase();
+                for(Station station: mOriginalStations) {
+                	final String itemName = station.getName().toString().toLowerCase(Locale.UK);
                     if (itemName.contains(prefixString)) {
-                    	if(stationModeFilter.equals("All") ){
+                    	if(mStationModeFilter.equals("All") ){
                     		newStations.add(station);
-                    	} else if(stationModeFilter.equals(station.getCompany().getMode())) {
+                    	} else if(mStationModeFilter.equals(station.getCompany().getMode())) {
                     		newStations.add(station);
                     	}
                     }
@@ -150,7 +152,7 @@ public class StationArrayAdapter extends ArrayAdapter<Station>{
         }
         @SuppressWarnings("unchecked")
         protected void publishResults(CharSequence prefix, FilterResults results) {
-            stations = (ArrayList<Station>) results.values;
+            mStations = (ArrayList<Station>) results.values;
             if (results.count > 0) {
                 notifyDataSetChanged();
             } else {
@@ -165,6 +167,6 @@ public class StationArrayAdapter extends ArrayAdapter<Station>{
      * @param mode
      */
     public void updateStationModeFilter(String mode) {
-    	this.stationModeFilter = mode;
+    	this.mStationModeFilter = mode;
     }
 }

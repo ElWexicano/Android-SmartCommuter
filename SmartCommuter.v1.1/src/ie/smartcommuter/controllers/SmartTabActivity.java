@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 /**
  * This superclass is used in tabbed activity classes.
- * @author Shane Bryan Doyle
+ * @author Shane Doyle
  */
 public class SmartTabActivity extends TabActivity {
 

@@ -27,191 +27,206 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 /**
- * This is a class is used to display the directions
- * to the station from the users location.
- * @author Shane Bryan Doyle
+ * This is a class is used to display the directions to the station from the
+ * users location.
+ * 
+ * @author Shane Doyle
  */
-public class StationDirectionsActivity extends SmartTabContentActivity implements LocationListener {
-	
-	private LocationManager locationManager;
-	private Station station;
-	private Address address;
-	private Location location;
-	private Dialog dialog;
-	private Directions directions;
-	private ListView directionsList;
-	private DirectionArrayAdapter directionsAdapter;
-	private SharedPreferences prefs;
-	private Context context;
-	private Handler handler;
-	private Runnable runnable;
-	private Boolean hideProgressBar;
-	private String provider;
-	
-	public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.screen_station_direction);
-        dialog = new Dialog(this);
-        context = this;
-        handler = new Handler();
-        hideProgressBar = false;
-        
-        prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        
-        directionsList = (ListView) findViewById(R.id.directionsListView);
-        directionsList.setEmptyView(findViewById(R.id.directionsListEmpty));
-        
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        
-        station = (Station) bundle.getSerializable("station");
+public class StationDirectionsActivity extends SmartTabContentActivity
+		implements LocationListener {
 
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        
-        Criteria criteria = new Criteria();
-		provider = locationManager.getBestProvider(criteria, false);
-        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);   
-    }
-	
+	private LocationManager mLocationManager;
+	private Station mStation;
+	private Address mAddress;
+	private Location mLocation;
+	private Dialog mDialog;
+	private Directions mDirections;
+	private ListView mDirectionsList;
+	private DirectionArrayAdapter mDirectionsAdapter;
+	private SharedPreferences mPrefs;
+	private Context mContext;
+	private Handler mHandler;
+	private Runnable mRunnable;
+	private Boolean mHideProgressBar;
+	private String mProvider;
+
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.screen_station_direction);
+		mDialog = new Dialog(this);
+		mContext = this;
+		mHandler = new Handler();
+		mHideProgressBar = false;
+
+		mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+		mDirectionsList = (ListView) findViewById(R.id.directionsListView);
+		mDirectionsList.setEmptyView(findViewById(R.id.directionsListEmpty));
+
+		Intent intent = getIntent();
+		Bundle bundle = intent.getExtras();
+
+		mStation = (Station) bundle.getSerializable("station");
+
+		mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+		Criteria criteria = new Criteria();
+		mProvider = mLocationManager.getBestProvider(criteria, false);
+		mLocation = mLocationManager
+				.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+	}
+
 	@Override
 	protected void onResume() {
 		super.onResume();
 
-		runnable = updateDirectionsRunnable();
-		locationManager.requestLocationUpdates(provider, 180000, 200, this);
+		mRunnable = updateDirectionsRunnable();
+		mLocationManager.requestLocationUpdates(mProvider, 180000, 200, this);
 
-		new Thread(runnable).start();
+		new Thread(mRunnable).start();
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		locationManager.removeUpdates(this);
-		handler.removeCallbacks(runnable);
+		mLocationManager.removeUpdates(this);
+		mHandler.removeCallbacks(mRunnable);
 	}
 
-	public void onLocationChanged(Location loc) { 
-		if(Utilities.isBetterLocation(loc, location)) {
-			location = loc;
-			new Thread(runnable).start();
+	public void onLocationChanged(Location loc) {
+		if (Utilities.isBetterLocation(loc, mLocation)) {
+			mLocation = loc;
+			new Thread(mRunnable).start();
 		}
 	}
 
 	public void onProviderDisabled(String provider) {
-		Toast.makeText(this, "GPS Disabled",Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, "GPS Disabled", Toast.LENGTH_SHORT).show();
 	}
 
 	public void onProviderEnabled(String provider) {
-		Toast.makeText(this, "GPS Enabled",Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, "GPS Enabled", Toast.LENGTH_SHORT).show();
 	}
 
-	public void onStatusChanged(String provider, int status, Bundle extras) {}
-	
-    /**
-     * This method is used to display the GPS Dialog
-     * when the GPS is turned off.
-     */
-    private void openGPSDialog() {
-		dialog.setTitle(R.string.gpsAlertTitle);
-		dialog.setContentView(R.layout.dialog_gps);
-		
-		dialog.setCancelable(false);
-		dialog.setCanceledOnTouchOutside(false);
-		dialog.show();
-		
-		Button enableGPSButton = (Button) dialog.findViewById(R.id.enableGPSButton);
-		Button dontUseFeatureButton = (Button) dialog.findViewById(R.id.dontUseButton);
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+	}
+
+	/**
+	 * This method is used to display the GPS Dialog when the GPS is turned off.
+	 */
+	private void openGPSDialog() {
+		mDialog.setTitle(R.string.gps_alert_title);
+		mDialog.setContentView(R.layout.dialog_gps);
+
+		mDialog.setCancelable(false);
+		mDialog.setCanceledOnTouchOutside(false);
+		mDialog.show();
+
+		Button enableGPSButton = (Button) mDialog
+				.findViewById(R.id.enableGPSButton);
+		Button dontUseFeatureButton = (Button) mDialog
+				.findViewById(R.id.dontUseButton);
 		enableGPSButton.setOnClickListener(new GPSDialogButtonListener(0));
 		dontUseFeatureButton.setOnClickListener(new GPSDialogButtonListener(1));
-    }
-    
-    /**
-     * This class is used to either direct the user
-     * to the Enable GPS screen or the previous
-     * activity.
-     * @author Shane Bryan Doyle
-     */
-    private class GPSDialogButtonListener implements OnClickListener {
-    	
-    	int operationId;
-    	
-    	public GPSDialogButtonListener(int id) {
-    		this.operationId = id;
-    	}
-    	
+	}
+
+	/**
+	 * This class is used to either direct the user to the Enable GPS screen or
+	 * the previous activity.
+	 * 
+	 * @author Shane Doyle
+	 */
+	private class GPSDialogButtonListener implements OnClickListener {
+
+		private int mOperationID;
+
+		public GPSDialogButtonListener(int id) {
+			this.mOperationID = id;
+		}
+
 		public void onClick(View arg0) {
-			dialog.dismiss();
-			
+			mDialog.dismiss();
+
 			Intent intent = null;
-			
-			switch(operationId) {
+
+			switch (mOperationID) {
 			case 0:
 				intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
 				startActivity(intent);
 				break;
-			case 1: 
+			case 1:
 				finish();
 				break;
 			}
 		}
-    }
-    
-    /**
-     * This method is used to run a thread that updates
-     * the directions on the screen.
-     * @return
-     */
-    private synchronized Runnable updateDirectionsRunnable() {
-    	Runnable runnable = new Runnable() {
+	}
+
+	/**
+	 * This method is used to run a thread that updates the directions on the
+	 * screen.
+	 * 
+	 * @return
+	 */
+	private synchronized Runnable updateDirectionsRunnable() {
+		Runnable runnable = new Runnable() {
 
 			public void run() {
-				handler.post(new Runnable() {
+				mHandler.post(new Runnable() {
 
 					public void run() {
-						if(location!=null) {
-							address = new Address(location);
-							
-					        directions = new Directions();
-					        directions.setStartLocation(address);
-					        directions.setEndLocation(station.getAddress());
-					        directions.setMode(prefs.getString("directionsMode", "walking"));
-					        directions.generate();
+						if (mLocation != null) {
+							mAddress = new Address(mLocation);
+
+							mDirections = new Directions();
+							mDirections.setStartLocation(mAddress);
+							mDirections.setEndLocation(mStation.getAddress());
+							mDirections.setMode(mPrefs.getString(
+									"directionsMode", "walking"));
+							mDirections.generate();
 						}
 
-				        if(directions!=null) {
-					        directionsAdapter = new DirectionArrayAdapter(context, directions.getStages());
-					        
-					        View header = getLayoutInflater().inflate(R.layout.row_directions_header, null, false);
-					        TextView summary = (TextView) header.findViewById(R.id.directionSummary);
-					        summary.setText(directions.getSummary());
-					        TextView distance = (TextView) header.findViewById(R.id.directionDistance);
-					        distance.setText(directions.getDistance());
-					        TextView duration = (TextView) header.findViewById(R.id.directionDuration);
-					        duration.setText(directions.getDuration());
-					        
-					        if(directionsList.getHeaderViewsCount()==0){
-					        	directionsList.addHeaderView(header);
-					        }
-					        
-					        int numberOfStages = 0;
-					        
-					        if(directions.getStages()!=null) {
-					        	numberOfStages = directions.getStages().size();
-					        }
-					        if(numberOfStages>0) {
-					        	directionsList.setAdapter(directionsAdapter);
-					        }			        	
-				        }
-				        
-				        if(hideProgressBar) {
-				        	hideProgressBar = updateEmptyListMessage(R.id.directionsProgressBar,
-				        			R.id.directionsListEmpty, R.string.directionsListEmptyMessage);
-				        }
+						if (mDirections != null) {
+							mDirectionsAdapter = new DirectionArrayAdapter(
+									mContext, mDirections.getStages());
+
+							View header = getLayoutInflater().inflate(
+									R.layout.list_item_directions_header, null,
+									false);
+							TextView summary = (TextView) header
+									.findViewById(R.id.directionSummary);
+							summary.setText(mDirections.getSummary());
+							TextView distance = (TextView) header
+									.findViewById(R.id.directionDistance);
+							distance.setText(mDirections.getDistance());
+							TextView duration = (TextView) header
+									.findViewById(R.id.directionDuration);
+							duration.setText(mDirections.getDuration());
+
+							if (mDirectionsList.getHeaderViewsCount() == 0) {
+								mDirectionsList.addHeaderView(header);
+							}
+
+							int numberOfStages = 0;
+
+							if (mDirections.getStages() != null) {
+								numberOfStages = mDirections.getStages().size();
+							}
+							if (numberOfStages > 0) {
+								mDirectionsList.setAdapter(mDirectionsAdapter);
+							}
+						}
+
+						if (mHideProgressBar) {
+							mHideProgressBar = updateEmptyListMessage(
+									R.id.directionsProgressBar,
+									R.id.directionsListEmpty,
+									R.string.directions_list_empty_message);
+						}
 					}
 				});
 			}
-    	};
-    	
+		};
+
 		return runnable;
-    }
+	}
 }

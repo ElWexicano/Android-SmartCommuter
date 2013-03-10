@@ -23,7 +23,7 @@ import android.widget.TextView;
 /**
  * This is a superclass that is widely used by
  * other classes in the Application.
- * @author Shane Bryan Doyle
+ * @author Shane Doyle
  */
 public class SmartActivity extends Activity {
 	
@@ -34,7 +34,7 @@ public class SmartActivity extends Activity {
         super.onCreate(savedInstanceState);
         
         requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-        setContentView(R.layout.screen_home);
+        setContentView(R.layout.activity_home);
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.title_bar);
     }
     
@@ -107,7 +107,7 @@ public class SmartActivity extends Activity {
 	 */
 	private void openInformationDialog() {
 		Dialog dialog = new Dialog(this);
-		dialog.setTitle(R.string.appAbout);
+		dialog.setTitle(R.string.app_about);
 		dialog.setContentView(R.layout.dialog_information);
 		
 		TextView currentVersion = (TextView) dialog.findViewById(R.id.versionTextView);

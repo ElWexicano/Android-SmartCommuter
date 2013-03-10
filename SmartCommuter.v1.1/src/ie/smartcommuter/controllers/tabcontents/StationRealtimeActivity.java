@@ -16,131 +16,135 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 /**
- * This is a class is used to display the realtime
- * information for the station.
- * @author Shane Bryan Doyle
+ * This is a class is used to display the realtime information for the station.
+ * 
+ * @author Shane Doyle
  */
 public class StationRealtimeActivity extends SmartTabContentActivity {
-	
-	private Station station;
-	private ListView arrivals;
-	private ListView departures;
-	private RealtimeArrayAdapter arrivalsAdapter;
-	private RealtimeArrayAdapter departuresAdapter;
-	private int realtimeRefreshInterval;
-	private SharedPreferences prefs;
-	private Context context;
-	private Boolean getRealtimeUpdates;
-	private Handler handler;
-	private Runnable runnable;
-	private Boolean hideProgressBar;
+
+	private Station mStation;
+	private ListView mArrivals;
+	private ListView mDepartures;
+	private RealtimeArrayAdapter mArrivalsAdapter;
+	private RealtimeArrayAdapter mDeparturesAdapter;
+	private int mRealtimeRefreshInterval;
+	private SharedPreferences mPrefs;
+	private Context mContext;
+	private Boolean mRealtimeUpdates;
+	private Handler mHandler;
+	private Runnable mRunnable;
+	private Boolean mHideProgressBar;
 
 	@Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.screen_station_realtime);
-        
-        context = this;
-        getRealtimeUpdates = true;
-        handler = new Handler();
-        hideProgressBar = false;
-        
-        prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        realtimeRefreshInterval = Integer.parseInt(prefs.getString("realtimeRefreshInterval", "30000"));
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.screen_station_realtime);
 
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        
-        station = (Station) bundle.getSerializable("station");
+		mContext = this;
+		mRealtimeUpdates = true;
+		mHandler = new Handler();
+		mHideProgressBar = false;
 
-        arrivals = (ListView)findViewById(R.id.arrivalsListView);
-        arrivals.setTextFilterEnabled(false);
-        arrivals.setEmptyView(findViewById(R.id.arrivalsLoadingListView));
-        
-        departures = (ListView)findViewById(R.id.departuresListView);
-        departures.setTextFilterEnabled(false);
-        departures.setEmptyView(findViewById(R.id.departuresLoadingListView));
-        
-		runnable = getRealtimeRunnable();
-    }
+		mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+		mRealtimeRefreshInterval = Integer.parseInt(mPrefs.getString(
+				"realtimeRefreshInterval", "30000"));
+
+		Intent intent = getIntent();
+		Bundle bundle = intent.getExtras();
+
+		mStation = (Station) bundle.getSerializable("station");
+
+		mArrivals = (ListView) findViewById(R.id.arrivalsListView);
+		mArrivals.setTextFilterEnabled(false);
+		mArrivals.setEmptyView(findViewById(R.id.arrivalsLoadingListView));
+
+		mDepartures = (ListView) findViewById(R.id.departuresListView);
+		mDepartures.setTextFilterEnabled(false);
+		mDepartures.setEmptyView(findViewById(R.id.departuresLoadingListView));
+
+		mRunnable = getRealtimeRunnable();
+	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		getRealtimeUpdates = false;
-		handler.removeCallbacks(runnable);
+		mRealtimeUpdates = false;
+		mHandler.removeCallbacks(mRunnable);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		realtimeRefreshInterval = Integer.parseInt(prefs.getString("realtimeRefreshInterval", "30000"));
-		
-		getRealtimeUpdates = true;
-		
-		new Thread(runnable).start();
+		mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+		mRealtimeRefreshInterval = Integer.parseInt(mPrefs.getString(
+				"realtimeRefreshInterval", "30000"));
+
+		mRealtimeUpdates = true;
+
+		new Thread(mRunnable).start();
 	}
-	
+
 	/**
-	 * This method is used to run a thread that updates
-	 * the realtime information on the screen.
+	 * This method is used to run a thread that updates the realtime information
+	 * on the screen.
+	 * 
 	 * @return
 	 */
 	private synchronized Runnable getRealtimeRunnable() {
 		Runnable runnable = new Runnable() {
 
 			public void run() {
-				
-				while(getRealtimeUpdates) {
-					station.getRealTimeData();
-					
-					handler.post(new Runnable() {
+
+				while (mRealtimeUpdates) {
+					mStation.getRealTimeData();
+
+					mHandler.post(new Runnable() {
 
 						public void run() {
-					        arrivalsAdapter = new RealtimeArrayAdapter(context, station.getArrivals());
-					        arrivals.setAdapter(arrivalsAdapter);
-					        
-					        departuresAdapter = new RealtimeArrayAdapter(context, station.getDepartures());
-					        departures.setAdapter(departuresAdapter);
-					        
-					        if(!hideProgressBar){
-					        	updateEmptyListMessages();
-					        }
+							mArrivalsAdapter = new RealtimeArrayAdapter(
+									mContext, mStation.getArrivals());
+							mArrivals.setAdapter(mArrivalsAdapter);
+
+							mDeparturesAdapter = new RealtimeArrayAdapter(
+									mContext, mStation.getDepartures());
+							mDepartures.setAdapter(mDeparturesAdapter);
+
+							if (!mHideProgressBar) {
+								updateEmptyListMessages();
+							}
 						}
 					});
-					
+
 					try {
-						Thread.sleep(realtimeRefreshInterval);
+						Thread.sleep(mRealtimeRefreshInterval);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
 				}
 			}
 		};
-		
+
 		return runnable;
 	}
-	
+
 	/**
-	 * This method is used to change the original
-	 * empty view message from loading to the no
-	 * data message.
-	 * @return 
+	 * This method is used to change the original empty view message from
+	 * loading to the no data message.
+	 * 
+	 * @return
 	 */
 	private void updateEmptyListMessages() {
 		ProgressBar arrivalsLoading = (ProgressBar) findViewById(R.id.arrivalsLoadingProgressBar);
 		arrivalsLoading.setVisibility(View.INVISIBLE);
 		TextView arrivalsTextView = (TextView) findViewById(R.id.arrivalsLoadingTextView);
-		arrivalsTextView.setText(R.string.arrivalsListEmptyMessage);
-		
+		arrivalsTextView.setText(R.string.arrivals_list_empty_message);
+
 		ProgressBar departuresLoading = (ProgressBar) findViewById(R.id.departuresLoadingProgressBar);
 		departuresLoading.setVisibility(View.INVISIBLE);
 		TextView departuresTextView = (TextView) findViewById(R.id.departuresLoadingTextView);
-		departuresTextView.setText(R.string.departuresListEmptyMessage);
-		
-		hideProgressBar = true;
-	}
-	
-}
+		departuresTextView.setText(R.string.departures_list_emptyMessage);
 
+		mHideProgressBar = true;
+	}
+
+}

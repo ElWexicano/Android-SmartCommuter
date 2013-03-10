@@ -25,7 +25,7 @@ import com.google.android.maps.MapView;
 /**
  * This is a superclass that is widely used by
  * classes that need Maps.
- * @author Shane Bryan Doyle
+ * @author Shane Doyle
  */
 public class SmartMapActivity extends MapActivity {
 
@@ -95,7 +95,7 @@ public class SmartMapActivity extends MapActivity {
 	 */
 	private void openInformationDialog() {
 		Dialog dialog = new Dialog(this);
-		dialog.setTitle(R.string.appAbout);
+		dialog.setTitle(R.string.app_about);
 		dialog.setContentView(R.layout.dialog_information);
 		
 		TextView currentVersion = (TextView) dialog.findViewById(R.id.versionTextView);

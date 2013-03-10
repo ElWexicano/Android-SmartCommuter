@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/realtimeBanner"
-        android:text="@string/arrivalsLbl" />
+        android:text="@string/arrivals" />
 
     <ListView
         android:id="@+id/arrivalsListView"
@@ -19,7 +19,6 @@
 
 	<LinearLayout 
 	    android:id="@+id/arrivalsLoadingListView" 
-	    xmlns:android="http://schemas.android.com/apk/res/android"
 	    android:layout_width="fill_parent"
 	    android:layout_height="160dp"
 	    android:orientation="vertical"
@@ -36,7 +35,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:textColor="@color/appFontColor"
-	        android:text="@string/realTimeLoadingMessage" />
+	        android:text="@string/realtime_loading_message" />
 	
 	</LinearLayout>
     
@@ -45,7 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/realtimeBanner"
-        android:text="@string/departuresLbl" />
+        android:text="@string/departures" />
 
     <ListView
         android:id="@+id/departuresListView"
@@ -54,7 +53,6 @@
 
 	<LinearLayout 
 	    android:id="@+id/departuresLoadingListView" 
-	    xmlns:android="http://schemas.android.com/apk/res/android"
 	    android:layout_width="fill_parent"
 	    android:layout_height="160dp"
 	    android:orientation="vertical"
@@ -71,7 +69,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:textColor="@color/appFontColor"
-	        android:text="@string/realTimeLoadingMessage" />
+	        android:text="@string/realtime_loading_message" />
 	
 	</LinearLayout>
     

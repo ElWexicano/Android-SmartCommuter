@@ -1,48 +1,56 @@
 package ie.smartcommuter.models;
 
 /**
- * This is a class is to create instances
- * of Contact Details for Companies.
- * @author Shane Bryan Doyle
+ * This is a class is to create instances of Contact Details for Companies.
+ * 
+ * @author Shane Doyle
  */
 public class ContactDetails {
 
-	private String email;
-	private String telephone;
-	private String website;
-	private String facebook;
-	private String twitter;
-	
+	private String mEmail;
+	private String mTelephone;
+	private String mWebsite;
+	private String mFacebook;
+	private String mTwitter;
+
 	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public String getTelephone() {
-		return telephone;
-	}
-	public void setTelephone(String telephone) {
-		this.telephone = telephone;
-	}
-	public String getWebsite() {
-		return website;
-	}
-	public void setWebsite(String website) {
-		this.website = website;
-	}
-	public String getFacebook() {
-		return facebook;
-	}
-	public void setFacebook(String facebook) {
-		this.facebook = facebook;
-	}
-	public String getTwitter() {
-		return twitter;
-	}
-	public void setTwitter(String twitter) {
-		this.twitter = twitter;
+		return mEmail;
 	}
 
-	
+	public void setEmail(String email) {
+		this.mEmail = email;
+	}
+
+	public String getTelephone() {
+		return mTelephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.mTelephone = telephone;
+	}
+
+	public String getWebsite() {
+		return mWebsite;
+	}
+
+	public void setWebsite(String website) {
+		this.mWebsite = website;
+	}
+
+	public String getFacebook() {
+		return mFacebook;
+	}
+
+	public void setFacebook(String facebook) {
+		this.mFacebook = facebook;
+	}
+
+	public String getTwitter() {
+		return mTwitter;
+	}
+
+	public void setTwitter(String twitter) {
+		this.mTwitter = twitter;
+	}
+
 }

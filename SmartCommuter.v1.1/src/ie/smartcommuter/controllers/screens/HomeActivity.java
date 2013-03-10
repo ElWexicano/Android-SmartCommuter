@@ -1,12 +1,13 @@
 package ie.smartcommuter.controllers.screens;
 
-import java.util.List;
-
 import ie.smartcommuter.R;
 import ie.smartcommuter.controllers.SmartActivity;
 import ie.smartcommuter.controllers.StationArrayAdapter;
 import ie.smartcommuter.models.DatabaseManager;
 import ie.smartcommuter.models.Station;
+
+import java.util.List;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -17,12 +18,12 @@ import android.widget.ListView;
 /**
  * This activity provides functionality to the
  * home screen of the application.
- * @author Shane Bryan Doyle
+ * @author Shane Doyle
  */
 public class HomeActivity extends SmartActivity {
 	
-	private List<Station> recentlyViewedStations;
-	private DatabaseManager databaseManager;
+	private List<Station> mRecentlyViewedStations;
+	private DatabaseManager mRatabaseManager;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,14 +44,14 @@ public class HomeActivity extends SmartActivity {
 	protected void onResume() {
 		super.onResume();
 		
-        databaseManager = new DatabaseManager(this);
-        databaseManager.open();
+        mRatabaseManager = new DatabaseManager(this);
+        mRatabaseManager.open();
         
-        recentlyViewedStations = databaseManager.getRecentlyViewedStations();
+        mRecentlyViewedStations = mRatabaseManager.getRecentlyViewedStations();
         
-        databaseManager.close();
+        mRatabaseManager.close();
         
-        StationArrayAdapter listAdapter  = new StationArrayAdapter(this, recentlyViewedStations);
+        StationArrayAdapter listAdapter  = new StationArrayAdapter(this, mRecentlyViewedStations);
         ListView recentStationsList = (ListView)findViewById(R.id.recentlyViewedList);
         recentStationsList.setOnItemClickListener(new StationItemListener());
         recentStationsList.setAdapter(listAdapter);
@@ -63,21 +64,21 @@ public class HomeActivity extends SmartActivity {
      * button on the home screen has been 
      * clicked and starts the activity that is
      * associated with that button.
-     * @author Shane Bryan Doyle
+     * @author Shane Doyle
      */
     private class HomeButtonsListener implements OnClickListener {
     	
-    	int operationId;
+    	private int mOperationID;
     	
     	public HomeButtonsListener(int i){
-    		this.operationId = i;
+    		this.mOperationID = i;
     	}
     	
 		public void onClick(View arg0) {
 			
 			Intent activityIntent = null;
 			
-			switch(operationId) {
+			switch(mOperationID) {
 			case 0:
 				activityIntent = new Intent(HomeActivity.this, SearchActivity.class);
 				break;

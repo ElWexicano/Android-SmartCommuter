@@ -1,62 +1,63 @@
 package ie.smartcommuter.models;
 
 /**
- * This class is used to represent a single
- * stage of a journey.
- * @author Shane Bryan Doyle
+ * This class is used to represent a single stage of a journey.
+ * 
+ * @author Shane Doyle
  */
 public class Stage {
-	
-	private String distance;
-	private String duration;
-	private Address startLocation;
-	private Address endLocation;
-	private String instructions;
-	
-	public Stage() {}
+
+	private String mDistance;
+	private String mDuration;
+	private Address mStartLocation;
+	private Address mEndLocation;
+	private String mInstructions;
 
 	public String getDistance() {
-		return distance;
+		return mDistance;
 	}
 
 	public void setDistance(String distance) {
-		this.distance = distance;
+		this.mDistance = distance;
 	}
 
 	public String getDuration() {
-		return duration;
+		return mDuration;
 	}
 
 	public void setDuration(String duration) {
-		this.duration = duration;
+		this.mDuration = duration;
 	}
 
 	public Address getStartLocation() {
-		return startLocation;
+		return mStartLocation;
 	}
 
 	public void setStartLocation(Address startLocation) {
-		this.startLocation = startLocation;
+		this.mStartLocation = startLocation;
 	}
 
 	public Address getEndLocation() {
-		return endLocation;
+		return mEndLocation;
 	}
 
 	public void setEndLocation(Address endLocation) {
-		this.endLocation = endLocation;
+		this.mEndLocation = endLocation;
 	}
 
 	public String getInstructions() {
-		return instructions;
+		return mInstructions;
 	}
 
 	public void setInstructions(String instructions) {
-		this.instructions = (android.text.Html.fromHtml(instructions).toString()).replaceAll("\\s+", " ");
-		
-		if(getInstructions().contains("Destination will be")) {
-			this.instructions = this.instructions.replace(" Destination will be", ". Destination will be");
+		this.mInstructions = (android.text.Html.fromHtml(instructions)
+				.toString()).replaceAll("\\s+", " ");
+
+		if (getInstructions().contains(Constants.DESTINATION_WILL_BE)) {
+			this.mInstructions = this.mInstructions.replace(
+					(" " + Constants.DESTINATION_WILL_BE), ". "
+							+ Constants.DESTINATION_WILL_BE);
 		}
 	}
-	
+
 }

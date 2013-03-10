@@ -1,12 +1,13 @@
 package ie.smartcommuter.controllers.screens;
 
-import java.util.List;
-
 import ie.smartcommuter.R;
 import ie.smartcommuter.controllers.SmartActivity;
 import ie.smartcommuter.controllers.StationArrayAdapter;
 import ie.smartcommuter.models.DatabaseManager;
 import ie.smartcommuter.models.Station;
+
+import java.util.List;
+
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -19,98 +20,106 @@ import android.widget.ListView;
 import android.widget.Spinner;
 
 /**
- * This class is used for the search stations
- * screen of the application.
- * @author Shane Bryan Doyle
+ * This class is used for the search stations screen of the application.
+ * 
+ * @author Shane Doyle
  */
 public class SearchActivity extends SmartActivity {
 
-	private StationArrayAdapter listAdapter;
-	private Spinner stationTypeSpinner;
-	private EditText stationNameText;
-	
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.screen_search);
-        
-        stationTypeSpinner = (Spinner) findViewById(R.id.stationTypeSpinner);
-        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(
-                this, R.array.stationTypeArray, android.R.layout.simple_spinner_item);
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        stationTypeSpinner.setAdapter(spinnerAdapter);
-        stationTypeSpinner.setOnItemSelectedListener(new SearchSpinnerChangedListener());
-        
-        DatabaseManager databaseManager = new DatabaseManager(this);
-        databaseManager.open();
-        
-        List<Station> stations = databaseManager.getAllStations();
-        
-        databaseManager.close();
-        
-        listAdapter = new StationArrayAdapter(this, stations);
-        
-        ListView searchStationsList = (ListView)findViewById(R.id.searchStationsList);
-        searchStationsList.setOnItemClickListener(new StationItemListener());
-        searchStationsList.setAdapter(listAdapter);
-        searchStationsList.setTextFilterEnabled(true);
-        searchStationsList.setEmptyView(findViewById(R.id.searchStationsListEmpty));
-        
-        stationNameText = (EditText) findViewById(R.id.searchStationsNameEditText);
-        stationNameText.addTextChangedListener(new SearchTextChangedListener());
-    }
-    
-    
-    /**
-     * This class is used by the Search Station Name
-     * Edit Text to update the List of Stations.
-     * 
-     * @author Shane Bryan Doyle
-     */
-    private class SearchTextChangedListener implements TextWatcher {
+	private StationArrayAdapter mListAdapter;
+	private Spinner mStationTypeSpinner;
+	private EditText mStationNameText;
 
-		public void afterTextChanged(Editable s) {}
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_search);
+
+		mStationTypeSpinner = (Spinner) findViewById(R.id.stationTypeSpinner);
+		ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter
+				.createFromResource(this, R.array.station_types,
+						android.R.layout.simple_spinner_item);
+		spinnerAdapter
+				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		mStationTypeSpinner.setAdapter(spinnerAdapter);
+		mStationTypeSpinner
+				.setOnItemSelectedListener(new SearchSpinnerChangedListener());
+
+		DatabaseManager databaseManager = new DatabaseManager(this);
+		databaseManager.open();
+
+		List<Station> stations = databaseManager.getAllStations();
+
+		databaseManager.close();
+
+		mListAdapter = new StationArrayAdapter(this, stations);
+
+		ListView searchStationsList = (ListView) findViewById(R.id.searchStationsList);
+		searchStationsList.setOnItemClickListener(new StationItemListener());
+		searchStationsList.setAdapter(mListAdapter);
+		searchStationsList.setTextFilterEnabled(true);
+		searchStationsList
+				.setEmptyView(findViewById(R.id.searchStationsListEmpty));
+
+		mStationNameText = (EditText) findViewById(R.id.searchStationsNameEditText);
+		mStationNameText
+				.addTextChangedListener(new SearchTextChangedListener());
+	}
+
+	/**
+	 * This class is used by the Search Station Name Edit Text to update the
+	 * List of Stations.
+	 * 
+	 * @author Shane Bryan Doyle
+	 */
+	private class SearchTextChangedListener implements TextWatcher {
+
+		public void afterTextChanged(Editable s) {
+		}
 
 		public void beforeTextChanged(CharSequence s, int start, int count,
-				int after) {}
+				int after) {
+		}
 
 		public void onTextChanged(CharSequence s, int start, int before,
 				int count) {
-			listAdapter.getFilter().filter(s);
+			mListAdapter.getFilter().filter(s);
 		}
-    }
-    
-    /**
-     * This class is used to update the list of stations based on
-     * what is selected in the Spinner.
-     * 
-     * @author Shane Bryan Doyle
-     */
-    private class SearchSpinnerChangedListener implements OnItemSelectedListener {
+	}
+
+	/**
+	 * This class is used to update the list of stations based on what is
+	 * selected in the Spinner.
+	 * 
+	 * @author Shane Bryan Doyle
+	 */
+	private class SearchSpinnerChangedListener implements
+			OnItemSelectedListener {
 
 		public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
 				long arg3) {
-			
+
 			String selected = arg0.getItemAtPosition(arg2).toString();
 
-			if(selected!=null) {
-				
-				if(selected.equals("Bus")) {
-					listAdapter.updateStationModeFilter("Bus");
+			if (selected != null) {
+
+				if (selected.equals("Bus")) {
+					mListAdapter.updateStationModeFilter("Bus");
 				} else if (selected.equals("Rail")) {
-					listAdapter.updateStationModeFilter("Rail");
+					mListAdapter.updateStationModeFilter("Rail");
 				} else if (selected.equals("Tram")) {
-					listAdapter.updateStationModeFilter("Tram");
+					mListAdapter.updateStationModeFilter("Tram");
 				} else {
-					listAdapter.updateStationModeFilter("All");
+					mListAdapter.updateStationModeFilter("All");
 				}
-				
-				listAdapter.getFilter().filter(stationNameText.getText());
-				
+
+				mListAdapter.getFilter().filter(mStationNameText.getText());
+
 			}
-			
+
 		}
 
-		public void onNothingSelected(AdapterView<?> arg0) {}
-    }
+		public void onNothingSelected(AdapterView<?> arg0) {
+		}
+	}
 }

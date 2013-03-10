@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/appLayoutTheme"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" 
+        android:padding="10dp" >
+        
+        <Button
+            android:id="@+id/searchStationsBtn"
+            style="@style/homeScreenButton"
+			android:drawableTop="@drawable/ic_search"
+            android:text="@string/search_stations" />
+        
+	     <Button
+	         android:id="@+id/nearbyStationsBtn"
+	         style="@style/homeScreenButton"
+	         android:drawableTop="@drawable/ic_nearby"
+	         android:text="@string/nearby_stations" />
+	        
+	     <Button
+	         android:id="@+id/favouriteStationsBtn"
+	         style="@style/homeScreenButton"
+	         android:drawableTop="@drawable/ic_favourite"
+	         android:text="@string/favourites_stations" />
+        
+    </LinearLayout>
+
+
+	<TextView
+	    android:id="@+id/recentStationsTextView"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:text="@string/recently_viewed"
+	    style="@style/banner" />    
+
+	<RelativeLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent" >
+
+	    <ListView
+	        android:id="@+id/recentlyViewedList"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_above="@+id/footerLinearLayout"
+	        android:layout_alignParentTop="true" />
+
+	    <TextView 
+	        android:id="@+id/recentlyViewedListEmpty"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:gravity="center"
+	        android:textColor="@color/appFontColor"
+	        android:text="@string/recently_viewed_list_empty_message" />
+	    
+	    <LinearLayout
+	        android:id="@+id/footerLinearLayout"
+	        style="@style/footer"
+	        android:layout_alignParentBottom="true" >
+
+	        <TextView
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:gravity="center"
+	            android:paddingTop="10dip"
+	            android:text="@string/app_slogan"
+	            android:textColor="@color/appFontColor" />
+	    </LinearLayout>
+	</RelativeLayout>
+    
+</LinearLayout>

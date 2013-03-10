@@ -1,17 +1,15 @@
 package ie.smartcommuter.controllers.maps;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.google.android.maps.Overlay;
-import com.google.android.maps.OverlayItem;
-
 import ie.smartcommuter.R;
 import ie.smartcommuter.controllers.SmartMapActivity;
 import ie.smartcommuter.controllers.SmartOverlay;
 import ie.smartcommuter.controllers.screens.NearbyStationsActivity;
 import ie.smartcommuter.models.Address;
 import ie.smartcommuter.models.Station;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,33 +17,34 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
+import com.google.android.maps.Overlay;
+import com.google.android.maps.OverlayItem;
+
 /**
  * This is a class is used to display a Nearby Stations
  * on a Google Map.
- * @author Shane Bryan Doyle
+ * @author Shane Doyle
  */
 public class NearbyStationsMapActivity extends SmartMapActivity {
 	
-	private Address userLocation;
-	private Context context;
-	private Drawable drawable;
-	private List<Overlay> mapOverlays;
-	private List<Station> nearbyStations;
+	private Address mUserLocation;
+	private Context mContext;
+	private Drawable mDrawable;
+	private List<Overlay> mMapOverlays;
+	private List<Station> mNearbyStations;
 	
     @SuppressWarnings("unchecked")
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map_google);
-        context = this;
+        mContext = this;
         
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         
-        userLocation = (Address) bundle.getSerializable("userLocation");
-        nearbyStations = (List<Station>) bundle.getSerializable("nearbyStations");
-        
-
+        mUserLocation = (Address) bundle.getSerializable("userLocation");
+        mNearbyStations = (List<Station>) bundle.getSerializable("nearbyStations");
     }
 
 	@Override
@@ -53,33 +52,34 @@ public class NearbyStationsMapActivity extends SmartMapActivity {
 		super.onResume();
 		
         if(NearbyStationsActivity.nearbyStations!=null && NearbyStationsActivity.address!=null) {
-        	userLocation = NearbyStationsActivity.address;
-        	nearbyStations = NearbyStationsActivity.nearbyStations;
+        	mUserLocation = NearbyStationsActivity.address;
+        	mNearbyStations = NearbyStationsActivity.nearbyStations;
         }
         
-        if(nearbyStations==null) {
-        	nearbyStations = new ArrayList<Station>();
+        if(mNearbyStations==null) {
+        	mNearbyStations = new ArrayList<Station>();
         }
 		
-		if(userLocation!=null) {
-			updateNearbyStations(nearbyStations,userLocation);
+		if(mUserLocation!=null) {
+			updateNearbyStations(mNearbyStations,mUserLocation);
 		}
 		
 	}
 
-    /**
-     * This method is used to update the nearest stations map.
-     * @param stations
-     */
+	/**
+	 * This method is used to update the nearest stations map.
+	 * @param stations
+	 * @param address
+	 */
     public void updateNearbyStations(List<Station> stations, Address address) {
-    	userLocation = address;
-    	nearbyStations = stations;
+    	mUserLocation = address;
+    	mNearbyStations = stations;
     	
-        mapView = initGoogleMap(userLocation);
-        mapOverlays = mapView.getOverlays();
-        mapOverlays.clear();
+        mapView = initGoogleMap(mUserLocation);
+        mMapOverlays = mapView.getOverlays();
+        mMapOverlays.clear();
         SmartOverlay overlay = drawMapOverlays();
-        mapOverlays.add(overlay);
+        mMapOverlays.add(overlay);
     }
 	
     /**
@@ -87,22 +87,21 @@ public class NearbyStationsMapActivity extends SmartMapActivity {
      * @return
      */
 	private SmartOverlay drawMapOverlays() {
-		
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        drawable = getUserDrawable(prefs.getString("googleMapUserIconType", "male"));
+        mDrawable = getUserDrawable(prefs.getString("googleMapUserIconType", "male"));
 		
-		SmartOverlay overlay = new SmartOverlay(context, drawable);
+		SmartOverlay overlay = new SmartOverlay(mContext, mDrawable);
         
-        OverlayItem overlayItem = new OverlayItem(userLocation.toGeoPoint(), "User Location", "");
+        OverlayItem overlayItem = new OverlayItem(mUserLocation.toGeoPoint(), "User Location", "");
 
         overlay.addOverlay(overlayItem);
         
-        if(nearbyStations!=null) {
+        if(mNearbyStations!=null) {
         	
-        	for(Station station : nearbyStations) {
-        		drawable = overlay.getStationMarker(station.getCompany().getMode());
+        	for(Station station : mNearbyStations) {
+        		mDrawable = overlay.getStationMarker(station.getCompany().getMode());
         		overlayItem = new OverlayItem(station.getAddress().toGeoPoint(), "Station", Integer.toString(station.getId()));
-        		overlayItem.setMarker(drawable);
+        		overlayItem.setMarker(mDrawable);
         		overlay.addOverlay(overlayItem);
         	}
         	

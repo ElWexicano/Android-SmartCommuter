@@ -17,12 +17,12 @@ import com.google.android.maps.OverlayItem;
 
 /**
  * This is a class is used to add Overlays to Google Map
- * @author Shane Bryan Doyle
+ * @author Shane Doyle
  */
 public class SmartOverlay extends ItemizedOverlay<OverlayItem> {
 
 	private ArrayList<OverlayItem> mOverlays = new ArrayList<OverlayItem>();
-	private Context context;
+	private Context mContext;
 	
 	public SmartOverlay(Drawable arg0) {
 		super(boundCenterBottom(arg0));
@@ -30,7 +30,7 @@ public class SmartOverlay extends ItemizedOverlay<OverlayItem> {
 
 	public SmartOverlay(Context context, Drawable arg0) {
 		super(boundCenterBottom(arg0));
-		this.context = context;
+		this.mContext = context;
 	}
 
 	@Override
@@ -59,9 +59,9 @@ public class SmartOverlay extends ItemizedOverlay<OverlayItem> {
 			goToActivity(StationActivity.class, activityInfo);
 
 		} else if(item.getTitle().equals("Station Location")) {
-			Toast.makeText(context, "Station Location", Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, "Station Location", Toast.LENGTH_SHORT).show();
 		} else if(item.getTitle().equals("User Location")) {
-			Toast.makeText(context, "Your Location", Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, "Your Location", Toast.LENGTH_SHORT).show();
 		}
 		
 		return true;
@@ -74,13 +74,13 @@ public class SmartOverlay extends ItemizedOverlay<OverlayItem> {
 	 * @param bundle
 	 */
 	private void goToActivity(Class<? extends Activity> activityClass, Bundle bundle) {
-        Intent newActivity = new Intent(context, activityClass);
+        Intent newActivity = new Intent(mContext, activityClass);
         
         if(bundle!=null) {
         	newActivity.putExtras(bundle);
         }
         
-        context.startActivity(newActivity);
+        mContext.startActivity(newActivity);
 	}
 	
 	/**
@@ -91,11 +91,11 @@ public class SmartOverlay extends ItemizedOverlay<OverlayItem> {
 	public Drawable getStationMarker(String mode) {
 		Drawable drawable;
 		if(mode.equalsIgnoreCase("bus")) {
-        	drawable = context.getResources().getDrawable(R.drawable.map_ic_bus);
+        	drawable = mContext.getResources().getDrawable(R.drawable.map_ic_bus);
         } else if (mode.equalsIgnoreCase("rail")) {
-        	drawable = context.getResources().getDrawable(R.drawable.map_ic_train);
+        	drawable = mContext.getResources().getDrawable(R.drawable.map_ic_train);
         } else {
-        	drawable = context.getResources().getDrawable(R.drawable.map_ic_tram);
+        	drawable = mContext.getResources().getDrawable(R.drawable.map_ic_tram);
         }
 		
 		drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
